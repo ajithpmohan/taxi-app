@@ -1,9 +1,9 @@
-# React-Redux-Boilerplate
+# Taxi App - React.js
 
 ## Installation
 
-* `git clone https://github.com/ajithpmohan/react-redux-boilerplate.git`
-* cd react-redux-boilerplate
+* `git clone https://github.com/ajithpmohan/taxi-app-react.git`
+* cd taxi-app-react
 * npm install
 * npm start
 * visit `http://localhost:3000/`
