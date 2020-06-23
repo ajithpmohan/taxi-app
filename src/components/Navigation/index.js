@@ -22,10 +22,20 @@ const Navigation = () => (
       id="navbarSupportedContent"
     >
       <ul className="navbar-nav mr-auto">
-        <li className="nav-item active">
+        <li className="nav-item">
           <Link to={ROUTES.HOME} className="nav-link">
             Home
             <span className="sr-only">(current)</span>
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link to={ROUTES.RIDER} className="nav-link">
+            Dashboard
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link to={ROUTES.REQUESTTRIP} className="nav-link">
+            Request a Trip
           </Link>
         </li>
       </ul>

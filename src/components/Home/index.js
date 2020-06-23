@@ -1,7 +1,5 @@
 import React from 'react';
 
-const HomePage = () => (
-  <div> Welcome to React Redux Boilerplate! </div>
-);
+const HomePage = () => <div> Welcome to Taxi App </div>;
 
 export default HomePage;
