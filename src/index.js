@@ -2,12 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
-import 'font-awesome/css/font-awesome.min.css';
+// import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min';
 
 import App from './components/App';
 import store from './store';
+import API, { APIContext } from './api';
 import * as serviceWorker from './serviceWorker';
 
 import './index.css';
@@ -15,7 +16,9 @@ import './index.css';
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <APIContext.Provider value={new API()}>
+        <App />
+      </APIContext.Provider>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'),

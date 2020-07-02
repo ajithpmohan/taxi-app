@@ -38,6 +38,7 @@ module.exports = {
     'react/jsx-props-no-spreading': ['off'],
     'import/prefer-default-export': 0,
     'func-names': 0,
+    'no-unused-expressions': 0,
     'no-alert': 0,
     'no-new': 0,
   },
