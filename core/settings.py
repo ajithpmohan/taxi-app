@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
+import datetime
 import os
 
 from decouple import Csv, config
@@ -161,3 +162,9 @@ DEBUG_TOOLBAR_CONFIG = {
 }
 
 SHELL_PLUS = "bpython"
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(minutes=15),
+    'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=1),
+    'USER_ID_CLAIM': 'id',
+}
