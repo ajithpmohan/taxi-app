@@ -2,7 +2,7 @@ import axios from 'axios';
 
 class API {
   constructor() {
-    this.rootUrl = 'http://0.0.0.0:8000/';
+    this.rootUrl = 'http://0.0.0.0:8000/api/v1/';
   }
 
   sendRequest = (method, path, data) => {
@@ -14,7 +14,11 @@ class API {
   };
 
   doSignInWithEmailAndPassword = (email, password) =>
-    this.sendRequest('POST', 'api/token/', { email, password });
+    this.sendRequest('POST', 'account/token/', { email, password });
+
+  doSignOut = () => {
+    // TODO
+  };
 }
 
 export default API;

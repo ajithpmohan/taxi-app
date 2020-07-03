@@ -37,6 +37,7 @@ module.exports = {
     'jsx-a11y/label-has-associated-control': 0,
     'react/jsx-props-no-spreading': ['off'],
     'import/prefer-default-export': 0,
+    'jsx-a11y/anchor-is-valid': 0,
     'func-names': 0,
     'no-unused-expressions': 0,
     'no-alert': 0,

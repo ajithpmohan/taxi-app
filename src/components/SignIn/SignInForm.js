@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
+import { withRouter } from 'react-router-dom';
 
 import { doSetAuthUser } from '../../actions';
 import { withAPI } from '../../api';
@@ -12,6 +12,11 @@ const INITIAL_STATE = {
   email: '',
   password: '',
   error: null,
+};
+
+const REDIRECT_URL = {
+  driver: ROUTES.DRIVER,
+  rider: ROUTES.RIDER,
 };
 
 class SignInFormBase extends React.Component {
@@ -33,7 +38,7 @@ class SignInFormBase extends React.Component {
         localStorage.setItem('authUser', JSON.stringify(resp.data));
         onSetAuthUser(JSON.parse(localStorage.getItem('authUser')));
 
-        history.push(ROUTES.HOME);
+        history.push(REDIRECT_URL[resp.data.type]);
       })
       .catch((error) => {
         this.setState({ error });
@@ -104,8 +109,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const SignInForm = compose(
-  withRouter,
   withAPI,
+  withRouter,
   connect(null, mapDispatchToProps),
 )(SignInFormBase);
 

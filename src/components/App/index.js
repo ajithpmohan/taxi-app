@@ -3,8 +3,9 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import Navigation from '../Navigation';
 import HomePage from '../Home';
-import Dashboard from '../Rider/Dashboard';
 import SignInPage from '../SignIn';
+import DriverDash from '../Driver/Dashboard';
+import RiderDash from '../Rider/Dashboard';
 import RequestTrip from '../Rider/RequestTrip';
 
 import * as ROUTES from '../../constants/routes';
@@ -18,7 +19,10 @@ const App = () => (
 
       <Route exact path={ROUTES.HOME} component={HomePage} />
       <Route exact path={ROUTES.SIGNIN} component={SignInPage} />
-      <Route exact path={ROUTES.RIDER} component={Dashboard} />
+
+      <Route exact path={ROUTES.DRIVER} component={DriverDash} />
+
+      <Route exact path={ROUTES.RIDER} component={RiderDash} />
       <Route
         exact
         path={ROUTES.REQUESTTRIP}

@@ -18,8 +18,16 @@ const withAuthentication = (Component) => {
   }
 
   WithAuthentication.propTypes = {
-    authUser: PropTypes.objectOf(PropTypes.string).isRequired,
+    authUser: PropTypes.shape({
+      refresh: PropTypes.string,
+      access: PropTypes.string,
+      user: PropTypes.object,
+    }),
     onSetAuthUser: PropTypes.func.isRequired,
+  };
+
+  WithAuthentication.defaultProps = {
+    authUser: null,
   };
 
   const mapStateToProps = (state) => ({
