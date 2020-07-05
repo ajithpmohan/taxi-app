@@ -15,8 +15,8 @@ const INITIAL_STATE = {
 };
 
 const REDIRECT_URL = {
-  driver: ROUTES.DRIVER,
-  rider: ROUTES.RIDER,
+  DRIVER: ROUTES.DRIVER,
+  RIDER: ROUTES.RIDER,
 };
 
 class SignInFormBase extends React.Component {
@@ -38,7 +38,7 @@ class SignInFormBase extends React.Component {
         localStorage.setItem('authUser', JSON.stringify(resp.data));
         onSetAuthUser(JSON.parse(localStorage.getItem('authUser')));
 
-        history.push(REDIRECT_URL[resp.data.type]);
+        history.push(REDIRECT_URL[resp.data.user.type]);
       })
       .catch((error) => {
         this.setState({ error });

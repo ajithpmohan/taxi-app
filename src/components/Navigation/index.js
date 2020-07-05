@@ -9,9 +9,9 @@ import * as ROUTES from '../../constants/routes';
 import './index.css';
 
 const AUTH_STATES = (authUser) => ({
-  driver: <NavigationAuthDriver authUser={authUser} />,
-  rider: <NavigationAuthRider authUser={authUser} />,
-  nonauth: <NavigationNonAuth />,
+  DRIVER: <NavigationAuthDriver authUser={authUser} />,
+  RIDER: <NavigationAuthRider authUser={authUser} />,
+  NONAUTH: <NavigationNonAuth />,
 });
 
 const Navigation = ({ authUser }) => (
@@ -32,7 +32,7 @@ const Navigation = ({ authUser }) => (
       className="collapse navbar-collapse"
       id="navbarSupportedContent"
     >
-      {AUTH_STATES(authUser)[authUser?.type || 'nonauth']}
+      {AUTH_STATES(authUser)[authUser?.user.type || 'NONAUTH']}
       {!!authUser && (
         <ul className="navbar-nav ml-auto nav-flex-icons">
           <li className="nav-item avatar dropdown">
