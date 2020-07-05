@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
 from django.contrib.auth.base_user import AbstractBaseUser
-from django.contrib.auth.models import PermissionsMixin
+from django.contrib.auth.models import Group, PermissionsMixin
 from django.core.mail import send_mail
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -57,3 +57,19 @@ class User(AbstractBaseUser, PermissionsMixin):
         Sends an email to this User.
         '''
         send_mail(subject, message, from_email, [self.email], **kwargs)
+
+    @property
+    def is_rider(self):
+        rider = Group.objects.get(name='RIDER')  # WIP
+        return True if rider in self.groups.all() else False
+
+    @property
+    def is_driver(self):
+        driver = Group.objects.get(name='DRIVER')  # WIP
+        return True if driver in self.groups.all() else False
+
+    def get_type(self):
+        if self.is_rider:
+            return _('RIDER')
+        elif self.is_driver:
+            return _('DRIVER')

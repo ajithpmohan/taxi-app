@@ -136,6 +136,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
+
+MEDIA_URL = '/media/'
+
 AUTH_USER_MODEL = "account.User"
 
 CORS_ORIGIN_WHITELIST = [
