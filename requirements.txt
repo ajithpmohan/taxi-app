@@ -14,6 +14,7 @@ Pillow==7.1.1
 
 # db
 psycopg2==2.8.5
+django-fsm==2.7.0
 
 # helpers
 python-decouple==3.3

@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'django_extensions',
 
     'apps.account',
+    'apps.trips',
 ]
 
 MIDDLEWARE = [
