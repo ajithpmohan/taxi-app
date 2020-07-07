@@ -1,0 +1,87 @@
+### Python ###
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+
+# PyCharm
+.idea/
+
+
+# Distribution / packaging
+.Python
+.env
+.env.dev
+.env.prod
+env/
+envs/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+.*~
+.swp
+
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+
+# Installer logs
+pip-log.txt
+
+
+# DB
+*.sql
+*.sqlite3
+.DS_Store
+tags
+
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.cache
+nosetests.xml
+coverage.xml
+tests/coverage_html/
+tests/.coverage
+build/
+tests/report/
+
+
+# Documentation
+docs/_build/
+docs/locale/
+
+
+### Django ###
+*.log
+*.pot
+*.pyc
+__pycache__/
+local.py
+
+
+# Assets. If collect static was done locally with defaults, ignore collected files
+static/
+media/
+mediafiles/
+tmp/
+
+
+# Visual Studio Code
+.vscode/

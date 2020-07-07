@@ -1,0 +1,24 @@
+# Core Packages
+Django==3.0.7
+djangorestframework==3.11.0
+django-cors-headers==3.4.0
+channels==2.4.0
+
+# Coding standards
+flake8==3.8.3
+isort==4.3.21
+
+# Image Library
+Pillow==7.1.1
+
+# db
+psycopg2==2.8.5
+
+# helpers
+python-decouple==3.3
+drf-yasg==1.17.1
+
+# debugger
+bpython==0.19
+django-debug-toolbar==2.2
+django-extensions==3.0.0
