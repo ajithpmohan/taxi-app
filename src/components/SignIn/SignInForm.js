@@ -87,7 +87,7 @@ class SignInFormBase extends React.Component {
           >
             Sign In
           </button>
-          {error && <p>{error.response.data.detail}</p>}
+          {error && <p>{error.response?.data.detail}</p>}
         </div>
       </form>
     );
