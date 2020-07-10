@@ -69,7 +69,9 @@ class User(AbstractBaseUser, PermissionsMixin):
         return True if driver in self.groups.all() else False
 
     def get_type(self):
+        if self.is_superuser | self.is_staff:
+            return _('ADMIN')
         if self.is_rider:
             return _('RIDER')
-        elif self.is_driver:
+        if self.is_driver:
             return _('DRIVER')

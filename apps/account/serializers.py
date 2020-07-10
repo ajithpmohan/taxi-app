@@ -19,7 +19,8 @@ class UserSerializer(serializers.ModelSerializer):
         return obj.get_type()
 
     def get_avatar_url(self, obj):
-        return self.context['request'].build_absolute_uri(obj.avatar.url)
+        if bool(obj.avatar):
+            return self.context['request'].build_absolute_uri(obj.avatar.url)
 
 
 class TokenObtainPairSerializer(jwt_serializers.TokenObtainPairSerializer):

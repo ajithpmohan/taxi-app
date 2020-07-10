@@ -22,7 +22,8 @@ Try [python-decouple](https://simpleisbetterthancomplex.com/2015/11/26/package-o
 
     docker-compose up
 
-Access it through [http://0.0.0.0:8000](http://0.0.0.0:8000)
+## Swagger
+Access it through [http://0.0.0.0:9000/swagger/](http://0.0.0.0:9000/swagger/)
 
 ## Code Styling
 
