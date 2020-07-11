@@ -11,6 +11,7 @@ import './index.css';
 const AUTH_STATES = (authUser) => ({
   DRIVER: <NavigationAuthDriver authUser={authUser} />,
   RIDER: <NavigationAuthRider authUser={authUser} />,
+  ADMIN: <NavigationAuthAdmin authUser={authUser} />,
   NONAUTH: <NavigationNonAuth />,
 });
 
@@ -59,7 +60,7 @@ const Navigation = ({ authUser }) => (
             >
               <div className="dropdown-item">
                 <span>Welcome </span>
-                {authUser?.user.fullname}
+                {authUser?.user.fullname || 'User'}
                 <span>!</span>
               </div>
               <SignOut />
@@ -103,6 +104,17 @@ const NavigationAuthRider = () => (
     <li className="nav-item">
       <Link to={ROUTES.REQUESTTRIP} className="nav-link">
         Request a Trip
+      </Link>
+    </li>
+  </ul>
+);
+
+const NavigationAuthAdmin = () => (
+  <ul className="navbar-nav mr-auto">
+    <li className="nav-item">
+      <Link to={ROUTES.HOME} className="nav-link">
+        Home
+        <span className="sr-only">(current)</span>
       </Link>
     </li>
   </ul>

@@ -43,4 +43,15 @@ module.exports = {
     'no-alert': 0,
     'no-new': 0,
   },
+  "overrides": [
+    {
+      "files": [
+        "**/*.spec.js",
+        "**/*.spec.jsx"
+      ],
+      "env": {
+        "jest": true
+      }
+    }
+  ]
 };

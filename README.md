@@ -1,5 +1,7 @@
 # Taxi App - React.js
 
+[![Build Status](https://travis-ci.com/ajithpmohan/taxi-app-react.svg?token=U6tXt8qPvdLZEiWxFSoi&branch=master)](https://travis-ci.com/ajithpmohan/taxi-app-react)
+
 ## Installation
 
 * `git clone https://github.com/ajithpmohan/taxi-app-react.git`

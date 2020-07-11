@@ -17,6 +17,7 @@ const INITIAL_STATE = {
 const REDIRECT_URL = {
   DRIVER: ROUTES.DRIVER,
   RIDER: ROUTES.RIDER,
+  ADMIN: ROUTES.HOME,
 };
 
 class SignInFormBase extends React.Component {
