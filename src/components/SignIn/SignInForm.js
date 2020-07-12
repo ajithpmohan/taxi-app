@@ -63,6 +63,7 @@ class SignInFormBase extends React.Component {
           <input
             className="form-control col-md-4"
             name="email"
+            id="email"
             value={email}
             onChange={this.onChange}
             type="text"
@@ -73,6 +74,7 @@ class SignInFormBase extends React.Component {
           <label htmlFor="password">Password</label>
           <input
             className="form-control col-md-4"
+            id="password"
             name="password"
             value={password}
             onChange={this.onChange}

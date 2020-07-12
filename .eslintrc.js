@@ -4,7 +4,12 @@ module.exports = {
     es6: true,
     node: true,
   },
-  extends: ['plugin:react/recommended', 'airbnb', 'prettier'],
+  extends: [
+    'plugin:react/recommended',
+    'plugin:cypress/recommended',
+    'airbnb',
+    'prettier',
+  ],
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
@@ -43,15 +48,12 @@ module.exports = {
     'no-alert': 0,
     'no-new': 0,
   },
-  "overrides": [
+  overrides: [
     {
-      "files": [
-        "**/*.spec.js",
-        "**/*.spec.jsx"
-      ],
-      "env": {
-        "jest": true
-      }
-    }
-  ]
+      files: ['**/*.spec.js', '**/*.spec.jsx'],
+      env: {
+        jest: true,
+      },
+    },
+  ],
 };
