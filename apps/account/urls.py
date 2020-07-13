@@ -21,4 +21,5 @@ from apps.account import views as account_views
 urlpatterns = [
     path('token/', account_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
+    path('sign-up/', account_views.SignUpView.as_view(), name='sign_up'),
 ]
