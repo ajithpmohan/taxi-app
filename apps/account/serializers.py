@@ -1,3 +1,5 @@
+from collections import OrderedDict
+
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from rest_framework import serializers
@@ -8,15 +10,15 @@ from apps.account.validators import MaximumLengthValidator, MinimumLengthValidat
 
 class SignUpSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, validators=[MinimumLengthValidator(), MaximumLengthValidator()])
-    confirm_password = serializers.CharField(write_only=True)
+    password2 = serializers.CharField(write_only=True)
     groups = serializers.CharField()
 
     class Meta:
         model = get_user_model()
-        fields = ('id', 'email', 'password', 'confirm_password', 'first_name', 'last_name', 'avatar', 'groups')
+        fields = ('email', 'password', 'password2', 'first_name', 'last_name', 'avatar', 'groups')
 
     def validate(self, data):
-        if data['password'] != data['confirm_password']:
+        if data['password'] != data['password2']:
             raise serializers.ValidationError('Passwords must match.')
         return data
 
@@ -26,7 +28,7 @@ class SignUpSerializer(serializers.ModelSerializer):
         return value
 
     def create(self, validated_data):
-        validated_data.pop('confirm_password')
+        validated_data.pop('password2')
         group = Group.objects.filter(name=validated_data.pop('groups'))
         user = self.Meta.model.objects.create_user(**validated_data)
         user.groups.add(*group)
@@ -34,8 +36,8 @@ class SignUpSerializer(serializers.ModelSerializer):
         return user
 
     def to_representation(self, instance):
-        representation = super().to_representation(instance)
-        representation['groups'] = instance.get_type()
+        representation = OrderedDict()
+        representation['message'] = f'Account activation email sent to {instance.email}'
         return representation
 
 

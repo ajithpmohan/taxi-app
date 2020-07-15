@@ -16,11 +16,11 @@ Pillow==7.1.1
 psycopg2==2.8.5
 django-fsm==2.7.0
 
-# helpers
+# Helpers
 python-decouple==3.3
 drf-yasg==1.17.1
 
-# debugger
+# Debuggers
 bpython==0.19
 django-debug-toolbar==2.2
 django-extensions==3.0.0
