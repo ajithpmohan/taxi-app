@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-import { withAuthentication } from '../Session';
 import SignOut from '../SignOut';
+import MenuLink from './MenuLink';
 import * as ROUTES from '../../constants/routes';
 
 import './index.css';
@@ -74,70 +74,56 @@ const Navigation = ({ authUser }) => (
 
 const NavigationAuthDriver = () => (
   <ul className="navbar-nav mr-auto">
-    <li className="nav-item">
-      <Link to={ROUTES.HOME} className="nav-link">
-        Home
-        <span className="sr-only">(current)</span>
-      </Link>
-    </li>
-    <li className="nav-item">
-      <Link to={ROUTES.DRIVER} className="nav-link">
-        Dashboard
-      </Link>
-    </li>
+    <MenuLink
+      activeOnlyWhenExact="true"
+      to={ROUTES.DRIVER}
+      label="Dashboard"
+    />
   </ul>
 );
 
 const NavigationAuthRider = () => (
   <ul className="navbar-nav mr-auto">
-    <li className="nav-item">
-      <Link to={ROUTES.HOME} className="nav-link">
-        Home
-        <span className="sr-only">(current)</span>
-      </Link>
-    </li>
-    <li className="nav-item">
-      <Link to={ROUTES.RIDER} className="nav-link">
-        Dashboard
-      </Link>
-    </li>
-    <li className="nav-item">
-      <Link to={ROUTES.REQUESTTRIP} className="nav-link">
-        Request a Trip
-      </Link>
-    </li>
+    <MenuLink
+      activeOnlyWhenExact="true"
+      to={ROUTES.RIDER}
+      label="Dashboard"
+    />
+    <MenuLink
+      activeOnlyWhenExact="true"
+      to={ROUTES.REQUESTTRIP}
+      label="Request a Trip"
+    />
   </ul>
 );
 
 const NavigationAuthAdmin = () => (
   <ul className="navbar-nav mr-auto">
-    <li className="nav-item">
-      <Link to={ROUTES.HOME} className="nav-link">
-        Home
-        <span className="sr-only">(current)</span>
-      </Link>
-    </li>
+    <MenuLink
+      activeOnlyWhenExact="true"
+      to={ROUTES.HOME}
+      label="Home"
+    />
   </ul>
 );
 
 const NavigationNonAuth = () => (
   <ul className="navbar-nav mr-auto">
-    <li className="nav-item">
-      <Link to={ROUTES.HOME} className="nav-link">
-        Home
-        <span className="sr-only">(current)</span>
-      </Link>
-    </li>
-    <li className="nav-item">
-      <Link to={ROUTES.SIGNIN} className="nav-link">
-        Sign In
-      </Link>
-    </li>
-    <li className="nav-item">
-      <Link to={ROUTES.SIGNUP} className="nav-link">
-        Sign Up
-      </Link>
-    </li>
+    <MenuLink
+      activeOnlyWhenExact="true"
+      to={ROUTES.HOME}
+      label="Home"
+    />
+    <MenuLink
+      activeOnlyWhenExact="true"
+      to={ROUTES.SIGNIN}
+      label="Sign In"
+    />
+    <MenuLink
+      activeOnlyWhenExact="true"
+      to={ROUTES.SIGNUP}
+      label="Sign Up"
+    />
   </ul>
 );
 
@@ -153,4 +139,8 @@ Navigation.defaultProps = {
   authUser: null,
 };
 
-export default withAuthentication(Navigation);
+const mapStateToProps = (state) => ({
+  authUser: state.sessionState.authUser,
+});
+
+export default connect(mapStateToProps)(Navigation);
