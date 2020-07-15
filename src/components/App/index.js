@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Navigation from '../Navigation';
 import HomePage from '../Home';
 import SignInPage from '../SignIn';
+import SignUpPage from '../SignUp';
 import DriverDash from '../Driver/Dashboard';
 import RiderDash from '../Rider/Dashboard';
 import RequestTrip from '../Rider/RequestTrip';
@@ -19,6 +20,7 @@ const App = () => (
 
       <Route exact path={ROUTES.HOME} component={HomePage} />
       <Route exact path={ROUTES.SIGNIN} component={SignInPage} />
+      <Route exact path={ROUTES.SIGNUP} component={SignUpPage} />
 
       <Route exact path={ROUTES.DRIVER} component={DriverDash} />
 
