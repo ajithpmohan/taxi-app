@@ -10,6 +10,7 @@ import DriverDash from '../Driver/Dashboard';
 import RiderDash from '../Rider/Dashboard';
 import RequestTrip from '../Rider/RequestTrip';
 import * as ROUTES from '../../constants/routes';
+import './index.css';
 
 const App = () => (
   <Router>

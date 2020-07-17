@@ -209,6 +209,10 @@ class SignUpFormBase extends React.Component {
           >
             Sign In
           </button>
+          {error?.nonfield &&
+            error.nonfield.map((err, index) => (
+              <p key={index.toString()}>{err}</p>
+            ))}
         </div>
       </form>
     );
