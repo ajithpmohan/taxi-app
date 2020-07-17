@@ -2,6 +2,7 @@ from collections import OrderedDict
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
+from django.utils.translation import ugettext as _
 from rest_framework import serializers
 from rest_framework_simplejwt import serializers as jwt_serializers
 
@@ -19,12 +20,12 @@ class SignUpSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         if data['password'] != data['password2']:
-            raise serializers.ValidationError('Passwords must match.')
+            raise serializers.ValidationError({'password': _('Passwords must match.')})
         return data
 
     def validate_groups(self, value):
         if not Group.objects.filter(name=value).exists():
-            raise serializers.ValidationError('Group must be either DRIVER or RIDER')
+            raise serializers.ValidationError(_('This field must be either DRIVER or RIDER'))
         return value
 
     def create(self, validated_data):

@@ -155,6 +155,7 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.BrowsableAPIRenderer',
         'rest_framework.renderers.JSONRenderer',
     ],
+    'NON_FIELD_ERRORS_KEY': 'nonfield',
 }
 
 SWAGGER_SETTINGS = {
