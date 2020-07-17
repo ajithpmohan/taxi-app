@@ -29,10 +29,6 @@ class API {
 
   doSignUpWithEmailAndPassword = (data, contentType) =>
     this.sendRequest('POST', 'account/sign-up/', data, contentType);
-
-  doSignOut = () => {
-    // TODO
-  };
 }
 
 export default API;

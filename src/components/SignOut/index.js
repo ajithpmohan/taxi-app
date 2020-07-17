@@ -5,16 +5,14 @@ import { compose } from 'recompose';
 import { withRouter } from 'react-router-dom';
 
 import { doSetAuthUser } from '../../actions';
-import { withAPI } from '../../api';
 import * as ROUTES from '../../constants/routes';
 
 class SignOutButton extends React.Component {
   onSignOut = () => {
-    const { api, history, onSetAuthUser } = this.props;
+    const { history, onSetAuthUser } = this.props;
     localStorage.removeItem('authUser');
     onSetAuthUser(null);
 
-    api.doSignOut(); // TODO
     history.push(ROUTES.HOME);
   };
 
@@ -32,9 +30,6 @@ class SignOutButton extends React.Component {
 }
 
 SignOutButton.propTypes = {
-  api: PropTypes.shape({
-    doSignOut: PropTypes.func.isRequired,
-  }).isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
@@ -46,7 +41,6 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const SignOut = compose(
-  withAPI,
   withRouter,
   connect(null, mapDispatchToProps),
 )(SignOutButton);

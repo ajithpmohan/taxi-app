@@ -207,7 +207,7 @@ class SignUpFormBase extends React.Component {
             disabled={isInvalid}
             type="submit"
           >
-            Sign In
+            Sign Up
           </button>
           {error?.nonfield &&
             error.nonfield.map((err, index) => (
