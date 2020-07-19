@@ -40,7 +40,7 @@ const Navigation = ({ authUser }) => (
             <button
               type="button"
               className="nav-link dropdown-toggle btn btn-light"
-              id="navbarDropdownMenuLink-55"
+              id="navbarDropdownMenuLink"
               data-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false"
@@ -56,7 +56,7 @@ const Navigation = ({ authUser }) => (
             </button>
             <div
               className="dropdown-menu dropdown-menu-lg-right dropdown-secondary"
-              aria-labelledby="navbarDropdownMenuLink-55"
+              aria-labelledby="navbarDropdownMenuLink"
             >
               <div className="dropdown-item">
                 <span>Welcome </span>

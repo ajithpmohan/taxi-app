@@ -1,5 +1,8 @@
+/// <reference types="cypress" />
+
 describe('Authentication', () => {
   it('Can sign up', () => {
+    // stub API call
     cy.server();
     cy.route({
       method: 'POST',
@@ -24,6 +27,7 @@ describe('Authentication', () => {
   });
 
   it('Can log in as admin', () => {
+    // stub API call
     cy.server();
     cy.route({
       method: 'POST',
@@ -44,12 +48,20 @@ describe('Authentication', () => {
 
     cy.get('input#email').type('admin@example.com');
     cy.get('input#password').type('abc12345', { log: false });
-    cy.get('button').contains('Sign In').click();
+    cy.get('button')
+      .contains('Sign In')
+      .click()
+      .should(() => {
+        expect(
+          JSON.parse(localStorage.getItem('authUser')).user.email,
+        ).to.eq('admin@example.com');
+      });
 
     cy.location('pathname').should('eq', '/');
   });
 
   it('Can log in as driver', () => {
+    // stub API call
     cy.server();
     cy.route({
       method: 'POST',
@@ -70,12 +82,20 @@ describe('Authentication', () => {
 
     cy.get('input#email').type('driver@example.com');
     cy.get('input#password').type('abc12345', { log: false });
-    cy.get('button').contains('Sign In').click();
+    cy.get('button')
+      .contains('Sign In')
+      .click()
+      .should(() => {
+        expect(
+          JSON.parse(localStorage.getItem('authUser')).user.email,
+        ).to.eq('driver@example.com');
+      });
 
     cy.location('pathname').should('eq', '/driver');
   });
 
   it('Can log in as rider', () => {
+    // stub API call
     cy.server();
     cy.route({
       method: 'POST',
@@ -96,12 +116,61 @@ describe('Authentication', () => {
 
     cy.get('input#email').type('rider@example.com');
     cy.get('input#password').type('abc12345', { log: false });
-    cy.get('button').contains('Sign In').click();
+    cy.get('button')
+      .contains('Sign In')
+      .click()
+      .should(() => {
+        expect(
+          JSON.parse(localStorage.getItem('authUser')).user.email,
+        ).to.eq('rider@example.com');
+      });
 
     cy.location('pathname').should('eq', '/rider');
   });
+  it('Can log out', () => {
+    // stub API call
+    cy.server();
+    cy.route({
+      method: 'POST',
+      url: 'http://0.0.0.0:9000/api/v1/account/token/',
+      response: {
+        refresh: 'REFRESH_TOKEN',
+        access: 'ACCESS_TOKEN',
+        user: {
+          email: 'admin@example.com',
+          fullname: 'Admin',
+          avatar: null,
+          type: 'ADMIN',
+        },
+      },
+    });
 
-  it('Cannot visit the login page when logged in', () => {
+    cy.visit('/account/signin');
+
+    cy.get('input#email').type('admin@example.com');
+    cy.get('input#password').type('abc12345', { log: false });
+    cy.get('button')
+      .contains('Sign In')
+      .click()
+      .should(() => {
+        expect(
+          JSON.parse(localStorage.getItem('authUser')).user.email,
+        ).to.eq('admin@example.com');
+      });
+
+    cy.location('pathname').should('eq', '/');
+
+    cy.get('button#navbarDropdownMenuLink').click();
+    cy.get('button')
+      .contains('SignOut')
+      .click()
+      .should(() => {
+        expect(localStorage.getItem('authUser')).to.be.null;
+      });
+  });
+
+  it('Cannot visit the login or signup pages when logged in', () => {
+    // stub API call
     cy.server();
     cy.route({
       method: 'POST',
@@ -123,11 +192,21 @@ describe('Authentication', () => {
 
     cy.get('input#email').type('rider@example.com');
     cy.get('input#password').type('abc12345', { log: false });
-    cy.get('button').contains('Sign In').click();
+    cy.get('button')
+      .contains('Sign In')
+      .click()
+      .should(() => {
+        expect(
+          JSON.parse(localStorage.getItem('authUser')).user.email,
+        ).to.eq('rider@example.com');
+      });
 
     cy.location('pathname').should('eq', '/rider');
 
     cy.visit('/account/signin');
+    cy.location('pathname').should('eq', '/rider');
+
+    cy.visit('/account/signup');
     cy.location('pathname').should('eq', '/rider');
   });
 });
