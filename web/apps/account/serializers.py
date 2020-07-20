@@ -6,11 +6,12 @@ from django.utils.translation import ugettext as _
 from rest_framework import serializers
 from rest_framework_simplejwt import serializers as jwt_serializers
 
-from apps.account.validators import MaximumLengthValidator, MinimumLengthValidator
+from apps.account import validators
 
 
 class SignUpSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True, validators=[MinimumLengthValidator(), MaximumLengthValidator()])
+    password = serializers.CharField(write_only=True, validators=[
+        validators.MinimumLengthValidator(), validators.MaximumLengthValidator()])
     password2 = serializers.CharField(write_only=True)
     groups = serializers.CharField()
 

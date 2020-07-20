@@ -1,8 +1,4 @@
-version: '3'
-
-volumes:
-  postgres-data:
-    driver: local
+version: '3.7'
 
 services:
   postgres:
@@ -10,14 +6,14 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data/
     environment:
-      - POSTGRES_DATABASE=taxi_db
+      - POSTGRES_DB=taxi_db
       - POSTGRES_USER=taxi
       - POSTGRES_PASSWORD=taxi
-  app:
-    build: .
+  web:
+    build: ./web
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - .:/usr/src/app/
+      - ./web/:/usr/src/web/
     ports:
       - "9000:8000"
     env_file:
@@ -26,3 +22,6 @@ services:
       - postgres
     stdin_open: true
     tty: true
+
+volumes:
+  postgres-data:

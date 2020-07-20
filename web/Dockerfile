@@ -22,10 +22,13 @@ RUN apk --no-cache add jpeg-dev zlib-dev freetype-dev lcms2-dev openjpeg-dev \
         tiff-dev tk-dev tcl-dev harfbuzz-dev fribidi-dev
 
 # Set the working directory
-WORKDIR /usr/src/app
+WORKDIR /usr/src/web
 
 # Copy the current directory contents into the container
-COPY . /usr/src/app/
+COPY . /usr/src/web/
 
 # Install any needed packages specified in requirements.txt
 RUN pip install -r requirements.txt
+
+# run entrypoint.sh
+ENTRYPOINT ["/usr/src/web/entrypoint.sh"]
