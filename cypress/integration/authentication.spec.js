@@ -1,4 +1,5 @@
 /// <reference types="cypress" />
+import 'cypress-file-upload';
 
 describe('Authentication', () => {
   it('Can sign up', () => {
@@ -15,6 +16,13 @@ describe('Authentication', () => {
 
     cy.visit('/account/signup');
 
+    cy.fixture('images/rider.png').then((avatar) => {
+      cy.get('input#avatar').attachFile({
+        fileContent: avatar,
+        fileName: 'avatar.jpg',
+        mimeType: 'application/json',
+      });
+    });
     cy.get('input#email').type('ajithpmohan@example.com');
     cy.get('input#firstName').type('Ajith');
     cy.get('input#lastName').type('P Mohan');
@@ -22,7 +30,6 @@ describe('Authentication', () => {
     cy.get('input#password2').type('abc12345', { log: false });
     cy.get('select#groups').select('RIDER');
     cy.get('button').contains('Sign Up').click();
-
     cy.location('pathname').should('eq', '/');
   });
 

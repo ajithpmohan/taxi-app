@@ -7,7 +7,7 @@ install:
   - npm install
 
 script:
-  - npm run dev:cypress && npm test
+  - npm run test:cypress
 
 after_script:
   - COVERALLS_REPO_TOKEN=$coveralls_repo_token npm run coveralls

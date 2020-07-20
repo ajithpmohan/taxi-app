@@ -24,10 +24,6 @@ class SignUpFormBase extends React.Component {
     this.state = { ...INITIAL_STATE };
   }
 
-  fileValidation = (avatar) => {
-    return avatar && Object.getPrototypeOf(avatar) === File.prototype;
-  };
-
   handleSubmit = (event) => {
     const { api } = this.props;
     const {
@@ -40,10 +36,6 @@ class SignUpFormBase extends React.Component {
       avatar,
     } = this.state;
 
-    const config = this.fileValidation(avatar)
-      ? 'multipart/form-data'
-      : 'application/json';
-
     const data = new FormData();
 
     data.append('email', email);
@@ -55,7 +47,7 @@ class SignUpFormBase extends React.Component {
     data.append('avatar', avatar);
 
     api
-      .doSignUpWithEmailAndPassword(data, config)
+      .doSignUpWithEmailAndPassword(data)
       .then((resp) => {
         this.setState({ ...INITIAL_STATE });
         alert(resp?.data.message);
