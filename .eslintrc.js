@@ -37,6 +37,7 @@ module.exports = {
       },
     ],
     'react/jsx-closing-tag-location': 0,
+    'react/jsx-curly-newline': 0,
     'import/no-named-as-default': 0,
     'import/no-named-as-default-member': 0,
     'jsx-a11y/label-has-associated-control': 0,

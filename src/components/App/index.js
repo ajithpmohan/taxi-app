@@ -1,15 +1,17 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-import { withAuthentication, withPublicRouter } from '../Session';
-import Navigation from '../Navigation';
+import { PrivateRoute, withPublicRouter } from '../Route';
+import { withAuthentication } from '../Session';
+import DriverDash from '../Driver/Dashboard';
 import HomePage from '../Home';
+import Navigation from '../Navigation';
+import RequestTrip from '../Rider/RequestTrip';
+import RiderDash from '../Rider/Dashboard';
 import SignInPage from '../SignIn';
 import SignUpPage from '../SignUp';
-import DriverDash from '../Driver/Dashboard';
-import RiderDash from '../Rider/Dashboard';
-import RequestTrip from '../Rider/RequestTrip';
 import * as ROUTES from '../../constants/routes';
+
 import './index.css';
 
 const App = () => (
@@ -31,14 +33,17 @@ const App = () => (
         component={withPublicRouter(SignUpPage)}
       />
 
-      <Route exact path={ROUTES.DRIVER} component={DriverDash} />
+      <PrivateRoute exact path={ROUTES.DRIVER}>
+        <DriverDash />
+      </PrivateRoute>
 
-      <Route exact path={ROUTES.RIDER} component={RiderDash} />
-      <Route
-        exact
-        path={ROUTES.REQUESTTRIP}
-        component={RequestTrip}
-      />
+      <PrivateRoute exact path={ROUTES.RIDER}>
+        <RiderDash />
+      </PrivateRoute>
+
+      <PrivateRoute exact path={ROUTES.REQUESTTRIP}>
+        <RequestTrip />
+      </PrivateRoute>
     </div>
   </Router>
 );

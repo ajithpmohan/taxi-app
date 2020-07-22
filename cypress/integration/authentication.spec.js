@@ -14,7 +14,7 @@ describe('Authentication', () => {
       },
     });
 
-    cy.visit('/account/signup');
+    cy.visit('/account/sign-up');
 
     cy.fixture('images/rider.png').then((avatar) => {
       cy.get('input#avatar').attachFile({
@@ -51,7 +51,7 @@ describe('Authentication', () => {
       },
     });
 
-    cy.visit('/account/signin');
+    cy.visit('/account/sign-in');
 
     cy.get('input#email').type('admin@example.com');
     cy.get('input#password').type('abc12345', { log: false });
@@ -85,7 +85,7 @@ describe('Authentication', () => {
       },
     });
 
-    cy.visit('/account/signin');
+    cy.visit('/account/sign-in');
 
     cy.get('input#email').type('driver@example.com');
     cy.get('input#password').type('abc12345', { log: false });
@@ -119,7 +119,7 @@ describe('Authentication', () => {
       },
     });
 
-    cy.visit('/account/signin');
+    cy.visit('/account/sign-in');
 
     cy.get('input#email').type('rider@example.com');
     cy.get('input#password').type('abc12345', { log: false });
@@ -152,7 +152,7 @@ describe('Authentication', () => {
       },
     });
 
-    cy.visit('/account/signin');
+    cy.visit('/account/sign-in');
 
     cy.get('input#email').type('admin@example.com');
     cy.get('input#password').type('abc12345', { log: false });
@@ -194,8 +194,8 @@ describe('Authentication', () => {
       },
     });
 
-    cy.visit('/account/signin');
-    cy.location('pathname').should('eq', '/account/signin');
+    cy.visit('/account/sign-in');
+    cy.location('pathname').should('eq', '/account/sign-in');
 
     cy.get('input#email').type('rider@example.com');
     cy.get('input#password').type('abc12345', { log: false });
@@ -210,10 +210,10 @@ describe('Authentication', () => {
 
     cy.location('pathname').should('eq', '/rider');
 
-    cy.visit('/account/signin');
+    cy.visit('/account/sign-in');
     cy.location('pathname').should('eq', '/rider');
 
-    cy.visit('/account/signup');
+    cy.visit('/account/sign-up');
     cy.location('pathname').should('eq', '/rider');
   });
 });

@@ -8,7 +8,7 @@ const withAuthentication = (Component) => {
   class WithAuthentication extends React.Component {
     componentDidMount() {
       const { authUser, onSetAuthUser } = this.props;
-      !authUser &&
+      !authUser.isAuthenticated &&
         onSetAuthUser(JSON.parse(localStorage.getItem('authUser')));
     }
 
@@ -22,6 +22,7 @@ const withAuthentication = (Component) => {
       refresh: PropTypes.string,
       access: PropTypes.string,
       user: PropTypes.object,
+      isAuthenticated: PropTypes.bool,
     }),
     onSetAuthUser: PropTypes.func.isRequired,
   };

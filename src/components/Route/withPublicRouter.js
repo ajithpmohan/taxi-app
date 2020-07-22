@@ -24,15 +24,19 @@ const withPublicRouter = (Component) => {
 
     checkAndRedirect() {
       const { authUser, history } = this.props;
-      if (authUser) {
-        history.push(REDIRECT_URL[authUser?.user.type]);
+      if (authUser.isAuthenticated) {
+        history.push(REDIRECT_URL[authUser.user?.type]);
       }
     }
 
     render() {
       const { authUser } = this.props;
       return (
-        <div>{!authUser ? <Component {...this.props} /> : null}</div>
+        <div>
+          {!authUser.isAuthenticated ? (
+            <Component {...this.props} />
+          ) : null}
+        </div>
       );
     }
   }
@@ -42,6 +46,7 @@ const withPublicRouter = (Component) => {
       refresh: PropTypes.string,
       access: PropTypes.string,
       user: PropTypes.object,
+      isAuthenticated: PropTypes.bool,
     }),
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,

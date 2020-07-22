@@ -1,7 +1,7 @@
 import * as actionTypes from '../constants/actionTypes';
 
 const INITIAL_STATE = {
-  authUser: null,
+  authUser: { isAuthenticated: false },
 };
 
 const applySetAuthUser = (state, authUser) => ({
@@ -12,7 +12,11 @@ const applySetAuthUser = (state, authUser) => ({
 function sessionReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case actionTypes.AUTH_USER_SET: {
-      return applySetAuthUser(state, action.authUser);
+      const isAuthenticated = Boolean(action.authUser);
+      return applySetAuthUser(state, {
+        ...action.authUser,
+        isAuthenticated,
+      });
     }
     default:
       return state;

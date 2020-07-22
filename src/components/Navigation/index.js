@@ -33,8 +33,8 @@ const Navigation = ({ authUser }) => (
       className="collapse navbar-collapse"
       id="navbarSupportedContent"
     >
-      {AUTH_STATES(authUser)[authUser?.user.type || 'NONAUTH']}
-      {!!authUser && (
+      {AUTH_STATES(authUser)[authUser.user?.type || 'NONAUTH']}
+      {authUser.isAuthenticated && (
         <ul className="navbar-nav ml-auto nav-flex-icons">
           <li className="nav-item avatar dropdown">
             <button
@@ -47,7 +47,7 @@ const Navigation = ({ authUser }) => (
             >
               <img
                 src={
-                  authUser?.user.avatar ||
+                  authUser.user?.avatar ||
                   'https://mdbootstrap.com/img/Photos/Avatars/avatar-2.jpg'
                 }
                 className="md-avatar rounded-circle size-1"
@@ -60,7 +60,7 @@ const Navigation = ({ authUser }) => (
             >
               <div className="dropdown-item">
                 <span>Welcome </span>
-                {authUser?.user.fullname || 'User'}
+                {authUser.user?.fullname || 'User'}
                 <span>!</span>
               </div>
               <SignOut />
@@ -132,6 +132,7 @@ Navigation.propTypes = {
     refresh: PropTypes.string,
     access: PropTypes.string,
     user: PropTypes.object,
+    isAuthenticated: PropTypes.bool,
   }),
 };
 
