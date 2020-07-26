@@ -20,8 +20,11 @@ services:
       - ./.env.dev
     depends_on:
       - postgres
+    links:
+      - redis
     stdin_open: true
     tty: true
-
+  redis:
+    image: redis:latest
 volumes:
   postgres-data:

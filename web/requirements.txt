@@ -2,8 +2,9 @@
 Django==3.0.7
 djangorestframework==3.11.0
 django-cors-headers==3.4.0
-channels==2.4.0
 djangorestframework-simplejwt==4.4.0
+channels==2.4.0
+channels-redis==3.0.1
 
 # Coding standards
 flake8==3.8.3

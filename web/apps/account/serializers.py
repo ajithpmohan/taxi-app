@@ -57,6 +57,14 @@ class UserSerializer(serializers.ModelSerializer):
             return self.context['request'].build_absolute_uri(obj.avatar.url)
 
 
+class ReadOnlyUserSerializer(serializers.ModelSerializer):
+    fullname = serializers.CharField(source='get_full_name')
+
+    class Meta:
+        model = get_user_model()
+        fields = ('email', 'fullname')
+
+
 class TokenObtainPairSerializer(jwt_serializers.TokenObtainPairSerializer):
 
     def validate(self, attrs):
