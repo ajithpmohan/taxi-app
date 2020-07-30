@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
-// import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min';
 
@@ -10,15 +9,17 @@ import App from './components/App';
 import store from './store';
 import API, { APIContext } from './api';
 import * as serviceWorker from './serviceWorker';
-
+import WebSocketProvider from './components/WebSocket';
 import './index.css';
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <APIContext.Provider value={new API()}>
-        <App />
-      </APIContext.Provider>
+      <WebSocketProvider>
+        <APIContext.Provider value={new API()}>
+          <App />
+        </APIContext.Provider>
+      </WebSocketProvider>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'),

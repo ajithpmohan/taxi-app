@@ -1,23 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'recompose';
-import { connect } from 'react-redux';
-import { webSocket } from 'rxjs/webSocket';
 
 import * as ROLES from '../../constants/roles';
-import { withAuthorization } from '../Session';
 import GoogleMap from '../GoogleMap';
+import { withAuthorization } from '../Session';
+import { withWebSocket } from '../WebSocket';
+
 import './RequestTrip.css';
 
-const RequestTripPage = ({ access }) => {
+const RequestTripPage = ({ ws }) => {
   const pickup = React.useRef();
   const dropoff = React.useRef();
 
   const handleSubmit = (event) => {
-    const ws = webSocket(
-      `ws://localhost:9000/ws/trip/?token=${access}`,
-    );
-    ws.subscribe();
     ws.next({
       type: 'create.trip',
       data: {
@@ -64,20 +60,22 @@ const RequestTripPage = ({ access }) => {
 };
 
 RequestTripPage.propTypes = {
-  access: PropTypes.string,
+  ws: PropTypes.objectOf(
+    PropTypes.oneOfType([
+      PropTypes.bool,
+      PropTypes.array,
+      PropTypes.object,
+    ]),
+  ),
 };
 
 RequestTripPage.defaultProps = {
-  access: null,
+  ws: null,
 };
-
-const mapStateToProps = (state) => ({
-  access: state.sessionState.authUser.access,
-});
 
 const condition = (userrole) => userrole === ROLES.RIDER;
 
 export default compose(
   withAuthorization(condition),
-  connect(mapStateToProps),
+  withWebSocket,
 )(RequestTripPage);
