@@ -1,15 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'recompose';
+import { withRouter } from 'react-router-dom';
 
-import * as ROLES from '../../constants/roles';
 import GoogleMap from '../GoogleMap';
 import { withAuthorization } from '../Session';
 import { withWebSocket } from '../WebSocket';
+import * as ROLES from '../../constants/roles';
+import * as ROUTES from '../../constants/routes';
 
 import './RequestTrip.css';
 
-const RequestTripPage = ({ ws }) => {
+const RequestTripPage = ({ ws, history }) => {
   const pickup = React.useRef();
   const dropoff = React.useRef();
 
@@ -21,6 +23,8 @@ const RequestTripPage = ({ ws }) => {
         drop_off_address: dropoff.current.value,
       },
     });
+    history.push(ROUTES.RIDER);
+
     event.preventDefault();
   };
 
@@ -67,6 +71,9 @@ RequestTripPage.propTypes = {
       PropTypes.object,
     ]),
   ),
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 RequestTripPage.defaultProps = {
@@ -78,4 +85,5 @@ const condition = (userrole) => userrole === ROLES.RIDER;
 export default compose(
   withAuthorization(condition),
   withWebSocket,
+  withRouter,
 )(RequestTripPage);

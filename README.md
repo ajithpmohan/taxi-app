@@ -1,6 +1,6 @@
 # Taxi App - React.js
 
-[![Build Status](https://travis-ci.com/ajithpmohan/taxi-app-react.svg?token=U6tXt8qPvdLZEiWxFSoi&branch=master)](https://travis-ci.com/ajithpmohan/taxi-app-react) [![Coverage Status](https://coveralls.io/repos/github/ajithpmohan/taxi-app-react/badge.svg?branch=master&service=github)](https://coveralls.io/github/ajithpmohan/taxi-app-react?branch=master)
+[![Build Status](https://travis-ci.com/ajithpmohan/taxi-app-react.svg?token=U6tXt8qPvdLZEiWxFSoi&branch=master)](https://travis-ci.com/ajithpmohan/taxi-app-react) [![Coverage Status](https://coveralls.io/repos/github/ajithpmohan/taxi-app-react/badge.svg?branch=master)](https://coveralls.io/github/ajithpmohan/taxi-app-react?branch=master)
 
 ## Installation
 

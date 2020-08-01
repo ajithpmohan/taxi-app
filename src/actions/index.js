@@ -5,4 +5,9 @@ const doSetAuthUser = (authUser) => ({
   authUser,
 });
 
-export { doSetAuthUser };
+const doSetTrip = ({ action, payload }) => ({
+  type: action,
+  payload,
+});
+
+export { doSetAuthUser, doSetTrip };

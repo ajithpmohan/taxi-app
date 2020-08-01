@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { webSocket } from 'rxjs/webSocket';
 
 import WebSocketContext from './context';
+import { doSetTrip } from '../../actions';
 
 class WebSocketProvider extends React.Component {
   constructor(props) {
@@ -25,8 +26,9 @@ class WebSocketProvider extends React.Component {
     const { access } = this.props;
     let { ws } = this.state;
     if (access && !ws) {
+      const { onSetTrip } = this.props;
       ws = webSocket(`ws://localhost:9000/ws/trip/?token=${access}`);
-      ws.subscribe();
+      ws.subscribe((payload) => onSetTrip(payload));
       this.setState({ ws });
     }
   };
@@ -48,6 +50,7 @@ WebSocketProvider.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]).isRequired,
+  onSetTrip: PropTypes.func.isRequired,
 };
 
 WebSocketProvider.defaultProps = {
@@ -58,4 +61,11 @@ const mapStateToProps = (state) => ({
   access: state.sessionState.authUser.access,
 });
 
-export default connect(mapStateToProps)(WebSocketProvider);
+const mapDispatchToProps = (dispatch) => ({
+  onSetTrip: (payload) => dispatch(doSetTrip(payload)),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(WebSocketProvider);
