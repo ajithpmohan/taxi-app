@@ -1,10 +1,19 @@
 language: python
 
 python:
-    - 3.8
+  - 3.8
 
 services:
-    - docker
+  - docker
+
+install:
+  - docker-compose build
+
+before_script:
+  - docker-compose up -d
 
 script:
-    - docker-compose run web python manage.py test
+  - docker-compose exec web coverage run manage.py test apps
+
+after_script:
+  - docker-compose down

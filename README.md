@@ -1,5 +1,7 @@
 # Taxi API using DRF
 
+[![Build Status](https://travis-ci.org/ajithpmohan/taxi-api-django.svg?branch=master)](https://travis-ci.org/ajithpmohan/taxi-api-django)
+
 ## System Requirements
 
 You need **Docker Engine** and **Docker Compose**. Install it from [Docker Website](https://docs.docker.com/)

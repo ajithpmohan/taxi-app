@@ -21,6 +21,9 @@ django-fsm==2.7.0
 python-decouple==3.3
 drf-yasg==1.17.1
 
+# Testing
+coverage==5.2.1
+
 # Debuggers
 bpython==0.19
 django-debug-toolbar==2.2
