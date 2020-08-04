@@ -1,6 +1,6 @@
 # Taxi API using DRF
 
-[![Build Status](https://travis-ci.org/ajithpmohan/taxi-api-django.svg?branch=master)](https://travis-ci.org/ajithpmohan/taxi-api-django)
+[![Build Status](https://travis-ci.org/ajithpmohan/taxi-api-django.svg?branch=master)](https://travis-ci.org/ajithpmohan/taxi-api-django) [![Coverage Status](https://coveralls.io/repos/github/ajithpmohan/taxi-api-django/badge.svg?branch=master)](https://coveralls.io/github/ajithpmohan/taxi-api-django?branch=master)
 
 ## System Requirements
 

@@ -11,7 +11,7 @@ then
     echo "PostgreSQL started"
 fi
 
-if [ "$CI" = "travis" ]
+if [ "$CI" ]
 then
     python manage.py flush --no-input
     python manage.py migrate

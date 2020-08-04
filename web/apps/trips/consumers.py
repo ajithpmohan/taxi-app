@@ -10,18 +10,18 @@ class TaxiConsumer(AsyncJsonWebsocketConsumer):
         if user.is_anonymous:
             await self.close()
 
-        if user.get_type == 'DRIVER':
+        await self.accept()
+
+        if await self._user_group(user) == 'DRIVER':
             await self.channel_layer.group_add(
                 'driver',
                 self.channel_name
             )
 
-        await self.accept()
-
     async def disconnect(self, code):
         user = self.scope['user']
 
-        if user.get_type == 'DRIVER':
+        if await self._user_group(user) == 'DRIVER':
             await self.channel_layer.group_discard(
                 'driver',
                 self.channel_name
@@ -38,13 +38,21 @@ class TaxiConsumer(AsyncJsonWebsocketConsumer):
 
         # Send rider requests to all drivers.
         await self.channel_layer.group_send('driver', {
-                'type': 'trip.request',
-                'message': trip_data
+                'type': 'echo.message',
+                'action': 'TRIP_REQUESTED',
+                'payload': trip_data
             }
         )
+
+        await self.echo_message({
+            'action': 'TRIP_CREATED',
+            'payload': trip_data
+        })
+
+    async def echo_message(self, event):
         await self.send_json({
-            'type': 'trip.requested',
-            'data': trip_data
+            'action': event['action'],
+            'payload': event['payload']
         })
 
     @database_sync_to_async
@@ -54,3 +62,7 @@ class TaxiConsumer(AsyncJsonWebsocketConsumer):
         serializer.is_valid(raise_exception=True)
         trip = serializer.create(serializer.validated_data)
         return trip
+
+    @database_sync_to_async
+    def _user_group(self, user):
+        return user.get_type()
