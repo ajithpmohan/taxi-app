@@ -13,4 +13,4 @@ script:
   - docker-compose exec web coverage run manage.py test apps
 
 after_success:
-  - docker-compose exec web COVERALLS_REPO_TOKEN=$coveralls_repo_token coveralls
+  - docker-compose exec -e COVERALLS_REPO_TOKEN=$coveralls_repo_token web coveralls
