@@ -1,0 +1,3 @@
+export const AUTH_USER_SET = 'AUTH_USER_SET';
+export const TRIP_CREATED = 'TRIP_CREATED';
+export const TRIP_REQUESTED = 'TRIP_REQUESTED';

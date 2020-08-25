@@ -1,0 +1,21 @@
+.md-avatar {
+  vertical-align: middle;
+  width: 50px;
+  height: 50px;
+}
+.md-avatar.size-1 {
+  width: 40px;
+  height: 40px;
+}
+.md-avatar.size-2 {
+  width: 70px;
+  height: 70px;
+}
+.md-avatar.size-3 {
+  width: 90px;
+  height: 90px;
+}
+.md-avatar.size-4 {
+  width: 110px;
+  height: 110px;
+}
