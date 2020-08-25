@@ -10,14 +10,26 @@ services:
       - POSTGRES_DB=taxi_db
       - POSTGRES_USER=taxi
       - POSTGRES_PASSWORD=taxi
-  web:
-    build: ./web
-    container_name: taxi-web
+  client:
+    build: ./client
+    container_name: taxi-client
+    volumes:
+      - ./client:/usr/src/app
+      - /usr/src/node_modules
+    ports:
+      - "4200:4000"
+    depends_on:
+      - postgres
+      - server
+    stdin_open: true
+  server:
+    build: ./server
+    container_name: taxi-server
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - ./web/:/usr/src/web/
+      - ./server/:/usr/src/app/
     ports:
-      - "9000:8000"
+      - "8100:8000"
     env_file:
       - ./.env.dev
     depends_on:

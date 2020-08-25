@@ -1,6 +1,14 @@
-# Taxi API using DRF
+# Taxi App built on Docker, DRF & React.js
 
-[![Build Status](https://travis-ci.org/ajithpmohan/taxi-api-django.svg?branch=master)](https://travis-ci.org/ajithpmohan/taxi-api-django) [![Coverage Status](https://coveralls.io/repos/github/ajithpmohan/taxi-api-django/badge.svg?branch=master)](https://coveralls.io/github/ajithpmohan/taxi-api-django?branch=master)
+## Features
+
+* Docker
+* Django Rest Framework
+* Django Channel
+* React.js & Redux
+* Cypress for react.js e2e testing
+* PostgreSQL
+* Redis
 
 ## System Requirements
 
@@ -10,16 +18,12 @@ You need **Docker Engine** and **Docker Compose**. Install it from [Docker Websi
 
 Download the repository:
 
-    git clone git@github.com:ajithpmohan/taxi-api-django.git
-
-## Python Environment Setup
-
-Try [python-decouple](https://simpleisbetterthancomplex.com/2015/11/26/package-of-the-week-python-decouple.html) library for handling environment variables.
+    git clone git@github.com:ajithpmohan/taxi-app.git
 
 ## Permission Required
-Before building the services update the file permission of `web/entrypoint.sh`
+Before building the services update the file permission of `server/entrypoint.sh`
 
-    chmod +x web/entrypoint.sh
+    chmod +x server/entrypoint.sh
 
 ## Build the Services
 
@@ -27,14 +31,18 @@ Before building the services update the file permission of `web/entrypoint.sh`
 
 ## Starting App
 
-    docker-compose up
+    docker-compose up -d
 
-## Swagger
-Access it through [http://0.0.0.0:9000/swagger/](http://0.0.0.0:9000/swagger/)
+## Swagger for Server service
+Access it through [http://0.0.0.0:8100/swagger/](http://0.0.0.0:8100/swagger/)
 
-## Code Styling
+## React.js E2E testing using cypress
+
+    docker-compose exec client npm run e2e
+
+## Python Code Styling
 
 Before code pushing, run [flake8](https://simpleisbetterthancomplex.com/packages/2016/08/05/flake8.html) for code styling and [isort](https://simpleisbetterthancomplex.com/packages/2016/10/08/isort.html) for organizing the python imports.
 
-    docker-compose exec web flake8
-    docker-compose exec web isort -rc .
+    docker-compose exec server flake8
+    docker-compose exec server isort -rc .
