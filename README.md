@@ -1,5 +1,7 @@
 # Taxi App built on Docker, DRF & React.js
 
+[![Build Status](https://travis-ci.com/ajithpmohan/taxi-app.svg?branch=master)](https://travis-ci.com/ajithpmohan/taxi-app)
+
 ## Features
 
 * Docker

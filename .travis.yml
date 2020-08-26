@@ -1,0 +1,19 @@
+services:
+  - docker
+
+before_script:
+  - docker-compose up -d --build
+
+matrix:
+  include:
+    - language: python
+      python:
+        - "3.8"
+      script:
+        - docker-compose exec server python manage.py test apps
+
+    - language: node_js
+      node_js:
+        - node
+      script:
+        - docker-compose -f cy-run.yml run e2e
