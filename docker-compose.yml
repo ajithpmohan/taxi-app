@@ -17,7 +17,7 @@ services:
       - ./client:/usr/src/app
       - /usr/src/node_modules
     ports:
-      - "4200:4000"
+      - "3001:3000"
     depends_on:
       - postgres
       - server
@@ -41,5 +41,32 @@ services:
   redis:
     image: redis:latest
     container_name: taxi-redis
+  e2e:
+    image: cypress/included:3.4.0
+    build:
+      context: ./client
+      dockerfile: Dockerfile.e2e
+    container_name: taxi-e2e
+    depends_on:
+      - client
+    # note: inside e2e container, the network allows accessing
+    # "client" host under name "client"
+    # so "curl http://client:3000" would return whatever the webserver
+    # in the "client" container is cooking
+    # see https://docs.docker.com/compose/networking/
+    environment:
+      - CYPRESS_baseUrl=http://client:3000
+    command: npx cypress run
+    # mount the host directory cliennt/cypress and the file cliennt/cypress.json as
+    # volumes within the container
+    # this means that:
+    #  1. anything that Cypress writes to these folders (e.g., screenshots,
+    #     videos) appears also on the Docker host's filesystem
+    #  2. any change that the developer applies to Cypress files on the host
+    #     machine immediately takes effect within the e2e container (no docker
+    #     rebuild required).
+    volumes:
+      - ./client/cypress:/e2e/cypress
+      - ./client/cypress.json:/e2e/cypress.json
 volumes:
   postgres-data:

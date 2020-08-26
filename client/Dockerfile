@@ -19,7 +19,5 @@ WORKDIR /usr/src/app/
 # Copies everything over to Docker environment
 COPY . .
 
-EXPOSE 4000
-
 # Finally runs the application
 CMD npm start
