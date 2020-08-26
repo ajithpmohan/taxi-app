@@ -1,6 +1,4 @@
 {
   "video": false,
-  "baseUrl": "http://localhost:3001",
-  "pluginsFile": false,
-  "supportFile": false
+  "baseUrl": "http://localhost:3001"
 }
