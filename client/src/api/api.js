@@ -2,7 +2,7 @@ import axios from 'axios';
 
 class API {
   constructor() {
-    this.rootUrl = 'http://0.0.0.0:9000/api/v1/';
+    this.rootUrl = process.env.REACT_APP_SERVER_URL
   }
 
   sendRequest = (method, path, data) => {

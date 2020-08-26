@@ -58,6 +58,7 @@
 */tests/.coverage
 */tests/report/
 */.nyc_output
+*/cypress/screenshots/
 
 
 # Documentation

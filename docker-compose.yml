@@ -67,6 +67,7 @@ services:
     #     rebuild required).
     volumes:
       - ./client/cypress:/e2e/cypress
+      - ./client/cypress/screenshots:/e2e/cypress/screenshots
       - ./client/cypress.json:/e2e/cypress.json
 volumes:
   postgres-data:

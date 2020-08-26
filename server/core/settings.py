@@ -147,6 +147,7 @@ AUTH_USER_MODEL = "account.User"
 
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:3001",
+    "http://client:3000",
 ]
 
 REST_FRAMEWORK = {
