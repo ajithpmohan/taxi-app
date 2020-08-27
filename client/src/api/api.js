@@ -2,22 +2,22 @@ import axios from 'axios';
 
 class API {
   constructor() {
-    this.rootUrl = process.env.REACT_APP_SERVER_URL;
+    this.domain = process.env.REACT_APP_SERVER_DOMAIN;
   }
 
   sendRequest = (method, path, data) => {
     return axios({
       method,
-      url: `${this.rootUrl}${path}`,
+      url: `http://${this.domain}${path}`,
       data,
     });
   };
 
   doSignInWithEmailAndPassword = (email, password) =>
-    this.sendRequest('POST', 'account/token/', { email, password });
+    this.sendRequest('POST', '/api/v1/account/token/', { email, password });
 
   doSignUpWithEmailAndPassword = (data) =>
-    this.sendRequest('POST', 'account/sign-up/', data);
+    this.sendRequest('POST', '/api/v1/account/sign-up/', data);
 }
 
 export default API;

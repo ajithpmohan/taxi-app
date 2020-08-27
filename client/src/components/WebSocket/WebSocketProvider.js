@@ -27,7 +27,8 @@ class WebSocketProvider extends React.Component {
     let { ws } = this.state;
     if (access && !ws) {
       const { onSetTrip } = this.props;
-      ws = webSocket(`ws://localhost:9000/ws/trip/?token=${access}`);
+      const domain = process.env.REACT_APP_SERVER_DOMAIN;
+      ws = webSocket(`ws://${domain}/ws/trip/?token=${access}`);
       ws.subscribe((payload) => onSetTrip(payload));
       this.setState({ ws });
     }

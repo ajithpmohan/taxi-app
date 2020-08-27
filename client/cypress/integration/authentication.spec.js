@@ -2,12 +2,13 @@
 import 'cypress-file-upload';
 
 describe('Authentication', () => {
+
   it('Can sign up as driver', () => {
     // stub API call
     cy.server();
     cy.route({
       method: 'POST',
-      url: 'http://server:8000/api/v1/account/sign-up/',
+      url: 'http://localhost:8100/api/v1/account/sign-up/',
     }).as('signup');
 
     cy.visit('/account/sign-up');
@@ -37,7 +38,7 @@ describe('Authentication', () => {
     cy.server();
     cy.route({
       method: 'POST',
-      url: 'http://server:8000/api/v1/account/sign-up/',
+      url: 'http://localhost:8100/api/v1/account/sign-up/',
     }).as('signup');
     cy.visit('/account/sign-up');
 
@@ -67,7 +68,7 @@ describe('Authentication', () => {
     cy.server();
     cy.route({
       method: 'POST',
-      url: 'http://server:8000/api/v1/account/token/',
+      url: 'http://localhost:8100/api/v1/account/token/',
     }).as('login');
 
     cy.visit('/account/sign-in');
@@ -93,7 +94,7 @@ describe('Authentication', () => {
     cy.server();
     cy.route({
       method: 'POST',
-      url: 'http://server:8000/api/v1/account/token/',
+      url: 'http://localhost:8100/api/v1/account/token/',
     }).as('login');
 
     cy.visit('/account/sign-in');
@@ -119,7 +120,7 @@ describe('Authentication', () => {
     cy.server();
     cy.route({
       method: 'POST',
-      url: 'http://server:8000/api/v1/account/token/',
+      url: 'http://localhost:8100/api/v1/account/token/',
     }).as('login');
 
     cy.visit('/account/sign-in');
@@ -154,7 +155,7 @@ describe('Authentication', () => {
     cy.server();
     cy.route({
       method: 'POST',
-      url: 'http://server:8000/api/v1/account/token/',
+      url: 'http://localhost:8100/api/v1/account/token/',
     }).as('login');
 
     cy.visit('/account/sign-in');

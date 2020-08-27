@@ -1,28 +1,32 @@
-os: linux
-dist: focal
+language: node_js
 
-language: generic
+node_js:
+  - 10
 
-before_cache:
-  # Save tagged docker images
-  - >
-    mkdir -p $HOME/docker && docker images -a --filter='dangling=false' --format '{{.Repository}}:{{.Tag}} {{.ID}}'
-    | xargs -n 2 -t sh -c 'test -e $HOME/docker/$1.tar.gz || docker save $0 | gzip -2 > $HOME/docker/$1.tar.gz'
-
+addons:
+  apt:
+    packages:
+      # Ubuntu 16+ does not install this dependency by default, so we need to install it ourselves
+      - libgconf-2-4
 cache:
-  bundler: true
-  directories:
-    - $HOME/docker
+  # Caches $HOME/.npm when npm ci is default script command
+  # Caches node_modules in all other cases
   npm: true
+  directories:
+    # we also need to cache folder with Cypress binary
+    - ~/.cache
 
 before_script:
-  # Load cached docker images
-  - if [[ -d $HOME/docker ]]; then ls $HOME/docker/*.tar.gz | xargs -I {file} sh -c "zcat {file} | docker load"; fi
+  - docker-compose up -d
+  - docker-compose exec server python manage.py migrate
+  - docker-compose exec server python manage.py loaddata users.json groups.json
 
 services:
   - docker
 
 script:
-  - docker-compose up -d
   - docker-compose exec server python manage.py test apps
   - docker-compose -f cy-run.yml run e2e
+
+after_script:
+  - docker-compose down

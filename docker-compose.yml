@@ -18,6 +18,8 @@ services:
       - /usr/src/node_modules
     ports:
       - "3001:3000"
+    env_file:
+      - ./client/.env.dev
     depends_on:
       - postgres
       - server
@@ -31,7 +33,7 @@ services:
     ports:
       - "8100:8000"
     env_file:
-      - ./.env.dev
+      - ./server/.env.dev
     depends_on:
       - postgres
     links:
@@ -41,5 +43,6 @@ services:
   redis:
     image: redis:latest
     container_name: taxi-redis
+
 volumes:
   postgres-data:
