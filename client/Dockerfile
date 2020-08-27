@@ -8,7 +8,7 @@ WORKDIR /usr/src/
 COPY package*.json ./
 
 # Installs all node packages
-RUN npm install --no-optional && npm cache clean --force
+RUN npm i
 
 # add `/usr/src/app/node_modules/.bin` to $PATH
 ENV PATH /usr/src/node_modules/.bin:$PATH

@@ -9,12 +9,11 @@ then
     done
 
     echo "PostgreSQL started"
+
 fi
 
-if [ "$CI" ]
-then
-    python manage.py flush --no-input
-    python manage.py migrate
-fi
+python manage.py flush --no-input
+python manage.py migrate
+python manage.py loaddata users.json groups.json
 
 exec "$@"

@@ -1,13 +1,5 @@
-language: node_js
+language: generic
 
-node_js:
-  - 10
-
-addons:
-  apt:
-    packages:
-      # Ubuntu 16+ does not install this dependency by default, so we need to install it ourselves
-      - libgconf-2-4
 cache:
   # Caches $HOME/.npm when npm ci is default script command
   # Caches node_modules in all other cases
@@ -16,13 +8,11 @@ cache:
     # we also need to cache folder with Cypress binary
     - ~/.cache
 
-before_script:
-  - docker-compose up -d
-  - docker-compose exec server python manage.py migrate
-  - docker-compose exec server python manage.py loaddata users.json groups.json
-
 services:
   - docker
+
+before_script:
+  - docker-compose up -d --build
 
 script:
   - docker-compose exec server python manage.py test apps
