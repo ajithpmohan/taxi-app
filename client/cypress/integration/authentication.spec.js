@@ -1,25 +1,15 @@
 /// <reference types="cypress" />
-import 'cypress-file-upload';
+
+const serverUrl = Cypress.env('serverUrl');
 
 describe('Authentication', () => {
 
   it('Can sign up as driver', () => {
-    // stub API call
+    // network call
     cy.server();
-    cy.route({
-      method: 'POST',
-      url: 'http://localhost:8100/api/v1/account/sign-up/',
-    }).as('signup');
+    cy.route('POST', `${serverUrl}/account/sign-up/`).as('signup');
 
     cy.visit('/account/sign-up');
-
-    /*cy.fixture('images/rider.png').then((avatar) => {
-      cy.get('input#avatar').attachFile({
-        fileContent: avatar,
-        fileName: 'avatar.jpg',
-        mimeType: 'application/json',
-      });
-    });*/
 
     cy.get('input#email').type('ajithpmohan@example.com');
     cy.get('input#firstName').type('Ajith');
@@ -34,21 +24,11 @@ describe('Authentication', () => {
 
 
   it('Can sign up as rider', () => {
-    // stub API call
+    // network call
     cy.server();
-    cy.route({
-      method: 'POST',
-      url: 'http://localhost:8100/api/v1/account/sign-up/',
-    }).as('signup');
-    cy.visit('/account/sign-up');
+    cy.route('POST', `${serverUrl}/account/sign-up/`).as('signup');
 
-/*    cy.fixture('images/rider.png').then((avatar) => {
-      cy.get('input#avatar').attachFile({
-        fileContent: avatar,
-        fileName: 'avatar.jpg',
-        mimeType: 'application/json',
-      });
-    });*/
+    cy.visit('/account/sign-up');
 
     cy.get('input#email').type('regipmohan@example.com');
     cy.get('input#firstName').type('Regi');
@@ -64,12 +44,9 @@ describe('Authentication', () => {
 
 
   it('Can log in as driver', () => {
-    // stub API call
+    // network call
     cy.server();
-    cy.route({
-      method: 'POST',
-      url: 'http://localhost:8100/api/v1/account/token/',
-    }).as('login');
+    cy.route('POST', `${serverUrl}/account/token/`).as('login');
 
     cy.visit('/account/sign-in');
 
@@ -90,12 +67,9 @@ describe('Authentication', () => {
 
 
   it('Can log in as rider', () => {
-    // stub API call
+    // network call
     cy.server();
-    cy.route({
-      method: 'POST',
-      url: 'http://localhost:8100/api/v1/account/token/',
-    }).as('login');
+    cy.route('POST', `${serverUrl}/account/token/`).as('login');
 
     cy.visit('/account/sign-in');
 
@@ -116,12 +90,9 @@ describe('Authentication', () => {
 
 
   it('Can log out', () => {
-    // stub API call
+    // network call
     cy.server();
-    cy.route({
-      method: 'POST',
-      url: 'http://localhost:8100/api/v1/account/token/',
-    }).as('login');
+    cy.route('POST', `${serverUrl}/account/token/`).as('login');
 
     cy.visit('/account/sign-in');
 
@@ -151,12 +122,9 @@ describe('Authentication', () => {
 
 
   it('Cannot visit the login or signup pages when logged in', () => {
-    // stub API call
+    // network call
     cy.server();
-    cy.route({
-      method: 'POST',
-      url: 'http://localhost:8100/api/v1/account/token/',
-    }).as('login');
+    cy.route('POST', `${serverUrl}/account/token/`).as('login');
 
     cy.visit('/account/sign-in');
     cy.location('pathname').should('eq', '/account/sign-in');

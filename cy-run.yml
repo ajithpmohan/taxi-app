@@ -7,8 +7,8 @@ services:
       dockerfile: Dockerfile.e2e
     container_name: taxi-e2e
     # note: inside e2e container, the network allows accessing
-    # "client" host under name "client"
-    # so "curl http://client:3000" would return whatever the webserver
+    # "client" host under name "localhost:3001"
+    # so "curl http://localhost:3001" would return whatever the webserver
     # in the "client" container is cooking
     # see https://docs.docker.com/compose/networking/
     environment:

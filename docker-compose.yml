@@ -27,7 +27,6 @@ services:
   server:
     build: ./server
     container_name: taxi-server
-    command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - ./server/:/usr/src/app/
     ports:

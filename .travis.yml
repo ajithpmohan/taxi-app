@@ -13,6 +13,7 @@ services:
 
 before_script:
   - docker-compose up -d --build
+  - docker-compose -f cy-run.yml build
 
 script:
   - docker-compose exec server python manage.py test apps
