@@ -24,8 +24,7 @@ services:
     #     machine immediately takes effect within the e2e container (no docker
     #     rebuild required).
     volumes:
+      - ./client/coverage:/e2e/coverage
       - ./client/cypress:/e2e/cypress
       - ./client/cypress.json:/e2e/cypress.json
-      # - ./client/.nyc_output:/e2e/.nyc_output
-      # - ./client/coverage:/e2e/coverage
-      - ./client/cypress/screenshots:/e2e/cypress/screenshots
+      - ./client/.nyc_output:/e2e/.nyc_output

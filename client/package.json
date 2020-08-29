@@ -24,12 +24,7 @@
     "rxjs": "^6.6.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "dev": "BROWSER=none npm start",
-    "cypress:open": "cypress open",
-    "cypress:run": "cypress run",
-    "start:cypress": "start-server-and-test start http://localhost:3001 cypress:open",
-    "e2e": "start-server-and-test dev http://localhost:3001 cypress:run",
+    "start": "react-scripts -r @cypress/instrument-cra start",
     "test": "react-scripts test",
     "lint": "eslint src/",
     "build": "react-scripts build",
@@ -51,6 +46,9 @@
       "last 1 safari version"
     ]
   },
+  "nyc": {
+    "exclude": "src/serviceWorker.js"
+  },
   "devDependencies": {
     "@cypress/code-coverage": "^3.8.1",
     "@cypress/instrument-cra": "^1.1.1",
@@ -70,7 +68,6 @@
     "istanbul-lib-coverage": "^3.0.0",
     "nyc": "^15.1.0",
     "prettier": "^2.0.5",
-    "react-test-renderer": "^16.13.1",
-    "start-server-and-test": "^1.11.2"
+    "react-test-renderer": "^16.13.1"
   }
 }

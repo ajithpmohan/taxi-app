@@ -15,7 +15,7 @@ services:
     container_name: taxi-client
     volumes:
       - ./client:/usr/src/app
-      - /usr/src/node_modules
+      - /usr/src/app/node_modules
     ports:
       - "3001:3000"
     env_file:
