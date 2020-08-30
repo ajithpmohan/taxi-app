@@ -14,10 +14,12 @@ services:
 before_script:
   - docker-compose up -d --build
   - docker-compose -f cy-run.yml build
+  - docker cp .git taxi-client:/usr/src/app/ # helps coveralls to accurately report the branch and have the badge work.
 
 script:
   - docker-compose exec server python manage.py test apps
   - docker-compose -f cy-run.yml run e2e
 
 after_script:
+  - docker-compose exec -e COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN client npm run coveralls
   - docker-compose down
