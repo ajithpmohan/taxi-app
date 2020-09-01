@@ -4,3 +4,4 @@ coverage erase
 coverage run manage.py test apps
 coverage report
 coverage html
+coverage xml
