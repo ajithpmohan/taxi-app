@@ -46,9 +46,6 @@
       "last 1 safari version"
     ]
   },
-  "nyc": {
-    "exclude": "src/serviceWorker.js"
-  },
   "devDependencies": {
     "@cypress/code-coverage": "^3.8.1",
     "@cypress/instrument-cra": "^1.1.1",
@@ -69,5 +66,12 @@
     "nyc": "^15.1.0",
     "prettier": "^2.0.5",
     "react-test-renderer": "^16.13.1"
+  },
+  "nyc": {
+    "exclude": [
+      "src/serviceWorker.js",
+      "src/services/googlemaps",
+      "src/components/GoogleMap"
+    ]
   }
 }
