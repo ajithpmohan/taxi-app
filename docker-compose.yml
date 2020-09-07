@@ -29,6 +29,7 @@ services:
     container_name: taxi-server
     volumes:
       - ./server/:/usr/src/app/
+      - /usr/src/app/mediafiles
     ports:
       - "8100:8000"
     env_file:

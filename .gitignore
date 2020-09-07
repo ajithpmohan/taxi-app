@@ -138,5 +138,7 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
-*/.nyc_output/*
-*/mediafiles/*
+**/.nyc_output/*
+**/mediafiles/*
+**/staticfiles/*
+**/screenshots/*

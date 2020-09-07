@@ -1,0 +1,41 @@
+version: '3.7'
+
+services:
+  db:
+    image: postgres:12.1-alpine
+    volumes:
+      - postgres-data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=taxi_db
+      - POSTGRES_USER=taxi
+      - POSTGRES_PASSWORD=taxi
+  web:
+    build:
+      context: ./server
+      dockerfile: Dockerfile.prod
+    volumes:
+      - static_volume:/usr/src/app/staticfiles
+      - media_volume:/usr/src/app/mediafiles
+    expose:
+      - 8000
+    env_file:
+      - ./server/.env.prod
+    depends_on:
+      - db
+    links:
+      - redis
+  redis:
+    image: redis:latest
+  nginx:
+    build: ./nginx
+    volumes:
+      - static_volume:/usr/src/app/staticfiles
+      - media_volume:/usr/src/app/mediafiles
+    ports:
+      - 1337:80
+    depends_on:
+      - web
+volumes:
+  postgres-data:
+  static_volume:
+  media_volume:
