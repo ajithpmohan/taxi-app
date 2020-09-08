@@ -28,8 +28,7 @@
     "test": "react-scripts test",
     "lint": "eslint src/",
     "build": "react-scripts build",
-    "eject": "react-scripts eject",
-    "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -50,7 +49,6 @@
     "@cypress/code-coverage": "^3.8.1",
     "@cypress/instrument-cra": "^1.1.1",
     "babel-eslint": "^10.1.0",
-    "coveralls": "^3.1.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "eslint": "^6.8.0",
