@@ -1,6 +1,6 @@
 # Taxi App built on Docker, DRF & React.js
 
-[![Build Status](https://travis-ci.com/ajithpmohan/taxi-app.svg?branch=master)](https://travis-ci.com/ajithpmohan/taxi-app) [![Coverage Status](https://coveralls.io/repos/github/ajithpmohan/taxi-app/badge.svg?branch=master)](https://coveralls.io/github/ajithpmohan/taxi-app?branch=master)
+[![Build Status](https://travis-ci.com/ajithpmohan/taxi-app.svg?branch=master)](https://travis-ci.com/ajithpmohan/taxi-app) [![codecov](https://codecov.io/gh/ajithpmohan/taxi-app/branch/master/graph/badge.svg)](https://codecov.io/gh/ajithpmohan/taxi-app)
 
 ## Features
 
@@ -23,6 +23,7 @@ Download the repository:
     git clone git@github.com:ajithpmohan/taxi-app.git
 
 ## Permission Required
+
 Before building the services update the file permission of `server/entrypoint.sh` & `server/coverage.sh`
 
     chmod +x server/entrypoint.sh server/coverage.sh
