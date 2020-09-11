@@ -13,9 +13,10 @@ services:
     build:
       context: ./server
       dockerfile: Dockerfile.prod
+    command: gunicorn core.wsgi:application --bind 0.0.0.0:8000
     volumes:
-      - static_volume:/usr/src/app/staticfiles
-      - media_volume:/usr/src/app/mediafiles
+      - static_volume:/usr/src/assets/staticfiles
+      - media_volume:/usr/src/assets/mediafiles
     expose:
       - 8000
     env_file:
@@ -24,17 +25,17 @@ services:
       - db
     links:
       - redis
-  redis:
-    image: redis:latest
   nginx:
     build: ./nginx
     volumes:
-      - static_volume:/usr/src/app/staticfiles
-      - media_volume:/usr/src/app/mediafiles
+      - static_volume:/usr/src/assets/staticfiles
+      - media_volume:/usr/src/assets/mediafiles
     ports:
       - 1337:80
     depends_on:
       - web
+  redis:
+    image: redis:latest
 volumes:
   postgres-data:
   static_volume:

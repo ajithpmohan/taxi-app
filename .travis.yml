@@ -5,7 +5,6 @@ cache:
   # Caches node_modules in all other cases
   npm: true
   directories:
-    # we also need to cache folder with Cypress binary
     - ~/.cache
 
 services:
