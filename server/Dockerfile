@@ -26,7 +26,13 @@ RUN apk update \
     && apk del build-deps
 
 # Set the working directory
-WORKDIR /usr/src/app
+ENV BASE_DIR=/usr/src/app
+WORKDIR $BASE_DIR
+
+ENV ASSETS_DIR=/usr/src/assets
+RUN mkdir $ASSETS_DIR
+RUN mkdir $ASSETS_DIR/staticfiles
+RUN mkdir $ASSETS_DIR/mediafiles
 
 # Copies everything over to Docker environment
 COPY . .

@@ -12,6 +12,7 @@ services:
       - POSTGRES_PASSWORD=taxi
   client:
     build: ./client
+    image: docker.pkg.github.com/ajithpmohan/taxi-app/client:0.1
     container_name: taxi-client
     volumes:
       - ./client:/usr/src/app
@@ -26,6 +27,7 @@ services:
     stdin_open: true
   server:
     build: ./server
+    image: docker.pkg.github.com/ajithpmohan/taxi-app/server:0.1
     container_name: taxi-server
     command: python manage.py runserver 0.0.0.0:8000
     volumes:

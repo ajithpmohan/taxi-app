@@ -2,15 +2,16 @@ import uuid
 
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.db.models import Q
 from django.shortcuts import reverse
-from django_fsm import FSMField, transition
+from django.utils.translation import ugettext_lazy as _
 
 
 class Trip(models.Model):
-    REQUESTED = 'REQUESTED'
-    STARTED = 'STARTED'
-    IN_PROGRESS = 'IN_PROGRESS'
-    COMPLETED = 'COMPLETED'
+    REQUESTED = 'Requested'
+    STARTED = 'Started'
+    IN_PROGRESS = 'In Progress'
+    COMPLETED = 'Completed'
     STATUSES = (
         (REQUESTED, REQUESTED),
         (STARTED, STARTED),
@@ -23,7 +24,7 @@ class Trip(models.Model):
     updated = models.DateTimeField(auto_now=True)
     pick_up_address = models.CharField(max_length=255)
     drop_off_address = models.CharField(max_length=255)
-    status = FSMField(max_length=20, choices=STATUSES, default=REQUESTED)
+    status = models.CharField(max_length=16, choices=STATUSES, default=REQUESTED)
     driver = models.ForeignKey(
         get_user_model(),
         null=True,
@@ -45,14 +46,18 @@ class Trip(models.Model):
     def get_absolute_url(self):
         return reverse('trip:trip_detail', kwargs={'trip_id': self.id})
 
-    @transition(field=status, source=REQUESTED, target=STARTED)
-    def start(self):
-        pass
-
-    @transition(field=status, source=STARTED, target=IN_PROGRESS)
-    def progress(self):
-        pass
-
-    @transition(field=status, source=IN_PROGRESS, target=COMPLETED)
-    def complete(self):
-        pass
+    class Meta:
+        verbose_name = _('trip')
+        verbose_name_plural = _('trips')
+        constraints = [
+            models.UniqueConstraint(
+                fields=['driver'],
+                condition=Q(status__in=['Requested', 'Started', 'In Progress']),
+                name='unique_trip_per_driver',
+            ),
+            models.UniqueConstraint(
+                fields=['rider'],
+                condition=Q(status__in=['Requested', 'Started', 'In Progress']),
+                name='unique_trip_per_rider',
+            )
+        ]
