@@ -140,5 +140,5 @@ class TokenObtainTest(APITestCase):
             'email': 'driver@example.com',
             'fullname': 'REGI P MOHAN',
             'avatar': None,
-            'type': 'DRIVER'
+            'role': 'DRIVER'
         })

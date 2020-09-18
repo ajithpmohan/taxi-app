@@ -39,7 +39,7 @@ class SignInFormBase extends React.Component {
         localStorage.setItem('authUser', JSON.stringify(resp.data));
         onSetAuthUser(JSON.parse(localStorage.getItem('authUser')));
 
-        history.push(REDIRECT_URL[resp.data.user.type]);
+        history.push(REDIRECT_URL[resp.data.user.role]);
       })
       .catch((error) => {
         this.setState({ error });

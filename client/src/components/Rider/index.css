@@ -49,3 +49,7 @@ html, body {
   font-size: 13px;
   font-weight: 300;
 }
+
+.card {
+  margin-bottom: 20px;
+}

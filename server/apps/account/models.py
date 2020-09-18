@@ -68,7 +68,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         driver = Group.objects.get(name='DRIVER')  # WIP
         return True if driver in self.groups.all() else False
 
-    def get_type(self):
+    def get_role(self):
         if self.is_superuser | self.is_staff:
             return _('ADMIN')
         if self.is_rider:

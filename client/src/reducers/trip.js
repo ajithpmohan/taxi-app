@@ -17,7 +17,7 @@ const setAvailableTripsToDriver = (state, trip) => ({
 
 function TripReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case actionTypes.TRIP_CREATED:
+    case actionTypes.CURRENT_TRIP:
       return setCurrentTrip(state, action.payload);
     case actionTypes.TRIP_REQUESTED:
       return setAvailableTripsToDriver(state, action.payload);

@@ -58,7 +58,7 @@ describe('Authentication', () => {
         const authUser = JSON.parse(localStorage.getItem('authUser'));
         expect(authUser.user.email).to.eq('ajithpmohan@example.com');
         expect(authUser.user.fullname).to.eq('Ajith P Mohan');
-        expect(authUser.user.type).to.eq('DRIVER');
+        expect(authUser.user.role).to.eq('DRIVER');
       });
 
     cy.visit('/account/sign-in');
@@ -81,7 +81,7 @@ describe('Authentication', () => {
         const authUser = JSON.parse(localStorage.getItem('authUser'));
         expect(authUser.user.email).to.eq('regipmohan@example.com');
         expect(authUser.user.fullname).to.eq('Regi P Mohan');
-        expect(authUser.user.type).to.eq('RIDER');
+        expect(authUser.user.role).to.eq('RIDER');
       });
 
     cy.visit('/account/sign-in');
@@ -103,7 +103,7 @@ describe('Authentication', () => {
       .should(() => {
         const authUser = JSON.parse(localStorage.getItem('authUser'));
         expect(authUser.user.email).to.eq('ajithpmohan@example.com');
-        expect(authUser.user.type).to.eq('DRIVER');
+        expect(authUser.user.role).to.eq('DRIVER');
       });
 
     cy.visit('/account/sign-in');
@@ -136,7 +136,7 @@ describe('Authentication', () => {
       .should(() => {
         const authUser = JSON.parse(localStorage.getItem('authUser'));
         expect(authUser.user.email).to.eq('regipmohan@example.com');
-        expect(authUser.user.type).to.eq('RIDER');
+        expect(authUser.user.role).to.eq('RIDER');
       });
 
     cy.location('pathname').should('eq', '/rider');

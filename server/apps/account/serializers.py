@@ -46,11 +46,11 @@ class SignUpSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     avatar = serializers.SerializerMethodField('get_avatar_url')
     fullname = serializers.CharField(source='get_full_name')
-    type = serializers.CharField(source='get_type')
+    role = serializers.CharField(source='get_role')
 
     class Meta:
         model = get_user_model()
-        fields = ('email', 'fullname', 'avatar', 'type')
+        fields = ('email', 'fullname', 'avatar', 'role')
 
     def get_avatar_url(self, obj):
         if bool(obj.avatar):

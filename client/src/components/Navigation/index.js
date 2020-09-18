@@ -8,14 +8,14 @@ import * as ROUTES from '../../constants/routes';
 
 import './index.css';
 
-const AUTH_STATES = (authUser) => ({
-  DRIVER: <NavigationAuthDriver authUser={authUser} />,
-  RIDER: <NavigationAuthRider authUser={authUser} />,
-  ADMIN: <NavigationAuthAdmin authUser={authUser} />,
+const AUTH_STATES = (currentTrip) => ({
+  DRIVER: <NavigationAuthDriver />,
+  RIDER: <NavigationAuthRider currentTrip={currentTrip} />,
+  ADMIN: <NavigationAuthAdmin />,
   NONAUTH: <NavigationNonAuth />,
 });
 
-const Navigation = ({ authUser }) => (
+const Navigation = ({ authUser, currentTrip }) => (
   <nav className="navbar navbar-expand-lg navbar-light bg-light">
     <button
       className="navbar-toggler"
@@ -33,7 +33,7 @@ const Navigation = ({ authUser }) => (
       className="collapse navbar-collapse"
       id="navbarSupportedContent"
     >
-      {AUTH_STATES(authUser)[authUser.user?.type || 'NONAUTH']}
+      {AUTH_STATES(currentTrip)[authUser.user?.role || 'NONAUTH']}
       {authUser.isAuthenticated && (
         <ul className="navbar-nav ml-auto nav-flex-icons">
           <li className="nav-item avatar dropdown">
@@ -82,18 +82,20 @@ const NavigationAuthDriver = () => (
   </ul>
 );
 
-const NavigationAuthRider = () => (
+const NavigationAuthRider = ({ currentTrip }) => (
   <ul className="navbar-nav mr-auto">
     <MenuLink
       activeOnlyWhenExact="true"
       to={ROUTES.RIDER}
       label="Dashboard"
     />
-    <MenuLink
-      activeOnlyWhenExact="true"
-      to={ROUTES.REQUESTTRIP}
-      label="Request a Trip"
-    />
+    {!currentTrip && (
+      <MenuLink
+        activeOnlyWhenExact="true"
+        to={ROUTES.REQUESTTRIP}
+        label="Request a Trip"
+      />
+    )}
   </ul>
 );
 
@@ -134,14 +136,22 @@ Navigation.propTypes = {
     user: PropTypes.object,
     isAuthenticated: PropTypes.bool,
   }),
+  currentTrip: PropTypes.shape({
+    status: PropTypes.string,
+  }),
 };
 
 Navigation.defaultProps = {
   authUser: null,
+  currentTrip: null,
 };
+
+NavigationAuthRider.propTypes = Navigation.propTypes;
+NavigationAuthRider.defaultProps = Navigation.defaultProps;
 
 const mapStateToProps = (state) => ({
   authUser: state.sessionState.authUser,
+  currentTrip: state.tripState.currentTrip,
 });
 
 export default connect(mapStateToProps)(Navigation);

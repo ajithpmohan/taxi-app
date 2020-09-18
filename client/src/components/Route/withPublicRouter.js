@@ -25,7 +25,7 @@ const withPublicRouter = (Component) => {
     checkAndRedirect() {
       const { authUser, history } = this.props;
       if (authUser.isAuthenticated) {
-        history.push(REDIRECT_URL[authUser.user?.type]);
+        history.push(REDIRECT_URL[authUser.user?.role]);
       }
     }
 

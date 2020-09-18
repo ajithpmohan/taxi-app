@@ -9,11 +9,10 @@ import * as ROUTES from '../../constants/routes';
 const REDIRECT_URL = {
   DRIVER: ROUTES.DRIVER,
   RIDER: ROUTES.RIDER,
-  ADMIN: ROUTES.HOME,
 };
 
-const withAuthorization = (condition) => (Component) => {
-  class WithAuthorization extends React.Component {
+const withTripValidator = (condition) => (Component) => {
+  class WithTripValidator extends React.Component {
     componentDidMount() {
       this.checkAndRedirect();
     }
@@ -23,39 +22,44 @@ const withAuthorization = (condition) => (Component) => {
     }
 
     checkAndRedirect() {
-      const { userRole, history } = this.props;
-      if (!condition(userRole)) {
+      const { currentTrip, history, userRole } = this.props;
+      if (condition(currentTrip)) {
         history.push(REDIRECT_URL[userRole]);
       }
     }
 
     render() {
-      const { userRole } = this.props;
-      return condition(userRole) ? (
+      const { currentTrip } = this.props;
+      return !condition(currentTrip) ? (
         <Component {...this.props} />
       ) : null;
     }
   }
 
-  WithAuthorization.propTypes = {
-    userRole: PropTypes.string,
+  WithTripValidator.propTypes = {
+    currentTrip: PropTypes.shape({
+      status: PropTypes.string,
+    }),
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
     }).isRequired,
+    userRole: PropTypes.string,
   };
 
-  WithAuthorization.defaultProps = {
+  WithTripValidator.defaultProps = {
+    currentTrip: null,
     userRole: null,
   };
 
   const mapStateToProps = (state) => ({
+    currentTrip: state.tripState.currentTrip,
     userRole: state.sessionState.authUser.user?.role,
   });
 
   return compose(
     withRouter,
     connect(mapStateToProps),
-  )(WithAuthorization);
+  )(WithTripValidator);
 };
 
-export default withAuthorization;
+export default withTripValidator;
