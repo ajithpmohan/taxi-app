@@ -8,21 +8,17 @@ ENV PYTHONDONTWRITEBYTECODE 1
 # Prevents Python from buffering stdout and stderr
 ENV PYTHONUNBUFFERED 1
 
-# install dependencies
-RUN pip install --upgrade pip
-
-# install git dependencies
-RUN apk add --update git
-
 # install psycopg2, pillow & cryptography
-RUN apk update \
-    && apk add --virtual build-deps gcc python3-dev musl-dev \
-    && apk add postgresql-dev \
-    && pip install --no-cache-dir  psycopg2 \
+RUN apk add --no-cache --upgrade --virtual build-deps \
+    alpine-sdk \
+    postgresql-dev \
+    libffi-dev openssl-dev \
+    && pip install --no-cache-dir --upgrade pip \
+    && apk add postgresql-client \
+    && pip install --no-cache-dir psycopg2 \
     && apk add jpeg-dev zlib-dev libjpeg \
-    && pip install --no-cache-dir  Pillow \
-    && apk add libffi-dev openssl-dev \
-    && pip install --no-cache-dir  greenlet twisted hiredis cryptography \
+    && pip install --no-cache-dir Pillow \
+    && pip install --no-cache-dir greenlet twisted hiredis cryptography \
     && apk del build-deps
 
 # Set the working directory
