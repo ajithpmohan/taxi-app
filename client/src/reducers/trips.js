@@ -1,7 +1,7 @@
 import * as actionTypes from '../constants/actionTypes';
 
 const INITIAL_STATE = {
-  trips: [],
+  availableTrips: [],
   currentTrip: null,
 };
 
@@ -12,11 +12,11 @@ const setCurrentTrip = (state, currentTrip) => ({
 
 const setNewTrip = (state, trip) => ({
   ...state,
-  ...state.trips.push(trip),
+  ...state.availableTrips.push(trip),
 });
-const setAvailableTrips = (state, trips) => ({
+const setAvailableTrips = (state, availableTrips) => ({
   ...state,
-  trips,
+  availableTrips,
 });
 
 function TripReducer(state = INITIAL_STATE, action) {
