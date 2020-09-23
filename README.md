@@ -24,9 +24,9 @@ Download the repository:
 
 ## Permission Required
 
-Before building the services update the file permission of `server/entrypoint.sh` & `server/coverage.sh`
+Before building the services update the permission of following bash scripts.
 
-    chmod +x server/entrypoint.sh server/coverage.sh
+    chmod +x ./pre-commit.sh server/coverage.sh server/entrypoint.sh server/entrypoint.prod.sh
 
 ## Build the Services
 

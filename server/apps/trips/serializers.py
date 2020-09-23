@@ -8,7 +8,11 @@ class TripSerializer(serializers.ModelSerializer):
     class Meta:
         model = Trip
         fields = '__all__'
-        read_only_fields = ('id', 'created', 'updated',)
+        read_only_fields = (
+            'id',
+            'created',
+            'updated',
+        )
 
 
 class ReadOnlyTripSerializer(serializers.ModelSerializer):

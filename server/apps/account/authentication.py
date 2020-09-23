@@ -16,6 +16,7 @@ class TokenAuthMiddleware:
     successful, add the user into scope. If not, add the AnonymousUser
     into scope.
     """
+
     def __init__(self, inner):
         self.inner = inner
 
