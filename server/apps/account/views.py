@@ -1,3 +1,7 @@
+"""
+Account Endpoints
+"""
+
 from rest_framework import permissions
 from rest_framework.generics import CreateAPIView
 from rest_framework.parsers import MultiPartParser
@@ -7,12 +11,21 @@ from apps.account import serializers as account_serializers
 
 
 class SignUpView(CreateAPIView):
+    """
+    SignUp Endpoint for Rider/Driver
+    """
+
     permission_classes = [permissions.AllowAny]
     serializer_class = account_serializers.SignUpSerializer
     parser_classes = [MultiPartParser]
 
 
 class TokenObtainPairView(jwt_views.TokenObtainPairView):
+    """
+    SignIn Endpoint for Rider/Driver
+    Response: access & refresh tokens
+    """
+
     serializer_class = account_serializers.TokenObtainPairSerializer
 
     def get_serializer_context(self):

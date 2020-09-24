@@ -10,8 +10,9 @@ from apps.account import validators
 
 
 class SignUpSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True, validators=[
-        validators.MinimumLengthValidator(), validators.MaximumLengthValidator()])
+    password = serializers.CharField(
+        write_only=True, validators=[validators.MinimumLengthValidator(), validators.MaximumLengthValidator()]
+    )
     password2 = serializers.CharField(write_only=True)
     groups = serializers.CharField()
 
@@ -66,7 +67,6 @@ class ReadOnlyUserSerializer(serializers.ModelSerializer):
 
 
 class TokenObtainPairSerializer(jwt_serializers.TokenObtainPairSerializer):
-
     def validate(self, attrs):
         data = super().validate(attrs)
         data['user'] = UserSerializer(self.user, context=self.context).data

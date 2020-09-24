@@ -11,18 +11,26 @@ class UserAdmin(BaseUserAdmin):
     add_form = account_forms.UserCreationForm
     form = account_forms.UserChangeForm
     model = User
-    list_display = ('email', 'get_full_name', 'is_staff', 'is_superuser', 'is_active', )
-    list_filter = ('email', 'is_staff', 'is_superuser', 'is_active',)
+    list_display = (
+        'email',
+        'get_full_name',
+        'is_staff',
+        'is_superuser',
+        'is_active',
+    )
+    list_filter = (
+        'email',
+        'is_staff',
+        'is_superuser',
+        'is_active',
+    )
     fieldsets = (
         (None, {'fields': ('email', 'password', 'first_name', 'last_name', 'avatar')}),
         ('Permissions', {'fields': ('is_staff', 'is_active')}),
         ('Groups', {'fields': ('groups',)}),
     )
     add_fieldsets = (
-        (None, {
-            'classes': ('wide',),
-            'fields': ('email', 'password1', 'password2', 'is_staff', 'is_active')
-        }),
+        (None, {'classes': ('wide',), 'fields': ('email', 'password1', 'password2', 'is_staff', 'is_active')}),
     )
     search_fields = ('email',)
     ordering = ('email',)

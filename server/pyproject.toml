@@ -1,0 +1,33 @@
+[tool.black]
+line-length = 119
+include = '\.pyi?$'
+skip-string-normalization = true
+
+[tool.isort]
+line_length = 119
+multi_line_output = 3
+include_trailing_comma = true
+default_section = "THIRDPARTY"
+
+[tool.pylint.MESSAGE_CONTROL]
+disable="""
+    bad-continuation,
+    no-else-return,
+    too-few-public-methods,
+    line-too-long,
+    duplicate-code,
+    import-error,
+    unused-argument,
+    no-self-use,
+    import-outside-toplevel,
+    fixme
+"""
+
+[tool.pylint.REPORTS]
+reports="no"
+
+[tool.pylint.FORMAT]
+max-line-length="119"
+
+[tool.pylint.BASIC]
+good-names="_,i,j,k,e,qs,pk,setUp,tearDown,maxDiff,default_app_config"

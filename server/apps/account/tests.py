@@ -10,13 +10,16 @@ User = get_user_model()
 
 
 class SignupTest(APITestCase):
+    """
+    Signup UnitTests
+    """
 
     @classmethod
     def setUpTestData(cls):
-        Group.objects.bulk_create([
-            Group(name='DRIVER'),
-            Group(name='RIDER')
-        ])
+        """
+        Initialize DRIVER/RIDER Groups
+        """
+        Group.objects.bulk_create([Group(name='DRIVER'), Group(name='RIDER')])
 
     def test_password_minlength_subceed(self):
         data = {
@@ -25,7 +28,7 @@ class SignupTest(APITestCase):
             "password2": "abc1234",
             "first_name": "AJITH",
             "last_name": "P MOHAN",
-            "groups": "RIDER"
+            "groups": "RIDER",
         }
         self.assertEqual(User.objects.count(), 0)
 
@@ -42,7 +45,7 @@ class SignupTest(APITestCase):
             "password2": string.ascii_lowercase,
             "first_name": "AJITH",
             "last_name": "P MOHAN",
-            "groups": "RIDER"
+            "groups": "RIDER",
         }
         self.assertEqual(User.objects.count(), 0)
 
@@ -59,7 +62,7 @@ class SignupTest(APITestCase):
             "password2": "abc123456",
             "first_name": "AJITH",
             "last_name": "P MOHAN",
-            "groups": "RIDER"
+            "groups": "RIDER",
         }
         self.assertEqual(User.objects.count(), 0)
 
@@ -76,7 +79,7 @@ class SignupTest(APITestCase):
             "password2": "abc12345",
             "first_name": "AJITH",
             "last_name": "P MOHAN",
-            "groups": "ADMIN"
+            "groups": "ADMIN",
         }
         self.assertEqual(User.objects.count(), 0)
 
@@ -93,7 +96,7 @@ class SignupTest(APITestCase):
             "password2": "abc12345",
             "first_name": "AJITH",
             "last_name": "P MOHAN",
-            "groups": "RIDER"
+            "groups": "RIDER",
         }
         self.assertEqual(User.objects.count(), 0)
 
@@ -107,10 +110,7 @@ class SignupTest(APITestCase):
 class TokenObtainTest(APITestCase):
     @classmethod
     def setUpTestData(cls):
-        Group.objects.bulk_create([
-            Group(name='DRIVER'),
-            Group(name='RIDER')
-        ])
+        Group.objects.bulk_create([Group(name='DRIVER'), Group(name='RIDER')])
 
     def test_obtain_token(self):
 
@@ -120,7 +120,7 @@ class TokenObtainTest(APITestCase):
             "password2": "abc12345",
             "first_name": "REGI",
             "last_name": "P MOHAN",
-            "groups": "DRIVER"
+            "groups": "DRIVER",
         }
         self.assertEqual(User.objects.count(), 0)
 
@@ -128,17 +128,18 @@ class TokenObtainTest(APITestCase):
 
         self.assertEqual(User.objects.count(), 1)
 
-        response = self.client.post(reverse("account:token_obtain_pair"), data={
-            "email": "driver@example.com",
-            "password": "abc12345",
-        })
+        response = self.client.post(
+            reverse("account:token_obtain_pair"),
+            data={
+                "email": "driver@example.com",
+                "password": "abc12345",
+            },
+        )
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertTrue('access' in response.data)
         self.assertTrue('refresh' in response.data)
-        self.assertEqual(response.data['user'], {
-            'email': 'driver@example.com',
-            'fullname': 'REGI P MOHAN',
-            'avatar': None,
-            'role': 'DRIVER'
-        })
+        self.assertEqual(
+            response.data['user'],
+            {'email': 'driver@example.com', 'fullname': 'REGI P MOHAN', 'avatar': None, 'role': 'DRIVER'},
+        )

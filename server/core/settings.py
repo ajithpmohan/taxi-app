@@ -36,14 +36,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     'corsheaders',
     'rest_framework',
     'drf_yasg',
     'debug_toolbar',
     'django_extensions',
     'channels',
-
     'apps.account',
     'apps.trips',
 ]

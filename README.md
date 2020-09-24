@@ -24,9 +24,9 @@ Download the repository:
 
 ## Permission Required
 
-Before building the services update the file permission of `server/entrypoint.sh` & `server/coverage.sh`
+Before building the services update the permission of following bash scripts.
 
-    chmod +x server/entrypoint.sh server/coverage.sh
+    chmod +x server/coverage.sh server/entrypoint.sh server/entrypoint.prod.sh
 
 ## Build the Services
 
@@ -37,20 +37,20 @@ Before building the services update the file permission of `server/entrypoint.sh
     docker-compose up -d
 
 ## Swagger for Django (backend) Service
+
 Access it through [http://0.0.0.0:8100/swagger/](http://0.0.0.0:8100/swagger/)
 
 ## Run React.js Code Linter
+
     docker-compose exec client npm run e2e
 
 ## Run React.js E2E Testing using Cypress
+
     docker-compose -f cy-run.yml run e2e
 
-## Run Django Code Linter
+## Build & Run Django Code Linter
 
-Before code pushing, run [flake8](https://simpleisbetterthancomplex.com/packages/2016/08/05/flake8.html) for code styling and [isort](https://simpleisbetterthancomplex.com/packages/2016/10/08/isort.html) for organizing the python imports.
-
-    docker-compose exec server flake8
-    docker-compose exec server isort -rc .
+    docker-compose -f pre-commit.yml up --build
 
 ## Create Django Coverage Report
 

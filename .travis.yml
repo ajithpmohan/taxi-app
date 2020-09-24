@@ -12,10 +12,12 @@ services:
 
 before_script:
   - docker-compose up -d --build
+  - docker-compose -f pre-commit.yml build
   - docker-compose -f cy-run.yml build
 
 script:
   - docker-compose exec server ./coverage.sh
+  - docker-compose -f pre-commit.yml up
   - docker-compose -f cy-run.yml run e2e
 
 after_script:
