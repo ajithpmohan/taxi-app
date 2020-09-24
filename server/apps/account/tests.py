@@ -10,8 +10,15 @@ User = get_user_model()
 
 
 class SignupTest(APITestCase):
+    """
+    Signup UnitTests
+    """
+
     @classmethod
     def setUpTestData(cls):
+        """
+        Initialize DRIVER/RIDER Groups
+        """
         Group.objects.bulk_create([Group(name='DRIVER'), Group(name='RIDER')])
 
     def test_password_minlength_subceed(self):

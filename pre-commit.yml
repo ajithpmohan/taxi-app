@@ -1,0 +1,12 @@
+version: '3.7'
+
+services:
+  pre-commit:
+    build:
+      context: .
+      dockerfile: Dockerfile.pre-commit
+    image: docker.pkg.github.com/ajithpmohan/taxi-app/pre-commit:1.0
+    container_name: taxi-pre-commit
+    command: pre-commit run --all-files
+    volumes:
+      - .:/usr/src/app
