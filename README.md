@@ -36,9 +36,11 @@ Before building the services update the permission of following bash scripts.
 
     docker-compose up -d
 
-## Swagger for Django (backend) Service
+## Access the services in the development mode.
 
-Access it through [http://0.0.0.0:8100/swagger/](http://0.0.0.0:8100/swagger/)
+Open [http://localhost:3001/](http://localhost:3001/) to access `client` service in the browser.
+
+Open [http://localhost:8100/swagger/](http://localhost:8100/swagger/) to access `server` service in the browser.
 
 ## Run React.js Code Linter
 
@@ -48,7 +50,7 @@ Access it through [http://0.0.0.0:8100/swagger/](http://0.0.0.0:8100/swagger/)
 
     docker-compose -f cy-run.yml run e2e
 
-## Build & Run Django Code Linter
+## Run Python Code Linter & Formatter
 
     docker-compose -f pre-commit.yml up --build
 

@@ -8,6 +8,9 @@ ENV PYTHONDONTWRITEBYTECODE 1
 # Prevents Python from buffering stdout and stderr
 ENV PYTHONUNBUFFERED 1
 
+# install git dependencies
+RUN apk add --update git
+
 # install psycopg2, pillow & cryptography
 RUN apk add --no-cache --upgrade --virtual build-deps \
     alpine-sdk \
@@ -23,10 +26,13 @@ RUN apk add --no-cache --upgrade --virtual build-deps \
 
 # Set the working directory
 ENV BASE_DIR=/usr/src/app
-WORKDIR $BASE_DIR
+ENV APP_DIR=$BASE_DIR/web
+RUN mkdir -p $APP_DIR
+WORKDIR $APP_DIR
 
-ENV ASSETS_DIR=/usr/src/assets
-RUN mkdir $ASSETS_DIR
+# Set assets directory
+ENV ASSETS_DIR=$BASE_DIR/assets
+RUN mkdir -p $ASSETS_DIR
 RUN mkdir $ASSETS_DIR/staticfiles
 RUN mkdir $ASSETS_DIR/mediafiles
 
@@ -37,4 +43,4 @@ COPY . .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # run entrypoint.sh
-ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
+ENTRYPOINT ["/usr/src/app/web/entrypoint.sh"]

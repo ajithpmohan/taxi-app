@@ -5,7 +5,7 @@ services:
     build:
       context: ./client
       dockerfile: Dockerfile.e2e
-    image: docker.pkg.github.com/ajithpmohan/taxi-app/e2e:1.0
+    image: docker.pkg.github.com/ajithpmohan/taxi-app/e2e-dev:0.1
     container_name: taxi-e2e
     # note: inside e2e container, the network allows accessing
     # "client" host under name "localhost:3001"
