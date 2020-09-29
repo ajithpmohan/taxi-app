@@ -11,6 +11,7 @@ python-decouple==3.3
 
 # Coding standards
 pylint==2.6.0
+colorlog==4.2.1
 
 # Server
 gunicorn==20.0.4
