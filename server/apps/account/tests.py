@@ -12,7 +12,7 @@ User = get_user_model()
 
 class SignupTest(APITestCase):
     """
-    Signup UnitTest
+    Signup Integration Test
     """
 
     @classmethod
@@ -26,17 +26,17 @@ class SignupTest(APITestCase):
         [
             (
                 {
-                    "email": "rider@example.com",
+                    "email": "driver@example.com",
                     "password": "abc123",
                     "password2": "abc123",
-                    "first_name": "REJU",
+                    "first_name": "AJITH",
                     "last_name": "P MOHAN",
                     "groups": "DRIVER",
                 },
             ),
             (
                 {
-                    "email": "driver@example.com",
+                    "email": "rider@example.com",
                     "password": "abc1234",
                     "password2": "abc1234",
                     "first_name": "REJU",
@@ -135,7 +135,7 @@ class SignupTest(APITestCase):
         [
             (
                 {
-                    "email": "driver@example.com",
+                    "email": "admin@example.com",
                     "password": "abc12345",
                     "password2": "abc12345",
                     "first_name": "AJITH",
@@ -145,7 +145,7 @@ class SignupTest(APITestCase):
             ),
             (
                 {
-                    "email": "rider@example.com",
+                    "email": "staff@example.com",
                     "password": "abc12345",
                     "password2": "abc123456",
                     "first_name": "REJU",
@@ -207,7 +207,7 @@ class SignupTest(APITestCase):
 
 class TokenObtainTest(APITestCase):
     """
-    Signin UnitTest
+    Signin Integration Test
     """
 
     @classmethod
