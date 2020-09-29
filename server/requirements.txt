@@ -10,8 +10,8 @@ channels-redis==3.0.1
 python-decouple==3.3
 
 # Coding standards
-flake8==3.8.3
-isort==4.3.21
+pylint==2.6.0
+colorlog==4.2.1
 
 # Server
 gunicorn==20.0.4
@@ -19,6 +19,9 @@ daphne==2.5.0
 
 # Testing
 coverage==5.2.1
+pytest-django==3.10.0
+pytest-asyncio==0.14.0
+parameterized==0.7.4
 
 # Debuggers
 bpython==0.19

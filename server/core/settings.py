@@ -171,8 +171,8 @@ DEBUG_TOOLBAR_CONFIG = {
 SHELL_PLUS = "bpython"
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(minutes=60),
-    'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=1),
+    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(days=7),
+    'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=30),
     'USER_ID_CLAIM': 'id',
 }
 
@@ -184,5 +184,48 @@ CHANNEL_LAYERS = {
         'CONFIG': {
             "hosts": [(REDIS_HOST, 6379)],
         },
+    },
+}
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'simple': {
+            'format': '{levelname} - {message}',
+            'style': '{',
+        },
+        'color': {
+            '()': 'colorlog.ColoredFormatter',
+            'format': '%(log_color)s%(levelname)s - %(message)s',
+            'log_colors': {
+                'DEBUG': 'blue',
+                'INFO': 'green',
+                'WARNING': 'yellow',
+                'ERROR': 'red',
+                'CRITICAL': 'bold_red',
+            },
+        },
+    },
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'INFO',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            'formatter': 'color',
+        },
+    },
+    'loggers': {
+        'apps.trips.consumers': {
+            'handlers': [
+                'console',
+            ],
+            'level': 'INFO',
+        }
     },
 }

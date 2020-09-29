@@ -16,11 +16,11 @@ before_script:
   - docker-compose -f cy-run.yml build
 
 script:
-  - docker-compose exec server ./coverage.sh
   - docker-compose -f pre-commit.yml up
+  - docker-compose exec server ./coverage.sh
   - docker-compose -f cy-run.yml run e2e
 
 after_script:
   - bash <(curl -s https://codecov.io/bash) -f server/coverage.xml
   - bash <(curl -s https://codecov.io/bash) -f client/coverage/coverage-final.json
-  - docker-compose down
+  - docker-compose down -v

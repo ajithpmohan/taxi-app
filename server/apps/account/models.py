@@ -4,13 +4,17 @@ from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import Group, PermissionsMixin
 from django.core.mail import send_mail
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from apps.account import managers
 from apps.utils import helpers
 
 
 class User(AbstractBaseUser, PermissionsMixin):
+    """
+    User Model extended from django built-in AbstractBaseUser & PermissionsMixin.
+    """
+
     email = models.EmailField(_('email address'), unique=True)
     first_name = models.CharField(_('first name'), max_length=150, blank=True)
     last_name = models.CharField(_('last name'), max_length=150, blank=True)
@@ -42,7 +46,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         """
         Returns the first_name plus the last_name, with a space in between.
         """
-        full_name = '%s %s' % (self.first_name, self.last_name)
+        full_name = f'{self.first_name} {self.last_name}'
         return full_name.strip()
 
     def get_short_name(self):
@@ -59,15 +63,25 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     @property
     def is_rider(self):
+        """
+        Return True if current user has rider role
+        """
         rider = Group.objects.get(name='RIDER')  # WIP
-        return True if rider in self.groups.all() else False
+        return rider in self.groups.all()
 
     @property
     def is_driver(self):
+        """
+        Return True if current user has driver role
+        """
         driver = Group.objects.get(name='DRIVER')  # WIP
-        return True if driver in self.groups.all() else False
+        return driver in self.groups.all()
 
     def get_role(self):
+        """
+        Return User Role.
+        If user has no role RETURN None
+        """
         if self.is_superuser | self.is_staff:
             return _('ADMIN')
         if self.is_rider:

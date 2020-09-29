@@ -2,7 +2,7 @@ from collections import OrderedDict
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 from rest_framework import serializers
 from rest_framework_simplejwt import serializers as jwt_serializers
 
@@ -10,6 +10,10 @@ from apps.account import validators
 
 
 class SignUpSerializer(serializers.ModelSerializer):
+    """
+    SignUp Serializer for user creation
+    """
+
     password = serializers.CharField(
         write_only=True, validators=[validators.MinimumLengthValidator(), validators.MaximumLengthValidator()]
     )
@@ -45,6 +49,10 @@ class SignUpSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
+    """
+    User Serializer
+    """
+
     avatar = serializers.SerializerMethodField('get_avatar_url')
     fullname = serializers.CharField(source='get_full_name')
     role = serializers.CharField(source='get_role')
@@ -59,6 +67,10 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class ReadOnlyUserSerializer(serializers.ModelSerializer):
+    """
+    Return User email & fullname.
+    """
+
     fullname = serializers.CharField(source='get_full_name')
 
     class Meta:
@@ -67,6 +79,10 @@ class ReadOnlyUserSerializer(serializers.ModelSerializer):
 
 
 class TokenObtainPairSerializer(jwt_serializers.TokenObtainPairSerializer):
+    """
+    Return Access, Refresh tokens along with User data
+    """
+
     def validate(self, attrs):
         data = super().validate(attrs)
         data['user'] = UserSerializer(self.user, context=self.context).data
