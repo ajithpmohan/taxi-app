@@ -3,6 +3,10 @@ from rest_framework import serializers
 
 
 class MinimumLengthValidator(object):
+    """
+    Custom String Min length validator
+    """
+
     def __init__(self, min_length=8):
         self.min_length = min_length
 
@@ -15,6 +19,10 @@ class MinimumLengthValidator(object):
 
 
 class MaximumLengthValidator(object):
+    """
+    Custom String Max length validator
+    """
+
     def __init__(self, max_length=16):
         self.max_length = max_length
 

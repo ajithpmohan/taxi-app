@@ -8,6 +8,10 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class Trip(models.Model):
+    """
+    Model for storing Trip data.
+    """
+
     REQUESTED = 'Requested'
     STARTED = 'Started'
     IN_PROGRESS = 'In Progress'

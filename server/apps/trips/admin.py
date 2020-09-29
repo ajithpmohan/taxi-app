@@ -5,6 +5,10 @@ from apps.trips.models import Trip
 
 @admin.register(Trip)
 class TripAdmin(admin.ModelAdmin):
+    """
+    Admin Panel for handling Trip Model
+    """
+
     fields = (
         'id',
         'pick_up_address',

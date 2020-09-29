@@ -11,6 +11,10 @@ from apps.utils import helpers
 
 
 class User(AbstractBaseUser, PermissionsMixin):
+    """
+    User Model extended from django built-in AbstractBaseUser & PermissionsMixin.
+    """
+
     email = models.EmailField(_('email address'), unique=True)
     first_name = models.CharField(_('first name'), max_length=150, blank=True)
     last_name = models.CharField(_('last name'), max_length=150, blank=True)
@@ -59,15 +63,25 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     @property
     def is_rider(self):
+        """
+        Return True if current user has rider role
+        """
         rider = Group.objects.get(name='RIDER')  # WIP
-        return True if rider in self.groups.all() else False
+        return rider in self.groups.all()
 
     @property
     def is_driver(self):
+        """
+        Return True if current user has driver role
+        """
         driver = Group.objects.get(name='DRIVER')  # WIP
-        return True if driver in self.groups.all() else False
+        return driver in self.groups.all()
 
     def get_role(self):
+        """
+        Return User Role.
+        If user has no role RETURN None
+        """
         if self.is_superuser | self.is_staff:
             return _('ADMIN')
         if self.is_rider:

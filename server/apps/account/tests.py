@@ -11,7 +11,7 @@ User = get_user_model()
 
 class SignupTest(APITestCase):
     """
-    Signup UnitTests
+    Signup UnitTest
     """
 
     @classmethod
@@ -22,6 +22,9 @@ class SignupTest(APITestCase):
         Group.objects.bulk_create([Group(name='DRIVER'), Group(name='RIDER')])
 
     def test_password_minlength_subceed(self):
+        """
+        TestCase to verify that password minlength is not subceeded.
+        """
         data = {
             "email": "rider@example.com",
             "password": "abc1234",
@@ -39,6 +42,9 @@ class SignupTest(APITestCase):
         self.assertEqual(response.data['password'][0].code, 'password_too_short')
 
     def test_password_maxlength_exceed(self):
+        """
+        TestCase to verify that password maxlength is not exceeded.
+        """
         data = {
             "email": "rider@example.com",
             "password": string.ascii_lowercase,
@@ -56,6 +62,10 @@ class SignupTest(APITestCase):
         self.assertEqual(response.data['password'][0].code, 'password_too_long')
 
     def test_password_must_match(self):
+        """
+        TestCase to verify that password, password2 data mismatching should
+        raise 404 Bad Request.
+        """
         data = {
             "email": "rider@example.com",
             "password": "abc12345",
@@ -73,6 +83,10 @@ class SignupTest(APITestCase):
         self.assertEqual(response.data['password'][0], 'Passwords must match.')
 
     def test_invalid_group(self):
+        """
+        TestCase to verify that USER GROUPS other than DRIVER/RIDER should
+        raise 404 Bad Request.
+        """
         data = {
             "email": "rider@example.com",
             "password": "abc12345",
@@ -90,6 +104,9 @@ class SignupTest(APITestCase):
         self.assertEqual(response.data['groups'][0], 'This field must be either DRIVER or RIDER')
 
     def test_can_signup(self):
+        """
+        Can User Signup.
+        """
         data = {
             "email": "rider@example.com",
             "password": "abc12345",
@@ -108,12 +125,22 @@ class SignupTest(APITestCase):
 
 
 class TokenObtainTest(APITestCase):
+    """
+    Signin UnitTest
+    """
+
     @classmethod
     def setUpTestData(cls):
+        """
+        Initialize DRIVER/RIDER Groups
+        """
         Group.objects.bulk_create([Group(name='DRIVER'), Group(name='RIDER')])
 
     def test_obtain_token(self):
-
+        """
+        Can User SignIn.
+        Return Access, Refresh Token pair for valid cases
+        """
         data = {
             "email": "driver@example.com",
             "password": "abc12345",

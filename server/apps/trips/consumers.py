@@ -7,9 +7,13 @@ from apps.trips import serializers as trips_serializers
 
 
 class TaxiConsumer(AsyncJsonWebsocketConsumer):
+    """
+    Establish WebSocket connection to all riders & drivers.
+    Handle realtime trip events from trip creation to completion.
+    """
+
     async def connect(self):
-        user = self.scope['user']
-        if user.is_anonymous:
+        if (user := self.scope['user']).is_anonymous:
             await self.close()
 
         await self.accept()
@@ -59,7 +63,6 @@ class TaxiConsumer(AsyncJsonWebsocketConsumer):
         Send newly created trip data to `driver` group
         Add rider to unique trip group with trip_id as group name
         """
-
         trip = await self._create_trip(content)
         trip_data = trips_serializers.ReadOnlyTripSerializer(trip).data
 
@@ -89,8 +92,9 @@ class TaxiConsumer(AsyncJsonWebsocketConsumer):
         Create & return trip instance
         """
         content['rider'] = self.scope['user'].id
-        serializer = trips_serializers.TripSerializer(data=content)
-        serializer.is_valid(raise_exception=True)
+
+        # Walrus operator
+        (serializer := trips_serializers.TripSerializer(data=content)).is_valid(raise_exception=True)
         trip = serializer.create(serializer.validated_data)
         return trip
 

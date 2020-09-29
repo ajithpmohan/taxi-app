@@ -27,7 +27,7 @@ disable="""
 reports="no"
 
 [tool.pylint.FORMAT]
-max-line-length="119"
+max-line-length=119
 
 [tool.pylint.BASIC]
 good-names="_,i,j,k,e,qs,pk,setUp,tearDown,maxDiff,default_app_config"
