@@ -29,10 +29,7 @@ const Dashboard = ({ currentTrip }) => (
               Drop off Address:&nbsp;
               {currentTrip?.drop_off_address}
             </p>
-            <p className="card-text">
-              Status:&nbsp;
-              {currentTrip?.status}
-            </p>
+            <p className="card-text">{currentTrip?.status}</p>
             <Link to="#" className="btn btn-primary">
               Details
             </Link>
