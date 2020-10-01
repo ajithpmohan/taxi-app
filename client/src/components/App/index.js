@@ -3,13 +3,15 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import { PrivateRoute, withPublicRouter } from '../Route';
 import { withAuthentication } from '../Session';
-import DriverDash from '../Driver/Dashboard';
+
+import DriverPage from '../Driver';
 import HomePage from '../Home';
 import Navigation from '../Navigation';
 import RequestTrip from '../Rider/RequestTrip';
 import RiderDash from '../Rider/Dashboard';
 import SignInPage from '../SignIn';
 import SignUpPage from '../SignUp';
+
 import * as ROUTES from '../../constants/routes';
 
 import './index.css';
@@ -33,8 +35,8 @@ const App = () => (
         component={withPublicRouter(SignUpPage)}
       />
 
-      <PrivateRoute exact path={ROUTES.DRIVER}>
-        <DriverDash />
+      <PrivateRoute path={ROUTES.DRIVER}>
+        <DriverPage />
       </PrivateRoute>
 
       <PrivateRoute exact path={ROUTES.RIDER}>

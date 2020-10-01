@@ -9,8 +9,8 @@
 * Django Channel
 * React.js & Redux
 * Cypress for react.js e2e testing
+* PyTest for django testing
 * PostgreSQL
-* Redis
 
 ## System Requirements
 
@@ -44,7 +44,7 @@ Open [http://localhost:8100/swagger/](http://localhost:8100/swagger/) to access 
 
 ## Run React.js Code Linter
 
-    docker-compose exec client npm run e2e
+    docker-compose exec client npm run lint
 
 ## Run React.js E2E Testing using Cypress
 
@@ -54,6 +54,6 @@ Open [http://localhost:8100/swagger/](http://localhost:8100/swagger/) to access 
 
     docker-compose -f pre-commit.yml up --build
 
-## Create Django Coverage Report
+## Run Django Coverage Report
 
     docker-compose exec server ./coverage.sh

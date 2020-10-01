@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import * as ROLES from '../../constants/roles';
+import * as ROUTES from '../../constants/routes';
 import { withAuthorization } from '../Session';
 
 const Dashboard = ({ currentTrip, availableTrips }) => (
@@ -54,7 +55,15 @@ const Dashboard = ({ currentTrip, availableTrips }) => (
                   {trip.drop_off_address}
                 </p>
                 <p className="card-text">{trip.status}</p>
-                <Link to="#" className="btn btn-primary">
+                <Link
+                  to={{
+                    pathname: `${ROUTES.DRIVER}/${trip.id}`,
+                    state: {
+                      ...trip,
+                    },
+                  }}
+                  className="btn btn-primary"
+                >
                   Details
                 </Link>
               </li>
