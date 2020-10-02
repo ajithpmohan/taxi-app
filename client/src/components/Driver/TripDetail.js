@@ -5,9 +5,10 @@ import { connect } from 'react-redux';
 
 import * as ROLES from '../../constants/roles';
 import { withAPI } from '../../api';
-import { withAuthorization } from '../Session';
+import { withAuthorization, withTripValidator } from '../Session';
+import { withWebSocket } from '../WebSocket';
 
-const TripDetail = ({ access, api, location, match }) => {
+const TripDetail = ({ access, api, location, match, ws }) => {
   const { id } = match.params;
   const [trip, setTrip] = React.useState(location?.state);
 
@@ -23,6 +24,18 @@ const TripDetail = ({ access, api, location, match }) => {
         });
     }
   }, [access, api, id, trip]);
+
+  const handlePickUp = (event) => {
+    console.log('clicked!');
+    ws.next({
+      type: 'accept.pickup',
+      data: {
+        id: trip.id,
+      },
+    });
+
+    event.preventDefault();
+  };
 
   return (
     <React.Fragment>
@@ -41,6 +54,13 @@ const TripDetail = ({ access, api, location, match }) => {
                 {trip?.drop_off_address}
               </p>
               <p className="card-text">{trip?.status}</p>
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={handlePickUp}
+              >
+                Drive To Pick Up
+              </button>
             </li>
           </ul>
         </div>
@@ -62,20 +82,32 @@ TripDetail.propTypes = {
       id: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
+  ws: PropTypes.objectOf(
+    PropTypes.oneOfType([
+      PropTypes.bool,
+      PropTypes.array,
+      PropTypes.object,
+    ]),
+  ),
 };
 
 TripDetail.defaultProps = {
   access: null,
+  ws: null,
 };
 
 const mapStateToProps = (state) => ({
   access: state.sessionState.authUser.access,
 });
 
-const condition = (userrole) => userrole === ROLES.DRIVER;
+const roleValidator = (userrole) => userrole === ROLES.DRIVER;
+
+const tripValidator = (currenttrip) => !!currenttrip;
 
 export default compose(
-  withAuthorization(condition),
+  withAuthorization(roleValidator),
+  withTripValidator(tripValidator),
+  withWebSocket,
   withAPI,
   connect(mapStateToProps),
 )(TripDetail);

@@ -95,7 +95,7 @@ Dashboard.defaultProps = {
   currentTrip: null,
 };
 
-const condition = (userrole) => userrole === ROLES.DRIVER;
+const roleValidator = (userrole) => userrole === ROLES.DRIVER;
 
 const mapStateToProps = (state) => ({
   currentTrip: state.tripState.currentTrip,
@@ -103,6 +103,6 @@ const mapStateToProps = (state) => ({
 });
 
 export default compose(
-  withAuthorization(condition),
+  withAuthorization(roleValidator),
   connect(mapStateToProps),
 )(Dashboard);
