@@ -49,11 +49,11 @@ class User(AbstractBaseUser, PermissionsMixin):
         full_name = f'{self.first_name} {self.last_name}'
         return full_name.strip()
 
-    def get_short_name(self):
+    def get_email(self):
         """
-        Returns the short name for the user.
+        Returns the email id for the user.
         """
-        return self.first_name
+        return self.email
 
     def email_user(self, subject, message, from_email=None, **kwargs):
         """

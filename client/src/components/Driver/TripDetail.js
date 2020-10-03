@@ -26,7 +26,6 @@ const TripDetail = ({ access, api, location, match, ws }) => {
   }, [access, api, id, trip]);
 
   const handlePickUp = (event) => {
-    console.log('clicked!');
     ws.next({
       type: 'accept.pickup',
       data: {

@@ -50,7 +50,7 @@ class TaxiConsumer(AsyncJsonWebsocketConsumer):
             await self.echo_message({'action': 'CURRENT_TRIP', 'payload': trip_data})
             logger.info(f'Ongoing Trip data sent to {user.email}')
 
-    async def disconnect(self):
+    async def disconnect(self, code):
         user = self.scope['user']
 
         # Remove user with driver role from `driver` group.
@@ -59,12 +59,14 @@ class TaxiConsumer(AsyncJsonWebsocketConsumer):
             logger.info(f'{user.email} removed from driver group.')
 
     async def receive_json(self, event, **kwargs):
+        user = self.scope['user']
+
         msg_type = event.get('type')
         # Only user with rider role can create trip
-        if msg_type == 'create.trip' and await self._user_group(self.scope['user']) == 'RIDER':
+        if msg_type == 'create.trip' and await self._user_group(user) == 'RIDER':
             await self.create_trip(event.get('data'))
         # Only user with driver role can create trip
-        elif msg_type == 'accept.pickup' and await self._user_group(self.scope['user']) == 'DRIVER':
+        elif msg_type == 'accept.pickup' and await self._user_group(user) == 'DRIVER':
             await self.accept_pickup(event.get('data'))
 
     async def echo_message(self, event):
@@ -116,6 +118,8 @@ class TaxiConsumer(AsyncJsonWebsocketConsumer):
         Add driver to unique trip group
         Send driver assigned message to both rider & driver
         """
+        user = self.scope['user']
+
         if not await self._get_current_trips():
             if await self._accept_trip(payload):
                 trip_data = await self._get_current_trips()
@@ -126,7 +130,10 @@ class TaxiConsumer(AsyncJsonWebsocketConsumer):
 
                 # Before sending driver assigned messages, discard current user from `driver` group.
                 # So a new trip request can't be sent to the driver until the current trip goes complete.
-                await self.disconnect()
+                # Remove user with driver role from `driver` group.
+                if await self._user_group(user) == 'DRIVER':
+                    await self.channel_layer.group_discard('driver', self.channel_name)
+                    logger.info(f'{user.get_email()} removed from driver group.')
 
                 # Send driver assigned & ready to pickup messages to rider & driver.
                 await self.channel_layer.group_send(
@@ -161,9 +168,10 @@ class TaxiConsumer(AsyncJsonWebsocketConsumer):
         """
         Get trip instance if user has any ongoing trip
         """
+        user = self.scope['user']
         trips = (
             trips_models.Trip.objects.exclude(status=trips_models.Trip.COMPLETED)
-            .filter(Q(rider=self.scope['user']) | Q(driver=self.scope['user']))
+            .filter(Q(rider=user) | Q(driver=user))
             .distinct()
         )
         if trips:
