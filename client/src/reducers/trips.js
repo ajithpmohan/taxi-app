@@ -5,8 +5,9 @@ const INITIAL_STATE = {
   currentTrip: null,
 };
 
-const setCurrentTrip = (state, currentTrip) => ({
+const setCurrentTrip = (state, currentTrip, availableTrips = []) => ({
   ...state,
+  availableTrips,
   currentTrip,
 });
 
