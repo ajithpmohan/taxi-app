@@ -22,6 +22,9 @@ def channel_layer(settings):
 
 
 def get_access_token(user):
+    """
+    Return AccessToken
+    """
     return AccessToken.for_user(user)
 
 
@@ -37,7 +40,6 @@ def create_groups():
 def create_user(data):
     """
     Create User
-    Return AccessToken
     """
     group = Group.objects.filter(name=data.pop('groups'))
     user = User.objects.create_user(**data)
@@ -47,12 +49,10 @@ def create_user(data):
 
 @database_sync_to_async
 def authenticate_user(email, password):
+    """
+    Return Authenticated User
+    """
     return authenticate(email=email, password=password)
-
-
-@database_sync_to_async
-def get_trip_data(trip_id):
-    return trips_models.Trip.objects.get(id=trip_id)
 
 
 @pytest.mark.asyncio
@@ -71,7 +71,7 @@ class TestTaxiConsumer:
         access = await create_user(
             {
                 "email": "rider@example.com",
-                "password": "abc12345",
+                "password": "secret",
                 "first_name": "REJU",
                 "last_name": "P MOHAN",
                 "groups": "RIDER",
@@ -86,7 +86,7 @@ class TestTaxiConsumer:
         access = await create_user(
             {
                 "email": "driver@example.com",
-                "password": "abc12345",
+                "password": "secret",
                 "first_name": "AJITH",
                 "last_name": "P MOHAN",
                 "groups": "DRIVER",
@@ -157,7 +157,6 @@ class TestTaxiConsumer:
         communicator = await self.create_rider()
 
         # Send a Trip to consumer
-        # Return Trip data
         message = await self.create_trip(communicator)
 
         # Receive data from consumer
@@ -220,7 +219,7 @@ class TestTaxiConsumer:
         await communicator.disconnect()
 
         # Authenticate rider
-        user = await authenticate_user(email='rider@example.com', password='abc12345')
+        user = await authenticate_user(email='rider@example.com', password='secret')
 
         # Get access token
         access = get_access_token(user)
@@ -235,36 +234,39 @@ class TestTaxiConsumer:
 
         await communicator.disconnect()
 
-    # async def test_driver_can_accept_trip(self, settings):
-    #     """
-    #     Test that Driver can accept new trip
-    #     """
-    #     channel_layer(settings)
+    async def test_can_driver_accept_trip(self, settings):
+        """
+        Test that Driver can accept new trip
+        """
+        channel_layer(settings)
 
-    #     await create_groups()
+        await create_groups()
 
-    #     # Create & connect a rider to server
-    #     communicator = await self.create_rider()
+        # Create & connect a rider to server
+        communicator = await self.create_rider()
 
-    #     # Send a Trip to consumer
-    #     message = await self.create_trip(communicator)
+        # Send a Trip to consumer
+        await self.create_trip(communicator)
 
-    #     # disconnect rider
-    #     await communicator.disconnect()
+        # disconnect rider
+        await communicator.disconnect()
 
-    #     # Create & connect a driver to server
-    #     communicator = await self.create_driver()
+        # Create & connect a driver to server
+        communicator = await self.create_driver()
 
-    #     # Receive data from consumer
-    #     response = await communicator.receive_json_from()
+        # Receive data from consumer
+        response = await communicator.receive_json_from()
 
-    #     assert response['action'] == 'AVAILABLE_TRIPS'
-    #     assert len(response['payload'])
+        assert response['action'] == 'AVAILABLE_TRIPS'
+        assert len(response['payload'])
 
-    #     trip_id = response['payload'][0]['id']
-    #     await self.accept_trip(communicator, trip_id)
+        trip_id = response['payload'][0]['id']
+        await self.accept_trip(communicator, trip_id)
 
-    #     trip = await get_trip_data(trip_id)
-    #     assert trip.status == trips_models.Trip.STARTED
+        # Receive data from consumer
+        response = await communicator.receive_json_from()
+        assert response['action'] == 'CURRENT_TRIP'
+        assert response['payload']['status'] == trips_models.Trip.STARTED
+        assert response['payload']['driver']
 
-    #     await communicator.disconnect()
+        await communicator.disconnect()

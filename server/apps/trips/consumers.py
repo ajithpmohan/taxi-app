@@ -59,6 +59,11 @@ class TaxiConsumer(AsyncJsonWebsocketConsumer):
             logger.info(f'{user.email} removed from driver group.')
 
     async def receive_json(self, event, **kwargs):
+        """
+        Function receive any event send to consumer.
+        Json Payload contain type & data attributes.
+        Based on the type, pass the data to appropriate handler.
+        """
         user = self.scope['user']
 
         msg_type = event.get('type')
