@@ -9,11 +9,21 @@ services:
       - POSTGRES_DB=taxi_db
       - POSTGRES_USER=taxi
       - POSTGRES_PASSWORD=taxi
-  web:
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile.prod
+    image: docker.pkg.github.com/ajithpmohan/taxi-app/frontend-prod:1.0
+    ports:
+      - 1338:80
+    depends_on:
+      - db
+      - backend
+  backend:
     build:
       context: ./server
       dockerfile: Dockerfile.prod
-    image: docker.pkg.github.com/ajithpmohan/taxi-app/server-prod:1.0
+    image: docker.pkg.github.com/ajithpmohan/taxi-app/backend-prod:1.0
     command: gunicorn core.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - static_volume:/usr/src/app/assets/staticfiles
@@ -35,7 +45,7 @@ services:
     ports:
       - 1337:80
     depends_on:
-      - web
+      - backend
   redis:
     image: redis:latest
 volumes:

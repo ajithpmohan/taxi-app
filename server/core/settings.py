@@ -143,10 +143,7 @@ MEDIA_ROOT = os.path.join(ASSETS_DIR, 'mediafiles')
 
 AUTH_USER_MODEL = "account.User"
 
-CORS_ORIGIN_WHITELIST = [
-    "http://localhost:3001",
-    "http://client:3000",
-]
+CORS_ORIGIN_WHITELIST = config('CORS_ORIGIN_WHITELIST', cast=Csv())
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
