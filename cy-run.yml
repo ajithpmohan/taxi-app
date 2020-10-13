@@ -28,4 +28,3 @@ services:
       - ./client/coverage:/e2e/coverage
       - ./client/cypress:/e2e/cypress
       - ./client/cypress.json:/e2e/cypress.json
-      - ./client/.nyc_output:/e2e/.nyc_output

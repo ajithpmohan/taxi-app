@@ -1,8 +1,8 @@
-# Taxi App built on Docker, DRF & React.js
+# Taxi App
 
 [![Build Status](https://travis-ci.com/ajithpmohan/taxi-app.svg?branch=master)](https://travis-ci.com/ajithpmohan/taxi-app) [![codecov](https://codecov.io/gh/ajithpmohan/taxi-app/branch/master/graph/badge.svg)](https://codecov.io/gh/ajithpmohan/taxi-app)
 
-## Features
+## Tech Stack
 
 * Docker
 * Django Rest Framework
@@ -11,6 +11,7 @@
 * Cypress for react.js e2e testing
 * PyTest for django testing
 * PostgreSQL
+* Swagger
 
 ## System Requirements
 

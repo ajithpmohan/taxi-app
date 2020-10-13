@@ -1,7 +1,7 @@
 # pull official base image
 FROM node:12.18.3-alpine
 
-# set node_modules directory
+# set working directory
 WORKDIR /usr/src/app/
 
 # add `/usr/src/app/node_modules/.bin` to $PATH
