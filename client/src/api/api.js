@@ -15,16 +15,16 @@ class API {
   };
 
   doSignInWithEmailAndPassword = (email, password) =>
-    this.sendRequest('POST', '/api/v1/account/token/', {
+    this.sendRequest('POST', '/v1/account/token/', {
       email,
       password,
     });
 
   doSignUpWithEmailAndPassword = (data) =>
-    this.sendRequest('POST', '/api/v1/account/sign-up/', data);
+    this.sendRequest('POST', '/v1/account/sign-up/', data);
 
   dofetchTrip = (id, accessToken) =>
-    this.sendRequest('GET', `/api/v1/trips/${id}/`, null, {
+    this.sendRequest('GET', `/v1/trips/${id}/`, null, {
       Authorization: `Bearer ${accessToken}`,
     });
 }

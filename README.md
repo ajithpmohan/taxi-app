@@ -39,9 +39,9 @@ Before building the services update the permission of following bash scripts.
 
 ## Access the services in the development mode.
 
-Open [http://localhost:3001/](http://localhost:3001/) to access `client` service in the browser.
+Open [http://localhost:8001/](http://localhost:8001/) to access `client` service in the browser.
 
-Open [http://localhost:8100/swagger/](http://localhost:8100/swagger/) to access `server` service in the browser.
+Open [http://localhost:8002/](http://localhost:8002/) to access `server` service in the browser.
 
 ## Run React.js Code Linter
 

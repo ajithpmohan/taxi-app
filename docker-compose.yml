@@ -18,7 +18,7 @@ services:
       - ./client:/usr/src/app
       - /usr/src/app/node_modules
     ports:
-      - "3001:3000"
+      - "8001:8000"
     depends_on:
       - postgres
       - server
@@ -31,7 +31,7 @@ services:
     volumes:
       - ./server/:/usr/src/app/web/
     ports:
-      - "8100:8000"
+      - "8002:8000"
     env_file:
       - ./server/.env.dev
     depends_on:

@@ -13,7 +13,7 @@ services:
     # in the "client" container is cooking
     # see https://docs.docker.com/compose/networking/
     environment:
-      - CYPRESS_baseUrl=http://localhost:3001
+      - CYPRESS_baseUrl=http://localhost:8001
     command: npx cypress run
     network_mode: 'host'
     # mount the host directory cliennt/cypress and the file cliennt/cypress.json as
