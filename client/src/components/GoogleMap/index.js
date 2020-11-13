@@ -1,5 +1,5 @@
 import React, { createRef } from 'react';
-import AutocompleteDirectionsHandler from '../../services/googlemaps';
+import AutocompleteDirectionsHandler from 'services/googlemaps';
 
 class GoogleMap extends React.Component {
   googleMapRef = createRef();

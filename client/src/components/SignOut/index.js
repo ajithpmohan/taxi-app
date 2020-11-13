@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { withRouter } from 'react-router-dom';
 
-import { doSetAuthUser } from '../../actions';
-import * as ROUTES from '../../constants/routes';
+import { doSetAuthUser } from 'actions';
+import * as ROUTES from 'constants/routes';
 
 class SignOutButton extends React.Component {
   onSignOut = () => {

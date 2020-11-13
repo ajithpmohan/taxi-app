@@ -5,12 +5,12 @@ import { Provider } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min';
 
-import App from './components/App';
-import store from './store';
-import API, { APIContext } from './api';
-import * as serviceWorker from './serviceWorker';
-import WebSocketProvider from './components/WebSocket';
-import './index.css';
+import App from 'components/App';
+import store from 'store';
+import API, { APIContext } from 'api';
+import * as serviceWorker from 'serviceWorker';
+import WebSocketProvider from 'components/WebSocket';
+import 'index.css';
 
 ReactDOM.render(
   <React.StrictMode>

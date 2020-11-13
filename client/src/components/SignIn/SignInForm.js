@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { compose } from 'recompose';
 import { withRouter } from 'react-router-dom';
 
-import { doSetAuthUser } from '../../actions';
-import { withAPI } from '../../api';
-import * as ROUTES from '../../constants/routes';
+import * as ROUTES from 'constants/routes';
+import { doSetAuthUser } from 'actions';
+import { withAPI } from 'api';
 
-const INITIAL_STATE = {
+const initialState = {
   email: '',
   password: '',
   error: null,
@@ -20,82 +20,84 @@ const REDIRECT_URL = {
   ADMIN: ROUTES.HOME,
 };
 
-class SignInFormBase extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { ...INITIAL_STATE };
-  }
+const SignInFormBase = ({ api, history }) => {
+  const [user, setUser] = useState(initialState);
+  const dispatch = useDispatch();
 
-  onSubmit = (event) => {
-    const { email, password } = this.state;
-    const { api } = this.props;
+  const onSubmit = (event) => {
+    const { email, password } = user;
 
     api
       .doSignInWithEmailAndPassword(email, password)
-      .then((resp) => {
-        this.setState({ ...INITIAL_STATE });
+      .then(({ data }) => {
+        setUser(initialState);
 
-        const { history, onSetAuthUser } = this.props;
-        localStorage.setItem('authUser', JSON.stringify(resp.data));
-        onSetAuthUser(JSON.parse(localStorage.getItem('authUser')));
+        localStorage.setItem('authUser', JSON.stringify(data));
+        dispatch(doSetAuthUser(data));
 
-        history.push(REDIRECT_URL[resp.data.user.role]);
+        const {
+          user: { role },
+        } = data;
+        history.push(REDIRECT_URL[role]);
       })
-      .catch((error) => {
-        this.setState({ error });
-      });
+      .catch(
+        ({
+          response: {
+            data: { detail },
+          },
+        }) => {
+          setUser({ ...user, error: detail });
+        },
+      );
 
     event.preventDefault();
   };
 
-  onChange = (event) => {
-    this.setState({ [event.target.name]: event.target.value });
-  };
+  const isInvalid = user.password === '' || user.email === '';
 
-  render() {
-    const { email, password, error } = this.state;
-    const isInvalid = password === '' || email === '';
-
-    return (
-      <form onSubmit={this.onSubmit}>
-        <div className="form-group">
-          <label htmlFor="email">Email address</label>
-          <input
-            className="form-control col-md-4"
-            name="email"
-            id="email"
-            value={email}
-            onChange={this.onChange}
-            type="text"
-            placeholder="Email Address"
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">Password</label>
-          <input
-            className="form-control col-md-4"
-            id="password"
-            name="password"
-            value={password}
-            onChange={this.onChange}
-            type="password"
-            placeholder="Password"
-          />
-        </div>
-        <div className="form-group">
-          <button
-            className="btn btn-primary"
-            disabled={isInvalid}
-            type="submit"
-          >
-            Sign In
-          </button>
-          {error && <p>{error.response?.data.detail}</p>}
-        </div>
-      </form>
-    );
-  }
-}
+  return (
+    <form onSubmit={onSubmit}>
+      <div className="form-group">
+        <label htmlFor="email">Email address</label>
+        <input
+          className="form-control col-md-4"
+          name="email"
+          id="email"
+          value={user.email}
+          onChange={(e) =>
+            setUser({ ...user, email: e.target.value })
+          }
+          type="text"
+          placeholder="Email Address"
+        />
+      </div>
+      <div className="form-group">
+        <label htmlFor="password">Password</label>
+        <input
+          className="form-control col-md-4"
+          name="password"
+          id="password"
+          value={user.password}
+          onChange={(e) =>
+            setUser({ ...user, password: e.target.value })
+          }
+          type="password"
+          placeholder="Password"
+        />
+      </div>
+      <div className="form-group">
+        <button
+          className="btn btn-primary"
+          disabled={isInvalid}
+          type="submit"
+        >
+          Sign In
+        </button>
+        {user.error && <p>{user.error}</p>}
+      </div>
+    </form>
+  );
+};
 
 SignInFormBase.propTypes = {
   api: PropTypes.shape({
@@ -104,17 +106,8 @@ SignInFormBase.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
-  onSetAuthUser: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  onSetAuthUser: (authUser) => dispatch(doSetAuthUser(authUser)),
-});
-
-const SignInForm = compose(
-  withAPI,
-  withRouter,
-  connect(null, mapDispatchToProps),
-)(SignInFormBase);
+const SignInForm = compose(withAPI, withRouter)(SignInFormBase);
 
 export default SignInForm;

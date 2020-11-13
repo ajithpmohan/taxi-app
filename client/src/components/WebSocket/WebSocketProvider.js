@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { webSocket } from 'rxjs/webSocket';
 
+import { doSetTrip } from 'actions';
 import WebSocketContext from './context';
-import { doSetTrip } from '../../actions';
 
 class WebSocketProvider extends React.Component {
   constructor(props) {

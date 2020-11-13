@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
 
-import * as ROUTES from '../../constants/routes';
+import * as ROUTES from 'constants/routes';
 
 function PrivateRoute({ children, ...rest }) {
   const authUser = JSON.parse(localStorage.getItem('authUser'));

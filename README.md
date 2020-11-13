@@ -43,9 +43,11 @@ Open [http://localhost:8001/](http://localhost:8001/) to access `client` service
 
 Open [http://localhost:8002/](http://localhost:8002/) to access `server` service in the browser.
 
-## Run React.js Code Linter
+## Run React.js Code Linter & Formatter
 
     docker-compose exec client npm run lint
+
+    docker-compose exec client npm run format
 
 ## Run React.js E2E Testing using Cypress
 

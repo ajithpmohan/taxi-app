@@ -1,4 +1,14 @@
 module.exports = {
+  settings: {
+    react: {
+      version: 'detect', // Tells eslint-plugin-react to automatically detect the version of React to use
+    },
+    'import/resolver': {
+      node: {
+        paths: ['src'],
+      },
+    },
+  },
   env: {
     browser: true,
     es6: true,
@@ -35,6 +45,10 @@ module.exports = {
         component: true,
         html: false,
       },
+    ],
+    'import/no-extraneous-dependencies': [
+      'error',
+      { devDependencies: true },
     ],
     'react/jsx-closing-tag-location': 0,
     'react/jsx-curly-newline': 0,

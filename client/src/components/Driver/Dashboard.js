@@ -4,9 +4,9 @@ import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import * as ROLES from '../../constants/roles';
-import * as ROUTES from '../../constants/routes';
-import { withAuthorization } from '../Session';
+import * as ROLES from 'constants/roles';
+import * as ROUTES from 'constants/routes';
+import { withAuthorization } from 'components/Session';
 
 const Dashboard = ({ currentTrip, availableTrips }) => (
   <React.Fragment>

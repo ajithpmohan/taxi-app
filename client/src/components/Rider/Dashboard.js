@@ -4,8 +4,8 @@ import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import * as ROLES from '../../constants/roles';
-import { withAuthorization } from '../Session';
+import * as ROLES from 'constants/roles';
+import { withAuthorization } from 'components/Session';
 
 import './index.css';
 

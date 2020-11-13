@@ -1,9 +1,9 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
+import * as ROUTES from 'constants/routes';
 import Dashboard from './Dashboard';
 import TripDetail from './TripDetail';
-import * as ROUTES from '../../constants/routes';
 
 const DriverPage = () => (
   <div>
