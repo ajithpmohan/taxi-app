@@ -3,11 +3,14 @@ import PropTypes from 'prop-types';
 import { compose } from 'recompose';
 import { withRouter } from 'react-router-dom';
 
-import GoogleMap from '../GoogleMap';
-import { withAuthorization, withTripValidator } from '../Session';
-import { withWebSocket } from '../WebSocket';
-import * as ROLES from '../../constants/roles';
-import * as ROUTES from '../../constants/routes';
+import GoogleMap from 'components/GoogleMap';
+import {
+  withAuthorization,
+  withTripValidator,
+} from 'components/Session';
+import { withWebSocket } from 'components/WebSocket';
+import * as ROLES from 'constants/roles';
+import * as ROUTES from 'constants/routes';
 
 import './index.css';
 

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { doSetAuthUser } from '../../actions';
+import { doSetAuthUser } from 'actions';
 
 const withAuthentication = (Component) => {
   class WithAuthentication extends React.Component {
@@ -21,7 +21,7 @@ const withAuthentication = (Component) => {
     authUser: PropTypes.shape({
       refresh: PropTypes.string,
       access: PropTypes.string,
-      user: PropTypes.object,
+      user: PropTypes.objectOf(PropTypes.string),
       isAuthenticated: PropTypes.bool,
     }),
     onSetAuthUser: PropTypes.func.isRequired,

@@ -5,20 +5,20 @@ import { Provider } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min';
 
-import App from './components/App';
-import store from './store';
-import API, { APIContext } from './api';
-import * as serviceWorker from './serviceWorker';
-import WebSocketProvider from './components/WebSocket';
-import './index.css';
+import App from 'domain/App';
+import store from 'store';
+import ServerCtx, { ServerAPI } from 'services/server';
+import * as serviceWorker from 'serviceWorker';
+import WebSocketProvider from 'components/WebSocket';
+import 'index.css';
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <WebSocketProvider>
-        <APIContext.Provider value={new API()}>
+        <ServerCtx.Provider value={new ServerAPI()}>
           <App />
-        </APIContext.Provider>
+        </ServerCtx.Provider>
       </WebSocketProvider>
     </Provider>
   </React.StrictMode>,

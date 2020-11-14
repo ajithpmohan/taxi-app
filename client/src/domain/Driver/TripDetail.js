@@ -3,18 +3,21 @@ import PropTypes from 'prop-types';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
 
-import * as ROLES from '../../constants/roles';
-import { withAPI } from '../../api';
-import { withAuthorization, withTripValidator } from '../Session';
-import { withWebSocket } from '../WebSocket';
+import * as ROLES from 'constants/roles';
+import {
+  withAuthorization,
+  withTripValidator,
+} from 'components/Session';
+import { withWebSocket } from 'components/WebSocket';
+import { withServerConsumer } from 'services/server';
 
-const TripDetail = ({ access, api, location, match, ws }) => {
+const TripDetail = ({ access, serverAPI, location, match, ws }) => {
   const { id } = match.params;
   const [trip, setTrip] = React.useState(location?.state);
 
   React.useEffect(() => {
     if (!trip) {
-      api
+      serverAPI
         .dofetchTrip(id, access)
         .then((resp) => {
           setTrip(resp.data);
@@ -23,7 +26,7 @@ const TripDetail = ({ access, api, location, match, ws }) => {
           console.log(error);
         });
     }
-  }, [access, api, id, trip]);
+  }, [access, serverAPI, id, trip]);
 
   const handlePickUp = (event) => {
     ws.next({
@@ -70,11 +73,11 @@ const TripDetail = ({ access, api, location, match, ws }) => {
 
 TripDetail.propTypes = {
   access: PropTypes.string,
-  api: PropTypes.shape({
+  serverAPI: PropTypes.shape({
     dofetchTrip: PropTypes.func.isRequired,
   }).isRequired,
   location: PropTypes.shape({
-    state: PropTypes.object,
+    state: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   }).isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
@@ -107,6 +110,6 @@ export default compose(
   withAuthorization(roleValidator),
   withTripValidator(tripValidator),
   withWebSocket,
-  withAPI,
+  withServerConsumer,
   connect(mapStateToProps),
 )(TripDetail);

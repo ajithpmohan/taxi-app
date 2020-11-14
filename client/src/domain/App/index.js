@@ -1,18 +1,18 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-import { PrivateRoute, withPublicRouter } from '../Route';
-import { withAuthentication } from '../Session';
+import { PrivateRoute, withPublicRouter } from 'components/Route';
+import { withAuthentication } from 'components/Session';
 
-import DriverPage from '../Driver';
-import HomePage from '../Home';
-import Navigation from '../Navigation';
-import RequestTrip from '../Rider/RequestTrip';
-import RiderDash from '../Rider/Dashboard';
-import SignInPage from '../SignIn';
-import SignUpPage from '../SignUp';
+import Navigation from 'components/Navigation';
+import DriverPage from 'domain/Driver';
+import HomePage from 'domain/Home';
+import RequestTrip from 'domain/Rider/RequestTrip';
+import RiderDash from 'domain/Rider/Dashboard';
+import SignInPage from 'domain/SignIn';
+import SignUpPage from 'domain/SignUp';
 
-import * as ROUTES from '../../constants/routes';
+import * as ROUTES from 'constants/routes';
 
 import './index.css';
 

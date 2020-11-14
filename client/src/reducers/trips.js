@@ -1,6 +1,6 @@
-import * as actionTypes from '../constants/actionTypes';
+import * as actionTypes from 'constants/actionTypes';
 
-const INITIAL_STATE = {
+const initialState = {
   availableTrips: [],
   currentTrip: null,
 };
@@ -21,13 +21,18 @@ const setAvailableTrips = (state, availableTrips) => ({
   availableTrips,
 });
 
-function TripReducer(state = INITIAL_STATE, action) {
+const clearTrips = (state) => ({
+  ...state,
+  ...initialState,
+});
+
+function TripReducer(state = initialState, action) {
   switch (action.type) {
-    // CURRENT_TRIP events - 3 conditions
-    // When a new trip is created by RIDER assign it to `currentTrip` state variable.'
-    // When RIDER/Driver reconnected to websocket, fetch if rider/driver has any ongoing trip data
-    // & assign it to `currentTrip` state variable.
-    // When Driver accept a trip request assign it to `currentTrip` state variable .
+    // CURRENT_TRIP events trigger on three conditions.
+    // a) When a new trip is created by RIDER assign it to `currentTrip` state variable.'
+    // b) When RIDER/Driver reconnected to websocket, fetch if rider/driver has any
+    // ongoing trip data & assign it to `currentTrip` state variable.
+    // c) When Driver accept a trip request assign it to `currentTrip` state variable .
     case actionTypes.CURRENT_TRIP:
       return setCurrentTrip(state, action.payload);
 
@@ -43,6 +48,12 @@ function TripReducer(state = INITIAL_STATE, action) {
     // all newly requested trips will be fetched & stored to `availableTrips` state Array variable.
     case actionTypes.AVAILABLE_TRIPS:
       return setAvailableTrips(state, action.payload);
+
+    /// CLEAR_TRIPS events
+    // When User signout clear all trips data from the 'store'.
+    case actionTypes.CLEAR_TRIPS:
+      return clearTrips(state);
+
     default:
       return state;
   }

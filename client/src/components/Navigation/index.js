@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import SignOut from '../SignOut';
+import * as ROUTES from 'constants/routes';
+import SignOut from 'domain/SignOut';
 import MenuLink from './MenuLink';
-import * as ROUTES from '../../constants/routes';
 
 import './index.css';
 
@@ -133,7 +133,7 @@ Navigation.propTypes = {
   authUser: PropTypes.shape({
     refresh: PropTypes.string,
     access: PropTypes.string,
-    user: PropTypes.object,
+    user: PropTypes.objectOf(PropTypes.string),
     isAuthenticated: PropTypes.bool,
   }),
   currentTrip: PropTypes.shape({

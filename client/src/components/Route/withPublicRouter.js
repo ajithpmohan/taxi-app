@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { withRouter } from 'react-router-dom';
 
-import * as ROUTES from '../../constants/routes';
+import * as ROUTES from 'constants/routes';
 
 const REDIRECT_URL = {
   DRIVER: ROUTES.DRIVER,
@@ -45,7 +45,7 @@ const withPublicRouter = (Component) => {
     authUser: PropTypes.shape({
       refresh: PropTypes.string,
       access: PropTypes.string,
-      user: PropTypes.object,
+      user: PropTypes.objectOf(PropTypes.string),
       isAuthenticated: PropTypes.bool,
     }),
     history: PropTypes.shape({
