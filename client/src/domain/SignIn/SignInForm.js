@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 
 import * as ROUTES from 'constants/routes';
 import { doSetAuthUser } from 'actions';
-import { withAPI } from 'api';
+import { withServerConsumer } from 'services/server';
 
 const initialState = {
   email: '',
@@ -20,14 +20,14 @@ const REDIRECT_URL = {
   ADMIN: ROUTES.HOME,
 };
 
-const SignInFormBase = ({ api, history }) => {
+const SignInFormBase = ({ serverAPI, history }) => {
   const [user, setUser] = useState(initialState);
   const dispatch = useDispatch();
 
   const onSubmit = (event) => {
     const { email, password } = user;
 
-    api
+    serverAPI
       .doSignInWithEmailAndPassword(email, password)
       .then(({ data }) => {
         setUser(initialState);
@@ -100,7 +100,7 @@ const SignInFormBase = ({ api, history }) => {
 };
 
 SignInFormBase.propTypes = {
-  api: PropTypes.shape({
+  serverAPI: PropTypes.shape({
     doSignInWithEmailAndPassword: PropTypes.func.isRequired,
   }).isRequired,
   history: PropTypes.shape({
@@ -108,6 +108,9 @@ SignInFormBase.propTypes = {
   }).isRequired,
 };
 
-const SignInForm = compose(withAPI, withRouter)(SignInFormBase);
+const SignInForm = compose(
+  withServerConsumer,
+  withRouter,
+)(SignInFormBase);
 
 export default SignInForm;

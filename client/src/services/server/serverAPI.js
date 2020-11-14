@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-class API {
+class ServerAPI {
   constructor() {
     this.domain = process.env.REACT_APP_SERVER_DOMAIN;
   }
@@ -29,4 +29,4 @@ class API {
     });
 }
 
-export default API;
+export default ServerAPI;

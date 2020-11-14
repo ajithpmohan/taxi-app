@@ -10,4 +10,8 @@ const doSetTrip = ({ action, payload }) => ({
   payload,
 });
 
-export { doSetAuthUser, doSetTrip };
+const doClearTrips = () => ({
+  type: actionTypes.CLEAR_TRIPS,
+});
+
+export { doSetAuthUser, doSetTrip, doClearTrips };

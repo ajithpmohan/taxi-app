@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { compose } from 'recompose';
 import { withRouter } from 'react-router-dom';
 
-import { withAPI } from 'api';
 import * as ROUTES from 'constants/routes';
+import { withServerConsumer } from 'services/server';
 
 // Use camelCase as variable name
 const initialState = {
@@ -18,7 +18,7 @@ const initialState = {
   error: null,
 };
 
-const SignUpFormBase = ({ api, history }) => {
+const SignUpFormBase = ({ serverAPI, history }) => {
   const [user, setUser] = useState(initialState);
 
   const handleSubmit = (event) => {
@@ -42,7 +42,7 @@ const SignUpFormBase = ({ api, history }) => {
     data.append('groups', groups);
     data.append('avatar', avatar);
 
-    api
+    serverAPI
       .doSignUpWithEmailAndPassword(data)
       .then((response) => {
         setUser(initialState);
@@ -198,7 +198,7 @@ const SignUpFormBase = ({ api, history }) => {
 };
 
 SignUpFormBase.propTypes = {
-  api: PropTypes.shape({
+  serverAPI: PropTypes.shape({
     doSignUpWithEmailAndPassword: PropTypes.func.isRequired,
   }).isRequired,
   history: PropTypes.shape({
@@ -206,6 +206,9 @@ SignUpFormBase.propTypes = {
   }).isRequired,
 };
 
-const SignUpForm = compose(withAPI, withRouter)(SignUpFormBase);
+const SignUpForm = compose(
+  withServerConsumer,
+  withRouter,
+)(SignUpFormBase);
 
 export default SignUpForm;

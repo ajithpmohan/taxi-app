@@ -4,13 +4,13 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { PrivateRoute, withPublicRouter } from 'components/Route';
 import { withAuthentication } from 'components/Session';
 
-import DriverPage from 'components/Driver';
-import HomePage from 'components/Home';
 import Navigation from 'components/Navigation';
-import RequestTrip from 'components/Rider/RequestTrip';
-import RiderDash from 'components/Rider/Dashboard';
-import SignInPage from 'components/SignIn';
-import SignUpPage from 'components/SignUp';
+import DriverPage from 'domain/Driver';
+import HomePage from 'domain/Home';
+import RequestTrip from 'domain/Rider/RequestTrip';
+import RiderDash from 'domain/Rider/Dashboard';
+import SignInPage from 'domain/SignIn';
+import SignUpPage from 'domain/SignUp';
 
 import * as ROUTES from 'constants/routes';
 

@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import SignOut from 'components/SignOut';
 import * as ROUTES from 'constants/routes';
+import SignOut from 'domain/SignOut';
 import MenuLink from './MenuLink';
 
 import './index.css';
