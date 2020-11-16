@@ -18,12 +18,29 @@ services:
       - 1338:80
     depends_on:
       - db
-      - backend
-  backend:
+      - backend-asgi
+      - backend-wsgi
+  # backend-asgi container is for handling websocket req/res.
+  backend-asgi:
     build:
       context: ./server
-      dockerfile: Dockerfile.prod
-    image: docker.pkg.github.com/ajithpmohan/taxi-app/backend-prod:1.0
+      dockerfile: Dockerfile.asgi.prod
+    image: docker.pkg.github.com/ajithpmohan/taxi-app/backend-asgi-prod:1.0
+    command: daphne -b 0.0.0.0 -p 8000 core.asgi:application
+    expose:
+      - 8000
+    env_file:
+      - ./server/.env.prod
+    depends_on:
+      - db
+    links:
+      - redis
+  # backend-wsgi container is for handling normal http req/res.
+  backend-wsgi:
+    build:
+      context: ./server
+      dockerfile: Dockerfile.wsgi.prod
+    image: docker.pkg.github.com/ajithpmohan/taxi-app/backend-wsgi-prod:1.0
     command: gunicorn core.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - static_volume:/usr/src/app/assets/staticfiles
@@ -45,7 +62,8 @@ services:
     ports:
       - 1337:80
     depends_on:
-      - backend
+      - backend-asgi
+      - backend-wsgi
   redis:
     image: redis:latest
 volumes:

@@ -10,7 +10,7 @@ ENV PATH /app/node_modules/.bin:$PATH
 
 # install app dependencies
 COPY package*.json ./
-RUN npm ci --silent
+RUN npm ci
 
 # Copies everything over to Docker environment & Run build
 COPY . .
