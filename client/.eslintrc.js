@@ -39,21 +39,11 @@ module.exports = {
       1,
       { extensions: ['.js', '.jsx'] },
     ],
-    'react/self-closing-comp': [
-      'error',
-      {
-        component: true,
-        html: false,
-      },
-    ],
     'import/no-extraneous-dependencies': [
       'error',
       { devDependencies: true },
     ],
-    'react/jsx-closing-tag-location': 0,
     'react/jsx-curly-newline': 0,
-    'import/no-named-as-default': 0,
-    'import/no-named-as-default-member': 0,
     'jsx-a11y/label-has-associated-control': 0,
     'react/jsx-props-no-spreading': ['off'],
     'import/prefer-default-export': 0,

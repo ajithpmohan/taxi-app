@@ -40,7 +40,7 @@ const TripDetail = ({ access, serverAPI, location, match, ws }) => {
   };
 
   return (
-    <React.Fragment>
+    <>
       <div className="card col-sm-6">
         <h5 className="card-header">Requested Trip</h5>
         <div className="card-body">
@@ -67,7 +67,7 @@ const TripDetail = ({ access, serverAPI, location, match, ws }) => {
           </ul>
         </div>
       </div>
-    </React.Fragment>
+    </>
   );
 };
 

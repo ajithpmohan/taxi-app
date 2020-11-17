@@ -9,14 +9,14 @@ import * as ROUTES from 'constants/routes';
 import { withAuthorization } from 'components/Session';
 
 const Dashboard = ({ currentTrip, availableTrips }) => (
-  <React.Fragment>
+  <>
     <div className="card col-sm-6">
       <h5 className="card-header">Current Trip</h5>
       <div className="card-body">
         {!currentTrip ? (
           <p className="card-text">No Trip</p>
         ) : (
-          <React.Fragment>
+          <>
             <h5 className="card-title">
               {currentTrip.rider.fullname}
             </h5>
@@ -32,7 +32,7 @@ const Dashboard = ({ currentTrip, availableTrips }) => (
             <Link to="#" className="btn btn-primary">
               Details
             </Link>
-          </React.Fragment>
+          </>
         )}
       </div>
     </div>
@@ -76,7 +76,7 @@ const Dashboard = ({ currentTrip, availableTrips }) => (
       <h5 className="card-header">Recent Trips</h5>
       <div className="card-body">No Trips</div>
     </div>
-  </React.Fragment>
+  </>
 );
 
 Dashboard.propTypes = {

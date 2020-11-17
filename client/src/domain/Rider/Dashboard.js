@@ -4,18 +4,19 @@ import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+import * as ROUTES from 'constants/routes';
 import * as ROLES from 'constants/roles';
 import { withAuthorization } from 'components/Session';
 
 import './index.css';
 
 const Dashboard = ({ currentTrip }) => (
-  <React.Fragment>
+  <>
     <div className="card col-sm-6">
       <h5 className="card-header">Current Trip</h5>
       <div className="card-body">
-        {currentTrip ? (
-          <React.Fragment>
+        {currentTrip && currentTrip.status !== 'Requested' ? (
+          <>
             {currentTrip.driver && (
               <h5 className="card-title">
                 {currentTrip?.driver.fullname}
@@ -30,10 +31,18 @@ const Dashboard = ({ currentTrip }) => (
               {currentTrip?.drop_off_address}
             </p>
             <p className="card-text">{currentTrip?.status}</p>
-            <Link to="#" className="btn btn-primary">
+            <Link
+              to={{
+                pathname: `${ROUTES.RIDER}/${currentTrip.id}`,
+                state: {
+                  ...currentTrip,
+                },
+              }}
+              className="btn btn-primary"
+            >
               Details
             </Link>
-          </React.Fragment>
+          </>
         ) : (
           <p className="card-text">No Trip</p>
         )}
@@ -43,11 +52,12 @@ const Dashboard = ({ currentTrip }) => (
       <h5 className="card-header">Recent Trips</h5>
       <div className="card-body">No Trips</div>
     </div>
-  </React.Fragment>
+  </>
 );
 
 Dashboard.propTypes = {
   currentTrip: PropTypes.shape({
+    id: PropTypes.string,
     driver: PropTypes.shape({
       fullname: PropTypes.string,
     }),
