@@ -22,11 +22,6 @@ class ServerAPI {
 
   doSignUpWithEmailAndPassword = (data) =>
     this.sendRequest('POST', '/v1/account/sign-up/', data);
-
-  dofetchTrip = (id, accessToken) =>
-    this.sendRequest('GET', `/v1/trips/${id}/`, null, {
-      Authorization: `Bearer ${accessToken}`,
-    });
 }
 
 export default ServerAPI;

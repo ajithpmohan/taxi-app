@@ -37,7 +37,7 @@ class GoogleMap extends React.Component {
         id="map"
         ref={this.googleMapRef}
         style={{ width: '400px', height: '300px' }}
-      ></div>
+      />
     );
   }
 }

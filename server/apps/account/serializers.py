@@ -15,7 +15,8 @@ class SignUpSerializer(serializers.ModelSerializer):
     """
 
     password = serializers.CharField(
-        write_only=True, validators=[validators.MinimumLengthValidator(), validators.MaximumLengthValidator()]
+        write_only=True,
+        validators=[validators.MinimumLengthValidator(), validators.MaximumLengthValidator()],
     )
     password2 = serializers.CharField(write_only=True)
     groups = serializers.CharField()

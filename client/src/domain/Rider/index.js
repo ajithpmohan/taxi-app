@@ -4,17 +4,23 @@ import { Switch, Route } from 'react-router-dom';
 import * as ROUTES from 'constants/routes';
 import NotFoundPage from 'components/NotFound';
 import Dashboard from './Dashboard';
+import RequestTrip from './RequestTrip';
 import TripDetail from './TripDetail';
 
-const DriverPage = () => (
+const RiderPage = () => (
   <div>
-    <h4>Driver Dashboard</h4>
+    <h4>Rider Dashboard</h4>
 
     <Switch>
-      <Route exact path={ROUTES.DRIVER} component={Dashboard} />
+      <Route exact path={ROUTES.RIDER} component={Dashboard} />
       <Route
         exact
-        path={ROUTES.DRIVERTRIPDETAIL}
+        path={ROUTES.REQUESTTRIP}
+        component={RequestTrip}
+      />
+      <Route
+        exact
+        path={ROUTES.RIDERTRIPDETAIL}
         component={TripDetail}
       />
       <Route path="*" component={NotFoundPage} />
@@ -22,4 +28,4 @@ const DriverPage = () => (
   </div>
 );
 
-export default DriverPage;
+export default RiderPage;

@@ -202,7 +202,9 @@ class SignupTest(APITestCase):
 
         self.assertEqual(User.objects.count(), 1)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(response.data['message'], f'Account activation email sent to {data["email"]}')
+        self.assertEqual(
+            response.data['message'], f'Account activation email sent to {data["email"]}'
+        )
 
 
 class TokenObtainTest(APITestCase):

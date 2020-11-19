@@ -30,10 +30,18 @@ class Trip(models.Model):
     drop_off_address = models.CharField(max_length=255)
     status = models.CharField(max_length=16, choices=STATUSES, default=REQUESTED)
     driver = models.ForeignKey(
-        get_user_model(), null=True, blank=True, on_delete=models.CASCADE, related_name='trips_as_driver'
+        get_user_model(),
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
+        related_name='trips_as_driver',
     )
     rider = models.ForeignKey(
-        get_user_model(), null=True, blank=True, on_delete=models.CASCADE, related_name='trips_as_rider'
+        get_user_model(),
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
+        related_name='trips_as_rider',
     )
 
     def __str__(self):

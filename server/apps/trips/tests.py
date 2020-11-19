@@ -58,9 +58,11 @@ def authenticate_user(email, password):
 @pytest.mark.asyncio
 @pytest.mark.django_db(transaction=True)
 class TestTaxiConsumer:
-    async def connect_user_to_server(self, access):
-        # Connect user to webconnect
-        communicator = WebsocketCommunicator(application=application, path=f'/ws/trip/?token={access}')
+    async def connect_user_to_websocket(self, access):
+        # Connect user to websocket
+        communicator = WebsocketCommunicator(
+            application=application, path=f'/ws/trip/?token={access}'
+        )
         connected, _ = await communicator.connect()
         assert connected
 
@@ -78,7 +80,7 @@ class TestTaxiConsumer:
             }
         )
 
-        return await self.connect_user_to_server(access)
+        return await self.connect_user_to_websocket(access)
 
     async def create_driver(self):
 
@@ -93,7 +95,7 @@ class TestTaxiConsumer:
             }
         )
 
-        return await self.connect_user_to_server(access)
+        return await self.connect_user_to_websocket(access)
 
     async def create_trip(self, communicator):
 
@@ -110,10 +112,10 @@ class TestTaxiConsumer:
         await communicator.send_json_to(message)
         return message
 
-    async def accept_trip(self, communicator, trip_id):
+    async def accept_pickup(self, communicator, trip_id):
 
         message = {
-            'type': 'accept.pickup',
+            'type': 'trip.pickup',
             'data': {
                 'id': trip_id,
             },
@@ -121,7 +123,29 @@ class TestTaxiConsumer:
         # send data to consumer
         await communicator.send_json_to(message)
 
-    async def test_cannot_connect_to_server(self, settings):
+    async def accept_dropoff(self, communicator, trip_id):
+
+        message = {
+            'type': 'trip.dropoff',
+            'data': {
+                'id': trip_id,
+            },
+        }
+        # send data to consumer
+        await communicator.send_json_to(message)
+
+    async def complete_trip(self, communicator, trip_id):
+
+        message = {
+            'type': 'trip.complete',
+            'data': {
+                'id': trip_id,
+            },
+        }
+        # send data to consumer
+        await communicator.send_json_to(message)
+
+    async def test_cannot_connect_to_websocket(self, settings):
         """
         AnonymousUser can't able to connect websocket.
         """
@@ -131,7 +155,7 @@ class TestTaxiConsumer:
         connected, _ = await communicator.connect()
         assert connected is False
 
-    async def test_can_connect_to_server(self, settings):
+    async def test_can_connect_to_websocket(self, settings):
         """
         Only Authenticated User can connect to websocket.
         """
@@ -139,7 +163,7 @@ class TestTaxiConsumer:
 
         await create_groups()
 
-        # Create & connect a rider to server
+        # Create & connect a rider to websocket
         communicator = await self.create_rider()
 
         # disconnect rider
@@ -153,8 +177,11 @@ class TestTaxiConsumer:
 
         await create_groups()
 
-        # Create & connect a rider to server
+        # Create & connect a rider to websocket
         communicator = await self.create_rider()
+        response = await communicator.receive_json_from()
+        assert response['action'] == 'SET_RECENT_TRIPS'
+        assert len(response['payload']) == 0
 
         # Send a Trip to consumer
         message = await self.create_trip(communicator)
@@ -162,7 +189,7 @@ class TestTaxiConsumer:
         # Receive data from consumer
         response = await communicator.receive_json_from()
 
-        assert response['action'] == 'CURRENT_TRIP'
+        assert response['action'] == 'SET_CURRENT_TRIP'
         assert response['payload']['pick_up_address'] == message['data']['pick_up_address']
         assert response['payload']['drop_off_address'] == message['data']['drop_off_address']
 
@@ -193,8 +220,12 @@ class TestTaxiConsumer:
 
         # Receive data from consumer
         response = await communicator.receive_json_from()
+        assert response['action'] == 'SET_RECENT_TRIPS'
+        assert len(response['payload']) == 0
 
-        assert response['action'] == 'AVAILABLE_TRIPS'
+        # Receive data from consumer
+        response = await communicator.receive_json_from()
+        assert response['action'] == 'SET_AVAILABLE_TRIPS'
         assert len(response['payload'])
 
         # disconnect driver
@@ -224,17 +255,22 @@ class TestTaxiConsumer:
         # Get access token
         access = get_access_token(user)
 
-        communicator = await self.connect_user_to_server(access)
+        communicator = await self.connect_user_to_websocket(access)
 
+        # Receive data from consumer
         response = await communicator.receive_json_from()
+        assert response['action'] == 'SET_RECENT_TRIPS'
+        assert len(response['payload']) == 0
 
-        assert response['action'] == 'CURRENT_TRIP'
+        # Receive data from consumer
+        response = await communicator.receive_json_from()
+        assert response['action'] == 'SET_CURRENT_TRIP'
         assert response['payload']['pick_up_address'] == message['data']['pick_up_address']
         assert response['payload']['drop_off_address'] == message['data']['drop_off_address']
 
         await communicator.disconnect()
 
-    async def test_can_driver_accept_trip(self, settings):
+    async def test_trip_workflow(self, settings):
         """
         Test that Driver can accept new trip
         """
@@ -243,30 +279,100 @@ class TestTaxiConsumer:
         await create_groups()
 
         # Create & connect a rider to server
-        communicator = await self.create_rider()
+        rider_communicator = await self.create_rider()
 
         # Send a Trip to consumer
-        await self.create_trip(communicator)
+        message = await self.create_trip(rider_communicator)
 
-        # disconnect rider
-        await communicator.disconnect()
+        # Rider receive data from consumer
+        response = await rider_communicator.receive_json_from()
+        assert response['action'] == 'SET_RECENT_TRIPS'
+        assert len(response['payload']) == 0
+
+        # Rider receive data from consumer
+        response = await rider_communicator.receive_json_from()
+        assert response['action'] == 'SET_CURRENT_TRIP'
+        assert response['payload']['pick_up_address'] == message['data']['pick_up_address']
+        assert response['payload']['drop_off_address'] == message['data']['drop_off_address']
 
         # Create & connect a driver to server
-        communicator = await self.create_driver()
+        driver_communicator = await self.create_driver()
 
-        # Receive data from consumer
-        response = await communicator.receive_json_from()
+        # Driver receive data from consumer
+        response = await driver_communicator.receive_json_from()
+        assert response['action'] == 'SET_RECENT_TRIPS'
+        assert len(response['payload']) == 0
 
-        assert response['action'] == 'AVAILABLE_TRIPS'
+        # Driver receive data from consumer
+        response = await driver_communicator.receive_json_from()
+        assert response['action'] == 'SET_AVAILABLE_TRIPS'
         assert len(response['payload'])
 
+        '''
+        Driver accepting Trip request & heading to pickup the rider
+        '''
         trip_id = response['payload'][0]['id']
-        await self.accept_trip(communicator, trip_id)
+        await self.accept_pickup(driver_communicator, trip_id)
 
-        # Receive data from consumer
-        response = await communicator.receive_json_from()
-        assert response['action'] == 'CURRENT_TRIP'
+        # Driver receive data from consumer
+        response = await driver_communicator.receive_json_from()
+        assert response['action'] == 'SET_CURRENT_TRIP'
         assert response['payload']['status'] == trips_models.Trip.STARTED
-        assert response['payload']['driver']
+        assert response['payload']['driver']['email'] == 'driver@example.com'
 
-        await communicator.disconnect()
+        # Rider receive data from consumer
+        response = await rider_communicator.receive_json_from()
+        assert response['action'] == 'SET_CURRENT_TRIP'
+        assert response['payload']['status'] == trips_models.Trip.STARTED
+        assert response['payload']['driver']['email'] == 'driver@example.com'
+
+        '''
+        Driver picked up the rider & heading to destination
+        '''
+        await self.accept_dropoff(driver_communicator, trip_id)
+
+        # Driver receive data from consumer
+        response = await driver_communicator.receive_json_from()
+        assert response['action'] == 'SET_CURRENT_TRIP'
+        assert response['payload']['status'] == trips_models.Trip.IN_PROGRESS
+
+        # Rider receive data from consumer
+        response = await rider_communicator.receive_json_from()
+        assert response['action'] == 'SET_CURRENT_TRIP'
+        assert response['payload']['status'] == trips_models.Trip.IN_PROGRESS
+
+        '''
+        Destination reached & Trip is completed.
+        '''
+        await self.complete_trip(driver_communicator, trip_id)
+
+        # Driver receive data from consumer
+        response = await driver_communicator.receive_json_from()
+        assert response['action'] == 'SET_AVAILABLE_TRIPS'
+        assert len(response['payload']) == 0
+
+        # Driver receive data from consumer
+        response = await driver_communicator.receive_json_from()
+        assert response['action'] == 'CLEAR_CURRENT_TRIP'
+
+        # Driver receive data from consumer
+        response = await driver_communicator.receive_json_from()
+        assert response['action'] == 'UPDATE_RECENT_TRIPS'
+        assert response['payload']['id'] == trip_id
+        assert response['payload']['status'] == trips_models.Trip.COMPLETED
+
+        # Rider receive data from consumer
+        response = await rider_communicator.receive_json_from()
+        assert response['action'] == 'CLEAR_CURRENT_TRIP'
+
+        # Rider receive data from consumer
+        response = await rider_communicator.receive_json_from()
+        assert response['action'] == 'UPDATE_RECENT_TRIPS'
+        assert response['payload']['id'] == trip_id
+        assert response['payload']['status'] == trips_models.Trip.COMPLETED
+
+        # disconnect driver
+        await driver_communicator.disconnect()
+
+        # disconnect rider
+        await rider_communicator.disconnect()
