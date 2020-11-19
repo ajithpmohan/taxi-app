@@ -1,108 +1,67 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { compose } from 'recompose';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import * as ROLES from 'constants/roles';
-import * as ROUTES from 'constants/routes';
 import { withAuthorization } from 'components/Session';
+import {
+  getAvailableTrips,
+  getCurrentTrip,
+  getRecentTrips,
+} from 'selectors';
+import TripCard from './TripCard';
 
-const Dashboard = ({ currentTrip, availableTrips }) => (
-  <>
-    <div className="card col-sm-6">
-      <h5 className="card-header">Current Trip</h5>
-      <div className="card-body">
-        {!currentTrip ? (
-          <p className="card-text">No Trip</p>
-        ) : (
-          <>
-            <h5 className="card-title">
-              {currentTrip.rider.fullname}
-            </h5>
-            <p className="card-text">
-              Pick up Address:&nbsp;
-              {currentTrip.pick_up_address}
-            </p>
-            <p className="card-text">
-              Drop off Address:&nbsp;
-              {currentTrip.drop_off_address}
-            </p>
-            <p className="card-text">{currentTrip.status}</p>
-            <Link to="#" className="btn btn-primary">
-              Details
-            </Link>
-          </>
-        )}
-      </div>
-    </div>
-    <div className="card col-sm-6">
-      <h5 className="card-header">Requested Trips</h5>
-      <div className="card-body">
-        <ul className="list-group list-group-flush">
-          {!availableTrips.length ? (
-            <li className="list-group-item">No Trips</li>
+const Dashboard = () => {
+  const availableTrips = useSelector((state) =>
+    getAvailableTrips(state),
+  );
+  const currentTrip = useSelector((state) => getCurrentTrip(state));
+  const recentTrips = useSelector((state) => getRecentTrips(state));
+
+  return (
+    <>
+      <div className="card col-sm-6">
+        <h5 className="card-header">Current Trip</h5>
+        <div className="card-body">
+          {currentTrip ? (
+            <ul className="list-group list-group-flush">
+              <TripCard key={currentTrip.id} trip={currentTrip} />
+            </ul>
           ) : (
-            availableTrips.map((trip) => (
-              <li className="list-group-item" key={trip.id}>
-                <h5 className="card-title">{trip.rider.fullname}</h5>
-                <p className="card-text">
-                  Pick up Address:&nbsp;
-                  {trip.pick_up_address}
-                </p>
-                <p className="card-text">
-                  Drop off Address:&nbsp;
-                  {trip.drop_off_address}
-                </p>
-                <p className="card-text">{trip.status}</p>
-                <Link
-                  to={{
-                    pathname: `${ROUTES.DRIVER}/${trip.id}`,
-                    state: {
-                      ...trip,
-                    },
-                  }}
-                  className="btn btn-primary"
-                >
-                  Details
-                </Link>
-              </li>
-            ))
+            <p className="card-text">No Trip</p>
           )}
-        </ul>
+        </div>
       </div>
-    </div>
-    <div className="card col-sm-6">
-      <h5 className="card-header">Recent Trips</h5>
-      <div className="card-body">No Trips</div>
-    </div>
-  </>
-);
-
-Dashboard.propTypes = {
-  currentTrip: PropTypes.shape({
-    rider: PropTypes.shape({
-      fullname: PropTypes.string,
-    }),
-    drop_off_address: PropTypes.string,
-    pick_up_address: PropTypes.string,
-    status: PropTypes.string,
-  }),
-  availableTrips: PropTypes.arrayOf(PropTypes.object).isRequired,
-};
-
-Dashboard.defaultProps = {
-  currentTrip: null,
+      <div className="card col-sm-6">
+        <h5 className="card-header">Requested Trips</h5>
+        <div className="card-body">
+          <ul className="list-group list-group-flush">
+            {availableTrips.map((trip) => (
+              <TripCard key={trip.id} trip={trip} />
+            ))}
+            {!availableTrips.length && (
+              <p className="card-text">No Trips</p>
+            )}
+          </ul>
+        </div>
+      </div>
+      <div className="card col-sm-6">
+        <h5 className="card-header">Recent Trips</h5>
+        <div className="card-body">
+          <ul className="list-group list-group-flush">
+            {recentTrips.map((trip) => (
+              <TripCard key={trip.id} trip={trip} />
+            ))}
+            {!recentTrips.length && (
+              <p className="card-text">No Trips</p>
+            )}
+          </ul>
+        </div>
+      </div>
+    </>
+  );
 };
 
 const roleValidator = (userrole) => userrole === ROLES.DRIVER;
 
-const mapStateToProps = (state) => ({
-  currentTrip: state.tripState.currentTrip,
-  availableTrips: state.tripState.availableTrips,
-});
-
-export default compose(
-  withAuthorization(roleValidator),
-  connect(mapStateToProps),
-)(Dashboard);
+export default compose(withAuthorization(roleValidator))(Dashboard);

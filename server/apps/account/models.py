@@ -18,7 +18,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('email address'), unique=True)
     first_name = models.CharField(_('first name'), max_length=150, blank=True)
     last_name = models.CharField(_('last name'), max_length=150, blank=True)
-    avatar = models.ImageField(_('Avatar'), upload_to=helpers.default_avatar_path, blank=True, null=True)
+    avatar = models.ImageField(
+        _('Avatar'), upload_to=helpers.default_avatar_path, blank=True, null=True
+    )
     is_staff = models.BooleanField(
         _('staff status'),
         default=False,
@@ -28,7 +30,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         _('active'),
         default=True,
         help_text=_(
-            'Designates whether this user should be treated as active. Unselect this instead of deleting accounts.'
+            'Designates whether this user should be treated as active. \
+            Unselect this instead of deleting accounts.'
         ),
     )
     date_joined = models.DateTimeField(_('date joined'), auto_now_add=True)

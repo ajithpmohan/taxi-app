@@ -5,7 +5,7 @@ import * as ROUTES from 'constants/routes';
 import NotFoundPage from 'components/NotFound';
 import Dashboard from './Dashboard';
 import RequestTrip from './RequestTrip';
-import TripCard from './TripCard';
+import TripDetail from './TripDetail';
 
 const RiderPage = () => (
   <div>
@@ -18,7 +18,11 @@ const RiderPage = () => (
         path={ROUTES.REQUESTTRIP}
         component={RequestTrip}
       />
-      <Route exact path={ROUTES.TRIPCARD} component={TripCard} />
+      <Route
+        exact
+        path={ROUTES.RIDERTRIPDETAIL}
+        component={TripDetail}
+      />
       <Route path="*" component={NotFoundPage} />
     </Switch>
   </div>

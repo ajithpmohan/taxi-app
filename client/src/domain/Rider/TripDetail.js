@@ -4,11 +4,8 @@ import { compose } from 'recompose';
 import { useSelector } from 'react-redux';
 
 import * as ROLES from 'constants/roles';
-import {
-  withAuthorization,
-  // withTripValidator,
-} from 'components/Session';
-import { getDriverTrips } from 'selectors';
+import { withAuthorization } from 'components/Session';
+import { getRiderTrips } from 'selectors';
 import TripCard from './TripCard';
 
 const TripDetail = ({
@@ -16,7 +13,7 @@ const TripDetail = ({
     params: { id },
   },
 }) => {
-  const trip = useSelector((state) => getDriverTrips(state, id));
+  const trip = useSelector((state) => getRiderTrips(state, id));
 
   return (
     <>
@@ -42,11 +39,6 @@ TripDetail.propTypes = {
   }).isRequired,
 };
 
-const roleValidator = (userrole) => userrole === ROLES.DRIVER;
+const roleValidator = (userrole) => userrole === ROLES.RIDER;
 
-// const tripValidator = (currenttrip) => !!currenttrip;
-
-export default compose(
-  withAuthorization(roleValidator),
-  // withTripValidator(tripValidator),
-)(TripDetail);
+export default compose(withAuthorization(roleValidator))(TripDetail);

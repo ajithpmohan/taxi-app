@@ -12,7 +12,11 @@ const DriverPage = () => (
 
     <Switch>
       <Route exact path={ROUTES.DRIVER} component={Dashboard} />
-      <Route exact path={ROUTES.TRIPDETAIL} component={TripDetail} />
+      <Route
+        exact
+        path={ROUTES.DRIVERTRIPDETAIL}
+        component={TripDetail}
+      />
       <Route path="*" component={NotFoundPage} />
     </Switch>
   </div>
