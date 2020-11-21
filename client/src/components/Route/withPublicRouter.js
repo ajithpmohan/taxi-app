@@ -32,10 +32,16 @@ const withPublicRouter = (Component) => {
     render() {
       const { authUser } = this.props;
       return (
-        <div>
-          {!authUser.isAuthenticated ? (
-            <Component {...this.props} />
-          ) : null}
+        <div className="row">
+          <div className="col-sm-9 col-md-7 col-lg-3 mx-auto">
+            <div className="card card-signin my-5">
+              <div className="card-body">
+                {!authUser.isAuthenticated ? (
+                  <Component {...this.props} />
+                ) : null}
+              </div>
+            </div>
+          </div>
         </div>
       );
     }
