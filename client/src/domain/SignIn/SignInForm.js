@@ -56,46 +56,64 @@ const SignInFormBase = ({ serverAPI, history }) => {
   const isInvalid = user.password === '' || user.email === '';
 
   return (
-    <form onSubmit={onSubmit}>
-      <div className="form-group">
-        <label htmlFor="email">Email address</label>
-        <input
-          className="form-control col-md-4"
-          name="email"
-          id="email"
-          value={user.email}
-          onChange={(e) =>
-            setUser({ ...user, email: e.target.value })
-          }
-          type="text"
-          placeholder="Email Address"
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="password">Password</label>
-        <input
-          className="form-control col-md-4"
-          name="password"
-          id="password"
-          value={user.password}
-          onChange={(e) =>
-            setUser({ ...user, password: e.target.value })
-          }
-          type="password"
-          placeholder="Password"
-        />
-      </div>
-      <div className="form-group">
-        <button
-          className="btn btn-primary"
-          disabled={isInvalid}
-          type="submit"
-        >
-          Sign In
-        </button>
-        {user.error && <p>{user.error}</p>}
-      </div>
-    </form>
+    <>
+      <h5 className="card-title text-center">Sign In</h5>
+      <form className="form-signin" onSubmit={onSubmit}>
+        <div className="form-group">
+          <label htmlFor="email">Email address</label>
+          <input
+            className="form-control"
+            name="email"
+            id="email"
+            value={user.email}
+            onChange={(e) =>
+              setUser({ ...user, email: e.target.value })
+            }
+            type="text"
+            placeholder="Email Address"
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="password">Password</label>
+          <input
+            className="form-control"
+            name="password"
+            id="password"
+            value={user.password}
+            onChange={(e) =>
+              setUser({ ...user, password: e.target.value })
+            }
+            type="password"
+            placeholder="Password"
+          />
+        </div>
+        <div className="form-group">
+          <button
+            className="btn btn-lg btn-primary btn-block text-uppercase"
+            type="submit"
+            disabled={isInvalid}
+          >
+            Sign In
+          </button>
+          {user.error && <p>{user.error}</p>}
+        </div>
+      </form>
+      {/* <hr className="my-4" />
+      <button
+        className="btn btn-lg btn-google btn-block text-uppercase"
+        type="submit"
+      >
+        <i className="fab fa-google mr-2" />
+        Sign in with Google
+      </button>
+      <button
+        className="btn btn-lg btn-facebook btn-block text-uppercase"
+        type="submit"
+      >
+        <i className="fab fa-facebook-f mr-2" />
+        Sign in with Facebook
+      </button> */}
+    </>
   );
 };
 

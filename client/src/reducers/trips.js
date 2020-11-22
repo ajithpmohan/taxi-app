@@ -21,11 +21,13 @@ const clearCurrentTrip = (state) => ({
 const setAvailableTrips = (state, availableTrips) => ({
   ...state,
   availableTrips,
+  currentTrip: null,
 });
 
 const updateAvailableTrips = (state, trip) => ({
   ...state,
   availableTrips: [...state.availableTrips, trip],
+  currentTrip: null,
 });
 
 const setRecentTrips = (state, recentTrips) => ({

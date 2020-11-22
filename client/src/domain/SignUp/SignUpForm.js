@@ -78,122 +78,125 @@ const SignUpFormBase = ({ serverAPI, history }) => {
     user.password !== user.password2;
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="form-group">
-        <label htmlFor="email">Email address</label>
-        <input
-          className="form-control col-md-4"
-          type="text"
-          name="email"
-          id="email"
-          value={user.email}
-          onChange={handleChange}
-          placeholder="Email Address"
-        />
-        {error?.email &&
-          error.email.map((err, index) => (
-            <p key={index.toString()}>{err}</p>
-          ))}
-      </div>
-      <div className="form-group">
-        <label htmlFor="firstName">First name:</label>
-        <input
-          className="form-control col-md-4"
-          type="text"
-          name="firstName"
-          id="firstName"
-          value={user.firstName}
-          onChange={handleChange}
-          placeholder="First name"
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="lastName">Last name</label>
-        <input
-          className="form-control col-md-4"
-          type="text"
-          name="lastName"
-          id="lastName"
-          value={user.lastName}
-          onChange={handleChange}
-          placeholder="Last name"
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="password">Password</label>
-        <input
-          className="form-control col-md-4"
-          type="password"
-          id="password"
-          name="password"
-          value={user.password}
-          onChange={handleChange}
-          placeholder="Password"
-        />
-        {error?.password &&
-          error.password.map((err, index) => (
-            <p key={index.toString()}>{err}</p>
-          ))}
-      </div>
-      <div className="form-group">
-        <label htmlFor="password2">Confirm Password</label>
-        <input
-          className="form-control col-md-4"
-          type="password"
-          id="password2"
-          name="password2"
-          value={user.password2}
-          onChange={handleChange}
-          placeholder="Confirm Password"
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="groups">User Type</label>
-        <select
-          className="form-control col-md-4"
-          id="groups"
-          name="groups"
-          value={user.groups}
-          onChange={handleChange}
-        >
-          <option value="">------</option>
-          <option value="DRIVER">DRIVER</option>
-          <option value="RIDER">RIDER</option>
-        </select>
-        {error?.groups &&
-          error.groups.map((err, index) => (
-            <p key={index.toString()}>{err}</p>
-          ))}
-      </div>
-      <div className="form-group">
-        <label htmlFor="avatar">Avatar</label>
-        <input
-          className="form-control col-md-4"
-          type="file"
-          id="avatar"
-          name="avatar"
-          onChange={handleFileChange}
-          accept="image/*"
-        />
-        {error?.avatar &&
-          error.avatar.map((err, index) => (
-            <p key={index.toString()}>{err}</p>
-          ))}
-      </div>
-      <div className="form-group">
-        <button
-          className="btn btn-primary"
-          disabled={isInvalid}
-          type="submit"
-        >
-          Sign Up
-        </button>
-        {error?.nonfield &&
-          error.nonfield.map((err, index) => (
-            <p key={index.toString()}>{err}</p>
-          ))}
-      </div>
-    </form>
+    <>
+      <h5 className="card-title text-center">Sign Up</h5>
+      <form className="form-signin" onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="email">Email address</label>
+          <input
+            className="form-control"
+            type="text"
+            name="email"
+            id="email"
+            value={user.email}
+            onChange={handleChange}
+            placeholder="Email Address"
+          />
+          {error?.email &&
+            error.email.map((err, index) => (
+              <p key={index.toString()}>{err}</p>
+            ))}
+        </div>
+        <div className="form-group">
+          <label htmlFor="firstName">First name:</label>
+          <input
+            className="form-control"
+            type="text"
+            name="firstName"
+            id="firstName"
+            value={user.firstName}
+            onChange={handleChange}
+            placeholder="First name"
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="lastName">Last name</label>
+          <input
+            className="form-control"
+            type="text"
+            name="lastName"
+            id="lastName"
+            value={user.lastName}
+            onChange={handleChange}
+            placeholder="Last name"
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="password">Password</label>
+          <input
+            className="form-control"
+            type="password"
+            id="password"
+            name="password"
+            value={user.password}
+            onChange={handleChange}
+            placeholder="Password"
+          />
+          {error?.password &&
+            error.password.map((err, index) => (
+              <p key={index.toString()}>{err}</p>
+            ))}
+        </div>
+        <div className="form-group">
+          <label htmlFor="password2">Confirm Password</label>
+          <input
+            className="form-control"
+            type="password"
+            id="password2"
+            name="password2"
+            value={user.password2}
+            onChange={handleChange}
+            placeholder="Confirm Password"
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="groups">User Role</label>
+          <select
+            className="form-control"
+            id="groups"
+            name="groups"
+            value={user.groups}
+            onChange={handleChange}
+          >
+            <option value="">-------</option>
+            <option value="DRIVER">DRIVER</option>
+            <option value="RIDER">RIDER</option>
+          </select>
+          {error?.groups &&
+            error.groups.map((err, index) => (
+              <p key={index.toString()}>{err}</p>
+            ))}
+        </div>
+        <div className="form-group">
+          <label htmlFor="avatar">Avatar</label>
+          <input
+            className="form-control"
+            type="file"
+            id="avatar"
+            name="avatar"
+            onChange={handleFileChange}
+            accept="image/*"
+          />
+          {error?.avatar &&
+            error.avatar.map((err, index) => (
+              <p key={index.toString()}>{err}</p>
+            ))}
+        </div>
+        <div className="form-group">
+          <button
+            className="btn btn-lg btn-primary btn-block text-uppercase"
+            type="submit"
+            disabled={isInvalid}
+          >
+            Sign Up
+          </button>
+          {error?.nonfield &&
+            error.nonfield.map((err, index) => (
+              <p key={index.toString()}>{err}</p>
+            ))}
+        </div>
+      </form>
+    </>
   );
 };
 

@@ -1,14 +1,20 @@
+# base image
 FROM cypress/base:12
 
-WORKDIR /e2e
+# set working directory
+WORKDIR /usr/src/app
 
-# dependencies will be installed only if the package files change
-COPY package*.json ./
+# install dependencies
+RUN apt-get install -y --no-install-recommends libgbm-dev
 
-RUN npm ci --silent
+# install cypress
+RUN npm install cypress@5.6.0
+RUN npm install @cypress/code-coverage@3.8.3
+RUN npm install cypress-file-upload@4.1.1
 
-# Copies everything over to Docker environment
-COPY . .
+# copy cypress files and folders
+COPY cypress /usr/src/app/cypress
+COPY cypress.json /usr/src/app/cypress.json
 
 # verify that Cypress has been installed correctly.
 # running this command separately from "cypress run" will also cache its result

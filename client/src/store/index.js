@@ -1,19 +1,25 @@
 import { createStore, applyMiddleware } from 'redux';
 import { createLogger } from 'redux-logger';
-import createSagaMiddleware from 'redux-saga';
+import {
+  createStateSyncMiddleware,
+  initMessageListener,
+} from 'redux-state-sync';
 
 import rootReducer from 'reducers';
-import rootSaga from 'sagas';
 
 const logger = createLogger();
-const saga = createSagaMiddleware();
+
+const stateSyncConfig = {};
+const stateSyncMiddlewares = [
+  createStateSyncMiddleware(stateSyncConfig),
+];
 
 const store = createStore(
   rootReducer,
   undefined,
-  applyMiddleware(saga, logger),
+  applyMiddleware(...stateSyncMiddlewares, logger),
 );
 
-saga.run(rootSaga);
+initMessageListener(store);
 
 export default store;
