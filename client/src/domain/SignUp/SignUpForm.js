@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'recompose';
 import { withRouter } from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import Form from 'react-bootstrap/Form';
 
 import * as ROUTES from 'constants/routes';
 import { withServerConsumer } from 'services/server';
@@ -79,80 +82,75 @@ const SignUpFormBase = ({ serverAPI, history }) => {
 
   return (
     <>
-      <h5 className="card-title text-center">Sign Up</h5>
-      <form className="form-signin" onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="email">Email address</label>
-          <input
-            className="form-control"
-            type="text"
+      <Card.Title className="text-center">Sign Up</Card.Title>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group>
+          <Form.Label>Email address</Form.Label>
+          <Form.Control
             name="email"
             id="email"
-            value={user.email}
+            type="email"
             onChange={handleChange}
-            placeholder="Email Address"
+            value={user.email}
+            placeholder="Enter Email"
           />
           {error?.email &&
             error.email.map((err, index) => (
               <p key={index.toString()}>{err}</p>
             ))}
-        </div>
-        <div className="form-group">
-          <label htmlFor="firstName">First name:</label>
-          <input
-            className="form-control"
-            type="text"
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>First name</Form.Label>
+          <Form.Control
             name="firstName"
             id="firstName"
-            value={user.firstName}
-            onChange={handleChange}
-            placeholder="First name"
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="lastName">Last name</label>
-          <input
-            className="form-control"
             type="text"
+            onChange={handleChange}
+            value={user.firstName}
+            placeholder="Enter First Name"
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Last name</Form.Label>
+          <Form.Control
             name="lastName"
             id="lastName"
+            type="text"
+            onChange={handleChange}
             value={user.lastName}
-            onChange={handleChange}
-            placeholder="Last name"
+            placeholder="Enter Last Name"
           />
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">Password</label>
-          <input
-            className="form-control"
-            type="password"
-            id="password"
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Password</Form.Label>
+          <Form.Control
             name="password"
-            value={user.password}
+            id="password"
+            type="password"
             onChange={handleChange}
-            placeholder="Password"
+            value={user.password}
+            placeholder="Enter Password"
           />
           {error?.password &&
             error.password.map((err, index) => (
               <p key={index.toString()}>{err}</p>
             ))}
-        </div>
-        <div className="form-group">
-          <label htmlFor="password2">Confirm Password</label>
-          <input
-            className="form-control"
-            type="password"
-            id="password2"
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Confirm Password</Form.Label>
+          <Form.Control
             name="password2"
-            value={user.password2}
+            id="password2"
+            type="password"
             onChange={handleChange}
+            value={user.password2}
             placeholder="Confirm Password"
           />
-        </div>
-        <div className="form-group">
-          <label htmlFor="groups">User Role</label>
-          <select
-            className="form-control"
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>User Role</Form.Label>
+          <Form.Control
+            as="select"
             id="groups"
             name="groups"
             value={user.groups}
@@ -161,17 +159,15 @@ const SignUpFormBase = ({ serverAPI, history }) => {
             <option value="">-------</option>
             <option value="DRIVER">DRIVER</option>
             <option value="RIDER">RIDER</option>
-          </select>
+          </Form.Control>
           {error?.groups &&
             error.groups.map((err, index) => (
               <p key={index.toString()}>{err}</p>
             ))}
-        </div>
-        <div className="form-group">
-          <label htmlFor="avatar">Avatar</label>
-          <input
-            className="form-control"
-            type="file"
+        </Form.Group>
+        <Form.Group>
+          <Form.File
+            label="Avatar"
             id="avatar"
             name="avatar"
             onChange={handleFileChange}
@@ -181,21 +177,21 @@ const SignUpFormBase = ({ serverAPI, history }) => {
             error.avatar.map((err, index) => (
               <p key={index.toString()}>{err}</p>
             ))}
-        </div>
-        <div className="form-group">
-          <button
-            className="btn btn-lg btn-primary btn-block text-uppercase"
-            type="submit"
-            disabled={isInvalid}
-          >
-            Sign Up
-          </button>
-          {error?.nonfield &&
-            error.nonfield.map((err, index) => (
-              <p key={index.toString()}>{err}</p>
-            ))}
-        </div>
-      </form>
+        </Form.Group>
+        <Button
+          variant="primary"
+          size="lg"
+          block
+          type="submit"
+          disabled={isInvalid}
+        >
+          Sign Up
+        </Button>
+        {error?.nonfield &&
+          error.nonfield.map((err, index) => (
+            <p key={index.toString()}>{err}</p>
+          ))}
+      </Form>
     </>
   );
 };
