@@ -39,13 +39,13 @@ urlpatterns = [
     path('', RedirectView.as_view(pattern_name='schema-swagger-ui')),
     path('admin/', admin.site.urls),
     path('v1/account/', include(('apps.account.urls', 'account'), namespace='account')),
-    url(
-        r'^swagger(?P<format>\.json|\.yaml)$',
-        schema_view.without_ui(cache_timeout=0),
-        name='schema-json',
-    ),
-    url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    url(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    # url(
+    #     r'^swagger(?P<format>\.json|\.yaml)$',
+    #     schema_view.without_ui(cache_timeout=0),
+    #     name='schema-json',
+    # ),
+    url(r'^api-docs/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    # url(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]
 
 

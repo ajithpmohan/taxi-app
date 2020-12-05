@@ -1,6 +1,6 @@
 # pull official base image
 # build environment
-FROM node:12.18.3-alpine as build
+FROM node:14.15.1-alpine as build
 
 # set node_modules directory
 WORKDIR /app
@@ -9,8 +9,8 @@ WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 
 # install app dependencies
-COPY package*.json ./
-RUN npm ci
+COPY package.json ./
+RUN npm i && npm cache clean --force
 
 # Copies everything over to Docker environment & Run build
 COPY . .

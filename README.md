@@ -49,13 +49,15 @@ Open [http://localhost:8002/](http://localhost:8002/) to access `server` service
 
     docker-compose exec client npm run format
 
-## Run React.js E2E Testing using Cypress
-
-    docker-compose -f cy-run.yml run e2e
-
 ## Run Python Code Linter & Formatter
 
     docker-compose -f pre-commit.yml up --build
+
+## Build & Run React.js E2E Testing using Cypress
+
+    docker-compose -f docker-compose-e2e.yml build cy-run
+
+    docker-compose -f docker-compose-e2e.yml run cy-run
 
 ## Run Django Coverage Report
 

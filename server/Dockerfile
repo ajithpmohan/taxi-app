@@ -14,12 +14,13 @@ RUN pip install --no-cache-dir --upgrade pip
 # install git dependencies
 RUN apk add --update git
 
-# install psycopg2, pillow & cryptography
+# install psycopg2, pillow, black & cryptography
 RUN apk add --virtual build-deps gcc python3-dev musl-dev \
     && apk add postgresql-dev postgresql-client \
     && pip install --no-cache-dir psycopg2 \
     && apk add jpeg-dev zlib-dev libjpeg \
     && pip install --no-cache-dir Pillow \
+    && pip install --no-cache-dir black \
     && apk add libffi-dev openssl-dev \
     && pip install --no-cache-dir greenlet twisted hiredis cryptography \
     && apk del build-deps

@@ -1,5 +1,3 @@
-/// <reference types="cypress" />
-
 const serverUrl = Cypress.env('serverUrl');
 
 describe('Authentication', () => {
@@ -103,7 +101,7 @@ describe('Authentication', () => {
     cy.visit('/account/sign-in');
     cy.location('pathname').should('eq', '/driver');
 
-    cy.get('button#navbarDropdownMenuLink').click();
+    cy.get('button.navbarDropdownToggle').click();
     cy.get('button')
       .contains('SignOut')
       .click()

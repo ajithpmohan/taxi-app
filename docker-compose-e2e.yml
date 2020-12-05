@@ -1,0 +1,60 @@
+version: '3.7'
+
+services:
+  cy-open:
+    build:
+      context: ./client
+      dockerfile: Dockerfile.cy-open
+    image: docker.pkg.github.com/ajithpmohan/taxi-app/e2e-testing-cy-open:1.0
+    container_name: taxi-e2e-testing-cy-open
+    command: npx cypress open
+    # note: inside e2e-testing-cy-open container, the network allows accessing
+    # "client" host under name "localhost:8001"
+    # so "curl http://localhost:8001" would return whatever the webserver
+    # in the "client" container is cooking
+    # see https://docs.docker.com/compose/networking/
+    environment:
+      - CYPRESS_baseUrl=http://localhost:8001
+      - DISPLAY=unix${DISPLAY}
+    network_mode: 'host'
+    tty: true
+    # mount the host directory client/cypress and the file client/cypress.json as
+    # volumes within the container
+    # this means that:
+    #  1. anything that Cypress writes to these folders (e.g., screenshots,
+    #     videos) appears also on the Docker host's filesystem
+    #  2. any change that the developer applies to Cypress files on the host
+    #     machine immediately takes effect within the e2e-testing-cy-open container (no docker
+    #     rebuild required).
+    volumes:
+      - ./client/cypress:/usr/src/app/cypress
+      - ./client/cypress.json:/usr/src/app/cypress.json
+      - ./client/coverage:/usr/src/app/coverage
+      - /tmp/.X11-unix:/tmp/.X11-unix
+  cy-run:
+    build:
+      context: ./client
+      dockerfile: Dockerfile.cy-run
+    image: docker.pkg.github.com/ajithpmohan/taxi-app/e2e-testing-cy-run:1.0
+    container_name: taxi-e2e-testing-cy-run
+    command: npx cypress run
+    # note: inside e2e-testing-cy-run container, the network allows accessing
+    # "client" host under name "localhost:8001"
+    # so "curl http://localhost:8001" would return whatever the webserver
+    # in the "client" container is cooking
+    # see https://docs.docker.com/compose/networking/
+    environment:
+      - CYPRESS_baseUrl=http://localhost:8001
+    network_mode: 'host'
+    # mount the host directory client/cypress and the file client/cypress.json as
+    # volumes within the container
+    # this means that:
+    #  1. anything that Cypress writes to these folders (e.g., screenshots,
+    #     videos) appears also on the Docker host's filesystem
+    #  2. any change that the developer applies to Cypress files on the host
+    #     machine immediately takes effect within the e2e-testing-cy-run container (no docker
+    #     rebuild required).
+    volumes:
+      - ./client/cypress:/usr/src/app/cypress
+      - ./client/cypress.json:/usr/src/app/cypress.json
+      - ./client/coverage:/usr/src/app/coverage

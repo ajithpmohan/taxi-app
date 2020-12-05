@@ -27,28 +27,28 @@ const SignInFormBase = ({ serverAPI, history }) => {
   const onSubmit = (event) => {
     const { email, password } = user;
 
-    serverAPI
-      .doSignInWithEmailAndPassword(email, password)
-      .then(({ data }) => {
-        setUser(initialState);
+    (async () => {
+      const res = await serverAPI
+        .doSignInWithEmailAndPassword(email, password)
+        .catch((err) => (err.response ? err.response : err));
 
-        localStorage.setItem('authUser', JSON.stringify(data));
-        dispatch(doSetAuthUser(data));
+      if (res?.status === 200) {
+        setUser(initialState);
+        localStorage.setItem('authUser', JSON.stringify(res.data));
+        dispatch(doSetAuthUser(res.data));
 
         const {
-          user: { role },
-        } = data;
-        history.push(REDIRECT_URL[role]);
-      })
-      .catch(
-        ({
-          response: {
-            data: { detail },
+          data: {
+            user: { role },
           },
-        }) => {
-          setUser({ ...user, error: detail });
-        },
-      );
+        } = res;
+        history.push(REDIRECT_URL[role]);
+      } else if (res?.status === 401) {
+        setUser({ ...user, error: res.data?.detail });
+      } else if (res?.message) {
+        setUser({ ...user, error: res.message });
+      }
+    })();
 
     event.preventDefault();
   };

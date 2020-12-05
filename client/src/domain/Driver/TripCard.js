@@ -6,7 +6,7 @@ import * as ROUTES from 'constants/routes';
 import { withWebSocket } from 'components/WebSocket';
 import { CompleteTripBtn, DropoffBtn, PickupBtn } from './TripAction';
 
-const BUTTON_STATES = ({ handleTrip }) => ({
+const buttonStates = ({ handleTrip }) => ({
   Requested: <PickupBtn handleTrip={handleTrip} />,
   Started: <DropoffBtn handleTrip={handleTrip} />,
   'In Progress': <CompleteTripBtn handleTrip={handleTrip} />,
@@ -49,7 +49,7 @@ const TripCard = ({ trip, ws }) => {
           Details
         </Link>
       ) : (
-        BUTTON_STATES({ handleTrip })[trip.status]
+        buttonStates({ handleTrip })[trip.status]
       )}
     </li>
   );

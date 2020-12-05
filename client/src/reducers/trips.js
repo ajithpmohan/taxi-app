@@ -80,7 +80,7 @@ function TripReducer(state = initialState, action) {
     case actionTypes.UPDATE_RECENT_TRIPS:
       return updateRecentTrips(state, action.payload);
 
-    /// CLEAR_TRIPS events
+    // CLEAR_TRIPS events
     // When User signout clear all trips data from the 'store'.
     case actionTypes.CLEAR_TRIPS:
       return clearTrips(state);

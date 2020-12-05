@@ -2,15 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.min';
-
 import App from 'domain/App';
+import WebSocketProvider from 'components/WebSocket';
 import store from 'store';
 import ServerCtx, { ServerAPI } from 'services/server';
 import * as serviceWorker from 'serviceWorker';
-import WebSocketProvider from 'components/WebSocket';
 import 'index.css';
+
+// Importing the Bootstrap CSS
+import 'bootstrap/dist/css/bootstrap.min.css';
+// Importing the React Toastr CSS
+import 'react-toastify/dist/ReactToastify.css';
 
 ReactDOM.render(
   <React.StrictMode>

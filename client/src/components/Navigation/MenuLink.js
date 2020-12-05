@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Nav } from 'react-bootstrap';
 import { Link, useRouteMatch } from 'react-router-dom';
 
 const MenuLink = ({ label, to, activeOnlyWhenExact }) => {
@@ -9,12 +10,9 @@ const MenuLink = ({ label, to, activeOnlyWhenExact }) => {
   });
 
   return (
-    <li className={match ? 'nav-item active' : 'nav-item'}>
-      <Link to={to} className="nav-link">
-        {label}
-        {match && <span className="sr-only">(current)</span>}
-      </Link>
-    </li>
+    <Nav.Link as={Link} to={to} className={match && 'active'}>
+      {label}
+    </Nav.Link>
   );
 };
 

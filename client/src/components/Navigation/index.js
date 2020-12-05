@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Nav, Navbar } from 'react-bootstrap';
+import Dropdown from 'react-bootstrap/Dropdown';
+import { Link } from 'react-router-dom';
 
 import * as ROUTES from 'constants/routes';
 import SignOut from 'domain/SignOut';
@@ -8,7 +11,7 @@ import MenuLink from './MenuLink';
 
 import './index.css';
 
-const AUTH_STATES = (currentTrip) => ({
+const authStates = (currentTrip) => ({
   DRIVER: <NavigationAuthDriver />,
   RIDER: <NavigationAuthRider currentTrip={currentTrip} />,
   ADMIN: <NavigationAuthAdmin />,
@@ -16,74 +19,105 @@ const AUTH_STATES = (currentTrip) => ({
 });
 
 const Navigation = ({ authUser, currentTrip }) => (
-  <nav className="navbar navbar-expand-lg navbar-light bg-light">
-    <button
-      className="navbar-toggler"
-      type="button"
-      data-toggle="collapse"
-      data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span className="navbar-toggler-icon" />
-    </button>
-
-    <div
-      className="collapse navbar-collapse"
-      id="navbarSupportedContent"
-    >
-      {AUTH_STATES(currentTrip)[authUser.user?.role || 'NONAUTH']}
+  <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+    <Navbar.Brand as={Link} to={ROUTES.HOME}>
+      Taxi App
+    </Navbar.Brand>
+    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+    <Navbar.Collapse id="responsive-navbar-nav">
+      {authStates(currentTrip)[authUser.user?.role || 'NONAUTH']}
       {authUser.isAuthenticated && (
-        <ul className="navbar-nav ml-auto nav-flex-icons">
-          <li className="nav-item avatar dropdown">
-            <button
-              type="button"
-              className="nav-link dropdown-toggle btn btn-light"
-              id="navbarDropdownMenuLink"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              <img
-                src={
-                  authUser.user?.avatar ||
-                  'https://mdbootstrap.com/img/Photos/Avatars/avatar-2.jpg'
-                }
-                className="md-avatar rounded-circle size-1"
-                alt="avatar"
-              />
-            </button>
-            <div
-              className="dropdown-menu dropdown-menu-lg-right dropdown-secondary"
-              aria-labelledby="navbarDropdownMenuLink"
-            >
-              <div className="dropdown-item">
+        <Nav>
+          <Dropdown>
+            <Dropdown.Toggle
+              variant="dark"
+              id="dropdown-basic"
+              className="navbarDropdownToggle"
+            ></Dropdown.Toggle>
+            <Dropdown.Menu align="right">
+              <Dropdown.Item>
                 <span>Welcome </span>
                 {authUser.user?.fullname || 'User'}
                 <span>!</span>
-              </div>
-              <SignOut />
-            </div>
-          </li>
-        </ul>
+              </Dropdown.Item>
+              <Dropdown.Item>
+                <SignOut />
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        </Nav>
       )}
-    </div>
-  </nav>
+    </Navbar.Collapse>
+  </Navbar>
+
+  // <nav className="navbar navbar-expand-lg navbar-light bg-light">
+  //   <button
+  //     className="navbar-toggler"
+  //     type="button"
+  //     data-toggle="collapse"
+  //     data-target="#navbarSupportedContent"
+  //     aria-controls="navbarSupportedContent"
+  //     aria-expanded="false"
+  //     aria-label="Toggle navigation"
+  //   >
+  //     <span className="navbar-toggler-icon" />
+  //   </button>
+
+  //   <div
+  //     className="collapse navbar-collapse"
+  //     id="navbarSupportedContent"
+  //   >
+  //     {authStates(currentTrip)[authUser.user?.role || 'NONAUTH']}
+  //     {authUser.isAuthenticated && (
+  //       <ul className="navbar-nav ml-auto nav-flex-icons">
+  //         <li className="nav-item avatar dropdown">
+  //           <button
+  //             type="button"
+  //             className="nav-link dropdown-toggle btn btn-light"
+  //             id="navbarDropdownMenuLink"
+  //             data-toggle="dropdown"
+  //             aria-haspopup="true"
+  //             aria-expanded="false"
+  //           >
+  //             <img
+  //               src={
+  //                 authUser.user?.avatar ||
+  //                 'https://mdbootstrap.com/img/Photos/Avatars/avatar-2.jpg'
+  //               }
+  //               className="md-avatar rounded-circle size-1"
+  //               alt="avatar"
+  //             />
+  //           </button>
+  //           <div
+  //             className="dropdown-menu dropdown-menu-lg-right dropdown-secondary"
+  //             aria-labelledby="navbarDropdownMenuLink"
+  //           >
+  //             <div className="dropdown-item">
+  //               <span>Welcome </span>
+  //               {authUser.user?.fullname || 'User'}
+  //               <span>!</span>
+  //             </div>
+  //             <SignOut />
+  //           </div>
+  //         </li>
+  //       </ul>
+  //     )}
+  //   </div>
+  // </nav>
 );
 
 const NavigationAuthDriver = () => (
-  <ul className="navbar-nav mr-auto">
+  <Nav className="mr-auto">
     <MenuLink
       activeOnlyWhenExact="true"
       to={ROUTES.DRIVER}
       label="Dashboard"
     />
-  </ul>
+  </Nav>
 );
 
 const NavigationAuthRider = ({ currentTrip }) => (
-  <ul className="navbar-nav mr-auto">
+  <Nav className="mr-auto">
     <MenuLink
       activeOnlyWhenExact="true"
       to={ROUTES.RIDER}
@@ -96,26 +130,13 @@ const NavigationAuthRider = ({ currentTrip }) => (
         label="Request a Trip"
       />
     )}
-  </ul>
+  </Nav>
 );
 
-const NavigationAuthAdmin = () => (
-  <ul className="navbar-nav mr-auto">
-    <MenuLink
-      activeOnlyWhenExact="true"
-      to={ROUTES.HOME}
-      label="Home"
-    />
-  </ul>
-);
+const NavigationAuthAdmin = () => <Nav className="mr-auto"> </Nav>;
 
 const NavigationNonAuth = () => (
-  <ul className="navbar-nav mr-auto">
-    <MenuLink
-      activeOnlyWhenExact="true"
-      to={ROUTES.HOME}
-      label="Home"
-    />
+  <Nav className="mr-auto">
     <MenuLink
       activeOnlyWhenExact="true"
       to={ROUTES.SIGNIN}
@@ -126,7 +147,7 @@ const NavigationNonAuth = () => (
       to={ROUTES.SIGNUP}
       label="Sign Up"
     />
-  </ul>
+  </Nav>
 );
 
 Navigation.propTypes = {

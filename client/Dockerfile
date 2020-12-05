@@ -1,14 +1,15 @@
 # pull official base image
-FROM node:13.12.0-alpine
+FROM node:14.15.1-alpine
 
-# set working directory
-WORKDIR /usr/src/app/
+# Set the working directory
+ENV BASE_DIR=/usr/src/app
+WORKDIR $BASE_DIR
 
 # add `/usr/src/app/node_modules/.bin` to $PATH
-ENV PATH /usr/src/app/node_modules/.bin:$PATH
+ENV PATH $BASE_DIR/node_modules/.bin:$PATH
 
 # install app dependencies
-COPY package*.json ./
+COPY package.json ./
 RUN npm i && npm cache clean --force
 
 # Copies everything over to Docker environment

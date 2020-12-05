@@ -1,5 +1,5 @@
 # Core Packages
-Django==3.0.7
+Django==3.1.3
 djangorestframework==3.11.0
 django-cors-headers==3.4.0
 djangorestframework-simplejwt==4.4.0
@@ -10,6 +10,7 @@ channels-redis==3.0.1
 python-decouple==3.3
 
 # Coding standards
+flake8==3.8.4
 pylint==2.6.0
 colorlog==4.2.1
 
