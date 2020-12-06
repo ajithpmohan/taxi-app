@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { withRouter } from 'react-router-dom';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Card from 'react-bootstrap/Card';
 
 import * as ROUTES from 'constants/routes';
 
@@ -32,17 +36,19 @@ const withPublicRouter = (Component) => {
     render() {
       const { authUser } = this.props;
       return (
-        <div className="row">
-          <div className="col-sm-9 col-md-7 col-lg-4 mx-auto">
-            <div className="card card-signin my-5">
-              <div className="card-body">
-                {!authUser.isAuthenticated ? (
-                  <Component {...this.props} />
-                ) : null}
-              </div>
-            </div>
-          </div>
-        </div>
+        <Container>
+          <Row className="justify-content-md-center">
+            <Col xs lg="6">
+              <Card>
+                <Card.Body>
+                  {!authUser.isAuthenticated ? (
+                    <Component {...this.props} />
+                  ) : null}
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+        </Container>
       );
     }
   }

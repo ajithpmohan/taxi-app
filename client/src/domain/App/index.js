@@ -4,6 +4,7 @@ import {
   Switch,
   Route,
 } from 'react-router-dom';
+import Container from 'react-bootstrap/Container';
 
 import { PrivateRoute, withPublicRouter } from 'components/Route';
 import { withAuthentication } from 'components/Session';
@@ -21,8 +22,8 @@ import * as ROUTES from 'constants/routes';
 import './index.css';
 
 const App = () => (
-  <Router>
-    <div className="container-fluid">
+  <Container fluid>
+    <Router>
       <Navigation />
 
       <hr />
@@ -49,8 +50,8 @@ const App = () => (
 
         <Route path="*" component={NotFoundPage} />
       </Switch>
-    </div>
-  </Router>
+    </Router>
+  </Container>
 );
 
 export default withAuthentication(App);

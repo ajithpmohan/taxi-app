@@ -1,0 +1,20 @@
+# pull official base image
+FROM cypress/base:12
+
+# set working directory
+ENV BASE_DIR=/usr/src/app
+WORKDIR $BASE_DIR
+
+# install cypress - e2e testing tool
+RUN npm install cypress@latest
+RUN npm install @cypress/code-coverage@latest
+RUN npm install cypress-file-upload@latest
+
+COPY src $BASE_DIR/src
+COPY cypress $BASE_DIR/cypress
+COPY cypress.json $BASE_DIR/cypress.json
+
+# verify that Cypress has been installed correctly.
+# running this command separately from "cypress run" will also cache its result
+# to avoid verifying again when running the tests
+RUN npx cypress verify

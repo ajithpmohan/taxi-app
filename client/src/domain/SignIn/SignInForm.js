@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { compose } from 'recompose';
 import { withRouter } from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import Form from 'react-bootstrap/Form';
 
 import * as ROUTES from 'constants/routes';
 import { doSetAuthUser } from 'actions';
@@ -27,28 +30,28 @@ const SignInFormBase = ({ serverAPI, history }) => {
   const onSubmit = (event) => {
     const { email, password } = user;
 
-    serverAPI
-      .doSignInWithEmailAndPassword(email, password)
-      .then(({ data }) => {
-        setUser(initialState);
+    (async () => {
+      const res = await serverAPI
+        .doSignInWithEmailAndPassword(email, password)
+        .catch((err) => (err.response ? err.response : err));
 
-        localStorage.setItem('authUser', JSON.stringify(data));
-        dispatch(doSetAuthUser(data));
+      if (res?.status === 200) {
+        setUser(initialState);
+        localStorage.setItem('authUser', JSON.stringify(res.data));
+        dispatch(doSetAuthUser(res.data));
 
         const {
-          user: { role },
-        } = data;
-        history.push(REDIRECT_URL[role]);
-      })
-      .catch(
-        ({
-          response: {
-            data: { detail },
+          data: {
+            user: { role },
           },
-        }) => {
-          setUser({ ...user, error: detail });
-        },
-      );
+        } = res;
+        history.push(REDIRECT_URL[role]);
+      } else if (res?.status === 401) {
+        setUser({ ...user, error: res.data?.detail });
+      } else if (res?.message) {
+        setUser({ ...user, error: res.message });
+      }
+    })();
 
     event.preventDefault();
   };
@@ -57,62 +60,45 @@ const SignInFormBase = ({ serverAPI, history }) => {
 
   return (
     <>
-      <h5 className="card-title text-center">Sign In</h5>
-      <form className="form-signin" onSubmit={onSubmit}>
-        <div className="form-group">
-          <label htmlFor="email">Email address</label>
-          <input
-            className="form-control"
+      <Card.Title className="text-center">Sign In</Card.Title>
+      <Form onSubmit={onSubmit}>
+        <Form.Group>
+          <Form.Label>Email address</Form.Label>
+          <Form.Control
             name="email"
             id="email"
-            value={user.email}
+            type="email"
             onChange={(e) =>
               setUser({ ...user, email: e.target.value })
             }
-            type="text"
-            placeholder="Email Address"
+            value={user.email}
+            placeholder="Enter Email"
           />
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">Password</label>
-          <input
-            className="form-control"
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Password</Form.Label>
+          <Form.Control
             name="password"
             id="password"
-            value={user.password}
+            type="password"
             onChange={(e) =>
               setUser({ ...user, password: e.target.value })
             }
-            type="password"
-            placeholder="Password"
+            value={user.password}
+            placeholder="Enter Password"
           />
-        </div>
-        <div className="form-group">
-          <button
-            className="btn btn-lg btn-primary btn-block text-uppercase"
-            type="submit"
-            disabled={isInvalid}
-          >
-            Sign In
-          </button>
-          {user.error && <p>{user.error}</p>}
-        </div>
-      </form>
-      {/* <hr className="my-4" />
-      <button
-        className="btn btn-lg btn-google btn-block text-uppercase"
-        type="submit"
-      >
-        <i className="fab fa-google mr-2" />
-        Sign in with Google
-      </button>
-      <button
-        className="btn btn-lg btn-facebook btn-block text-uppercase"
-        type="submit"
-      >
-        <i className="fab fa-facebook-f mr-2" />
-        Sign in with Facebook
-      </button> */}
+        </Form.Group>
+        <Button
+          variant="primary"
+          size="lg"
+          block
+          type="submit"
+          disabled={isInvalid}
+        >
+          Sign In
+        </Button>
+        {user.error && <p>{user.error}</p>}
+      </Form>
     </>
   );
 };
