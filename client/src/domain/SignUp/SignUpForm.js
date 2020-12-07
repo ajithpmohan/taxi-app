@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'recompose';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
+import { ToastContainer, toast } from 'react-toastify';
 
 import * as ROUTES from 'constants/routes';
+import { TOASTR_OPTIONS } from 'constants/utils';
 import { withServerConsumer } from 'services/server';
 
 // Use camelCase as variable name
@@ -21,8 +23,9 @@ const initialState = {
   error: null,
 };
 
-const SignUpFormBase = ({ serverAPI, history }) => {
+const SignUpFormBase = ({ serverAPI }) => {
   const [user, setUser] = useState(initialState);
+  const history = useHistory();
 
   const handleSubmit = (event) => {
     const {
@@ -45,18 +48,25 @@ const SignUpFormBase = ({ serverAPI, history }) => {
     data.append('groups', groups);
     data.append('avatar', avatar);
 
-    serverAPI
-      .doSignUpWithEmailAndPassword(data)
-      .then((response) => {
-        setUser(initialState);
-        alert(response?.data.message);
+    (async () => {
+      const res = await serverAPI
+        .doSignUpWithEmailAndPassword(data)
+        .catch((err) => (err.response ? err.response : err));
 
-        history.push(ROUTES.HOME);
-      })
-      .catch(({ response }) => {
-        const error = response?.data || null;
-        setUser({ ...user, error });
-      });
+      if (res?.status === 201) {
+        setUser(initialState);
+        toast.info(
+          `Account created successfully. Go to login Page.`,
+          TOASTR_OPTIONS,
+        );
+        setTimeout(() => history.push(ROUTES.SIGNIN), 5000);
+      } else if (res?.status === 400) {
+        setUser({ ...user, error: res.data });
+      } else if (res?.message) {
+        const nonfield = Array(res.message);
+        setUser({ ...user, error: { nonfield } });
+      }
+    })();
 
     event.preventDefault();
   };
@@ -82,6 +92,7 @@ const SignUpFormBase = ({ serverAPI, history }) => {
 
   return (
     <>
+      <ToastContainer />
       <Card.Title className="text-center">Sign Up</Card.Title>
       <Form onSubmit={handleSubmit}>
         <Form.Group>
@@ -200,14 +211,8 @@ SignUpFormBase.propTypes = {
   serverAPI: PropTypes.shape({
     doSignUpWithEmailAndPassword: PropTypes.func.isRequired,
   }).isRequired,
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
 };
 
-const SignUpForm = compose(
-  withServerConsumer,
-  withRouter,
-)(SignUpFormBase);
+const SignUpForm = compose(withServerConsumer)(SignUpFormBase);
 
 export default SignUpForm;

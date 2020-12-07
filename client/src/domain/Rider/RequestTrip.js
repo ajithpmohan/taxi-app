@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'recompose';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import GoogleMap from 'components/GoogleMap';
 import {
@@ -14,7 +14,8 @@ import * as ROUTES from 'constants/routes';
 
 import './index.css';
 
-const RequestTripPage = ({ ws, history }) => {
+const RequestTripPage = ({ ws }) => {
+  const history = useHistory();
   const pickup = React.useRef();
   const dropoff = React.useRef();
 
@@ -74,9 +75,6 @@ RequestTripPage.propTypes = {
       PropTypes.object,
     ]),
   ),
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
 };
 
 RequestTripPage.defaultProps = {
@@ -91,5 +89,4 @@ export default compose(
   withAuthorization(roleValidator),
   withTripValidator(tripValidator),
   withWebSocket,
-  withRouter,
 )(RequestTripPage);

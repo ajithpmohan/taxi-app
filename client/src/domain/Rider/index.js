@@ -1,5 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
 import * as ROUTES from 'constants/routes';
 import NotFoundPage from 'components/NotFound';
@@ -9,6 +10,7 @@ import TripDetail from './TripDetail';
 
 const RiderPage = () => (
   <div>
+    <ToastContainer />
     <h4>Rider Dashboard</h4>
 
     <Switch>

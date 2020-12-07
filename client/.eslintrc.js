@@ -38,6 +38,7 @@ module.exports = {
     'require-jsdoc': 0,
     'react/react-in-jsx-scope': 0,
     'no-invalid-this': 0,
+    'cypress/no-unnecessary-waiting': 0,
   },
   overrides: [
     {

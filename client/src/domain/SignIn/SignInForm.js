@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { compose } from 'recompose';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
@@ -23,9 +23,10 @@ const REDIRECT_URL = {
   ADMIN: ROUTES.HOME,
 };
 
-const SignInFormBase = ({ serverAPI, history }) => {
+const SignInFormBase = ({ serverAPI }) => {
   const [user, setUser] = useState(initialState);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const onSubmit = (event) => {
     const { email, password } = user;
@@ -107,14 +108,8 @@ SignInFormBase.propTypes = {
   serverAPI: PropTypes.shape({
     doSignInWithEmailAndPassword: PropTypes.func.isRequired,
   }).isRequired,
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
 };
 
-const SignInForm = compose(
-  withServerConsumer,
-  withRouter,
-)(SignInFormBase);
+const SignInForm = compose(withServerConsumer)(SignInFormBase);
 
 export default SignInForm;

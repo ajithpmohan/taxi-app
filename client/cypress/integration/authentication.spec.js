@@ -16,8 +16,13 @@ describe('Authentication', () => {
     cy.get('select#groups').select('DRIVER');
     cy.get('input#avatar').attachFile('images/driver.jpeg');
     cy.get('button').contains('Sign Up').click();
+
     cy.wait('@signup');
-    cy.location('pathname').should('eq', '/');
+    cy.get('div.Toastify').contains(
+      'Account created successfully. Go to login Page.',
+    );
+    cy.wait(4000);
+    cy.location('pathname').should('eq', '/account/sign-in');
   });
 
   it('Can sign up as rider', () => {
@@ -37,7 +42,11 @@ describe('Authentication', () => {
     cy.get('button').contains('Sign Up').click();
 
     cy.wait('@signup');
-    cy.location('pathname').should('eq', '/');
+    cy.get('div.Toastify').contains(
+      'Account created successfully. Go to login Page.',
+    );
+    cy.wait(4000);
+    cy.location('pathname').should('eq', '/account/sign-in');
   });
 
   it('Can log in as driver', () => {

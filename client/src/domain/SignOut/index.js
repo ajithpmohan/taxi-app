@@ -1,14 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { compose } from 'recompose';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import { doSetAuthUser, doClearTrips } from 'actions';
 import * as ROUTES from 'constants/routes';
 
-const SignOutButton = ({ history }) => {
+const SignOut = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const onSignOut = () => {
     localStorage.removeItem('authUser');
@@ -29,13 +28,5 @@ const SignOutButton = ({ history }) => {
     </button>
   );
 };
-
-SignOutButton.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
-};
-
-const SignOut = compose(withRouter)(SignOutButton);
 
 export default SignOut;
