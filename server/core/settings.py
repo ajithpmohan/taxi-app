@@ -168,7 +168,7 @@ DEBUG_TOOLBAR_CONFIG = {
     'SHOW_TOOLBAR_CALLBACK': lambda request: False,
 }
 
-SHELL_PLUS = "bpython"
+SHELL_PLUS = "ipython"
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': datetime.timedelta(days=7),

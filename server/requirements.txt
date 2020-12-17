@@ -25,6 +25,6 @@ pytest-asyncio==0.14.0
 parameterized==0.7.4
 
 # Debuggers
-bpython==0.19
-django-debug-toolbar==2.2
-django-extensions==3.0.0
+ipython==7.19.0
+django-debug-toolbar==3.2
+django-extensions==3.1.0
