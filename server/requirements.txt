@@ -26,5 +26,5 @@ parameterized==0.7.4
 
 # Debuggers
 ipython==7.19.0
-django-debug-toolbar==3.2
+django-debug-toolbar==3.2.1
 django-extensions==3.1.0
