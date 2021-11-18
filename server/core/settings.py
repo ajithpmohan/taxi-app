@@ -30,17 +30,21 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 # Application definition
 
 INSTALLED_APPS = [
+    'admin_interface',
+    'colorfield',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'corsheaders',
     'rest_framework',
     'drf_yasg',
     'debug_toolbar',
     'django_extensions',
+    'maintenance_mode',
     'channels',
     'apps.account',
     'apps.trips',
@@ -55,7 +59,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.sites.middleware.CurrentSiteMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'maintenance_mode.middleware.MaintenanceModeMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -71,6 +77,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'maintenance_mode.context_processors.maintenance_mode',
             ],
         },
     },
@@ -145,6 +152,8 @@ AUTH_USER_MODEL = "account.User"
 
 CORS_ORIGIN_WHITELIST = config('CORS_ORIGIN_WHITELIST', cast=Csv())
 
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
@@ -156,13 +165,15 @@ REST_FRAMEWORK = {
     'NON_FIELD_ERRORS_KEY': 'nonfield',
 }
 
-SWAGGER_SETTINGS = {
-    'LOGIN_URL': 'admin:login',
-    'LOGOUT_URL': 'admin:logout',
-    'SECURITY_DEFINITIONS': {
-        'Bearer': {'type': 'apiKey', 'name': 'Authorization', 'in': 'header'}
-    },
-}
+SITE_ID = 1
+
+# django-admin-interface
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+SILENCED_SYSTEM_CHECKS = ['security.W019']
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
 
 DEBUG_TOOLBAR_CONFIG = {
     'SHOW_TOOLBAR_CALLBACK': lambda request: False,
@@ -174,6 +185,14 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': datetime.timedelta(days=7),
     'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=30),
     'USER_ID_CLAIM': 'id',
+}
+
+SWAGGER_SETTINGS = {
+    'LOGIN_URL': 'admin:login',
+    'LOGOUT_URL': 'admin:logout',
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {'type': 'apiKey', 'name': 'Authorization', 'in': 'header'}
+    },
 }
 
 REDIS_HOST = os.environ.get('REDIS_HOST', 'localhost')
@@ -229,3 +248,14 @@ LOGGING = {
         }
     },
 }
+
+
+SECURE_SSL_REDIRECT = config('SECURE_SSL_REDIRECT', False)
+
+USE_X_FORWARDED_HOST = config('USE_X_FORWARDED_HOST', False)
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Django Maintenance Mode - https://pypi.org/project/django-maintenance-mode/
+MAINTENANCE_MODE = config('MAINTENANCE_MODE', None)
+MAINTENANCE_MODE_IGNORE_ADMIN_SITE = True

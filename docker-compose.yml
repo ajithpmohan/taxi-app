@@ -3,7 +3,6 @@ version: '3.7'
 services:
   postgres:
     image: postgres:12.1-alpine
-    container_name: taxi-postgres
     volumes:
       - postgres-data:/var/lib/postgresql/data/
     environment:
@@ -12,8 +11,7 @@ services:
       - POSTGRES_PASSWORD=taxi
   client:
     build: ./client
-    image: docker.pkg.github.com/ajithpmohan/taxi-app/client-dev:0.1
-    container_name: taxi-client
+    image: taxi-app-frontend:1.0.0
     volumes:
       - ./client:/usr/src/app
       - /usr/src/app/node_modules
@@ -25,11 +23,10 @@ services:
     stdin_open: true
   server:
     build: ./server
-    image: docker.pkg.github.com/ajithpmohan/taxi-app/server-dev:0.1
-    container_name: taxi-server
-    command: python manage.py runserver 0.0.0.0:8000
+    image: taxi-app-backend:1.0.0
+    command: bash -c 'while !</dev/tcp/postgres/5432; do sleep 1; done; python manage.py runserver 0.0.0.0:8000'
     volumes:
-      - ./server/:/usr/src/app/web/
+      - ./server:/home/app/web
     ports:
       - "8002:8000"
     env_file:
@@ -42,7 +39,6 @@ services:
     tty: true
   redis:
     image: redis:latest
-    container_name: taxi-redis
 
 volumes:
   postgres-data:
