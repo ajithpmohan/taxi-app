@@ -1,0 +1,12 @@
+{
+  "recommendations": [
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "njpwerner.autodocstring",
+    "njqdev.vscode-python-typehint",
+    "thebarkman.vscode-djaneiro",
+    "coenraads.bracket-pair-colorizer-2",
+    "ms-toolsai.jupyter",
+    "ahmadawais.shades-of-purple",
+  ]
+}
