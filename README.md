@@ -23,12 +23,6 @@ Download the repository:
 
     git clone git@github.com:ajithpmohan/taxi-app.git
 
-## Permission Required
-
-Before building the services update the permission of following bash scripts.
-
-    chmod +x server/coverage.sh server/entrypoint.sh server/entrypoint.prod.sh
-
 ## Build the Services
 
     docker-compose build

@@ -5,8 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.pre-commit
-    image: docker.pkg.github.com/ajithpmohan/taxi-app/pre-commit-dev:0.1
-    container_name: taxi-pre-commit
+    image: taxi-app-backend-pre-commit:1.0.0
     command: pre-commit run --all-files
     volumes:
       - .:/usr/src/app

@@ -1,6 +1,5 @@
-# The first instruction is what image we want to base our container on
-# We Use an official Python runtime as a parent image
-FROM python:3.8.2-alpine
+# pull official base image
+FROM python:3.10-slim
 
 ENV BASE_DIR=/usr/src/app
 WORKDIR $BASE_DIR
@@ -8,16 +7,15 @@ WORKDIR $BASE_DIR
 # create the app user
 # RUN addgroup -S app && adduser -S app -G app
 
-RUN apk add --upgrade git
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends gcc musl-dev git
 
-RUN pip install --no-cache-dir --upgrade pip
-
-RUN apk add --no-cache --upgrade gcc musl-dev
+RUN pip install --upgrade pip
 
 RUN pip install pre-commit
 
 # Copies everything over to Docker environment
-COPY . .
+COPY . $BASE_DIR
 
 # chown all the files to the app user
 # RUN chown -R app:app $BASE_DIR
