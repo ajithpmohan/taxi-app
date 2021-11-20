@@ -13,8 +13,8 @@ services:
     build: ./client
     image: taxi-app-frontend:1.0.0
     volumes:
-      - ./client:/usr/src/app
-      - /usr/src/app/node_modules
+      - ./client:/home/app
+      - /home/app/node_modules
     ports:
       - "8001:8000"
     depends_on:

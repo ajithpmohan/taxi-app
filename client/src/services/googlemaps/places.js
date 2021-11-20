@@ -4,8 +4,10 @@ class AutocompleteDirectionsHandler {
     this.originPlaceId = null;
     this.destinationPlaceId = null;
     this.travelMode = 'DRIVING';
-    this.directionsService = new window.google.maps.DirectionsService();
-    this.directionsRenderer = new window.google.maps.DirectionsRenderer();
+    this.directionsService =
+      new window.google.maps.DirectionsService();
+    this.directionsRenderer =
+      new window.google.maps.DirectionsRenderer();
     this.directionsRenderer.setMap(map);
 
     const originInput = document.getElementById('origin-input');
@@ -13,15 +15,13 @@ class AutocompleteDirectionsHandler {
       'destination-input',
     );
 
-    const originAutocomplete = new window.google.maps.places.Autocomplete(
-      originInput,
-    );
+    const originAutocomplete =
+      new window.google.maps.places.Autocomplete(originInput);
     // Specify just the place data fields that you need.
     originAutocomplete.setFields(['place_id']);
 
-    const destinationAutocomplete = new window.google.maps.places.Autocomplete(
-      destinationInput,
-    );
+    const destinationAutocomplete =
+      new window.google.maps.places.Autocomplete(destinationInput);
     // Specify just the place data fields that you need.
     destinationAutocomplete.setFields(['place_id']);
 
