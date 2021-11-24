@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "coenraads.bracket-pair-colorizer-2",
+    "mikestead.dotenv",
+    "pkief.material-icon-theme",
+    "robbowen.synthwave-vscode"
+  ]
+}

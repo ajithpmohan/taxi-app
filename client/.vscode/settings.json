@@ -1,5 +1,12 @@
 {
   "editor.formatOnSave": true,
   "files.insertFinalNewline": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "editor.tabSize": 2,
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "workbench.colorTheme": "SynthWave '84",
 }
