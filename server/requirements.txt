@@ -34,7 +34,7 @@ pytest-asyncio==0.16.0
 parameterized==0.8.1
 
 # Loggers
-ipython==7.29.0
+ipython==7.31.1
 django-debug-toolbar==3.2.2
 django-extensions==3.1.5
 
