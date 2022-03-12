@@ -12,7 +12,7 @@ channels-redis==3.0.1
 python-decouple==3.5
 
  # Image Library
-Pillow==8.4.0
+Pillow==9.0.1
 
 # Postgres Deps
 psycopg2-binary==2.9.2
