@@ -47,8 +47,10 @@ class TokenAuthMiddlewareInstance:
             user = await self.get_anonymous_user()
 
         self.scope['user'] = user
-        inner = self.inner(self.scope)
-        return await inner(receive, send)
+        # Remove later
+        # inner = self.inner(self.scope)
+        # return await inner(receive, send)
+        return await self.inner(self.scope, receive, send)
 
     @database_sync_to_async
     def get_anonymous_user(self):

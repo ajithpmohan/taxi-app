@@ -4,9 +4,11 @@
     "ms-python.vscode-pylance",
     "njpwerner.autodocstring",
     "njqdev.vscode-python-typehint",
-    "thebarkman.vscode-djaneiro",
-    "coenraads.bracket-pair-colorizer-2",
     "ms-toolsai.jupyter",
-    "ahmadawais.shades-of-purple",
+    "2gua.rainbow-brackets",
+    "thebarkman.vscode-djaneiro",
+    "batisteo.vscode-django",
+    "monosans.djlint",
+    "ahmadawais.shades-of-purple"
   ]
 }

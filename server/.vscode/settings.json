@@ -4,7 +4,7 @@
   "python.linting.pylintEnabled": false,
   "python.linting.flake8Enabled": true,
   "python.linting.flake8Args": [
-    "--max-line-length=99",
+    "--max-line-length=99"
   ],
   "python.linting.enabled": true,
   "python.pythonPath": "/usr/local/bin/python",
@@ -12,12 +12,38 @@
   "python.formatting.provider": "black",
   "python.formatting.blackPath": "/usr/local/bin/black",
   "python.formatting.blackArgs": [
-    "--line-length=99",
+    "--line-length=99"
   ],
   "[python]": {
     "editor.codeActionsOnSave": {
       "source.organizeImports": true
     }
+  },
+  "[json]": {
+    "editor.tabSize": 2,
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "djlint.enableLinting": true,
+  "djlint.pythonPath": "/usr/local/bin/python",
+  "files.associations": {
+    "**/*.html": "html",
+    "**/templates/**/*.html": "django-html",
+    "**/templates/**/*": "django-txt",
+  },
+  "emmet.includeLanguages": {
+    "django-html": "html"
+  },
+  // "[html]": {
+  //   "editor.defaultFormatter": "monosans.djlint"
+  // },
+  "[django-html]": {
+    "editor.defaultFormatter": "monosans.djlint",
+  },
+  "[jinja]": {
+    "editor.defaultFormatter": "monosans.djlint"
+  },
+  "[jinja-html]": {
+    "editor.defaultFormatter": "monosans.djlint"
   },
   "git.ignoreLimitWarning": true,
   "workbench.colorTheme": "Shades of Purple"

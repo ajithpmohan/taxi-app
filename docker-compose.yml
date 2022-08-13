@@ -1,8 +1,8 @@
-version: '3.7'
+version: "3.8"
 
 services:
-  postgres:
-    image: postgres:12.1-alpine
+  db:
+    image: postgres:latest
     volumes:
       - postgres-data:/var/lib/postgresql/data/
     environment:
@@ -18,13 +18,13 @@ services:
     ports:
       - "8001:8000"
     depends_on:
-      - postgres
+      - db
       - server
     stdin_open: true
   server:
     build: ./server
     image: taxi-app-backend:1.0.0
-    command: bash -c 'while !</dev/tcp/postgres/5432; do sleep 1; done; python manage.py runserver 0.0.0.0:8000'
+    command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; python manage.py runserver 0.0.0.0:8000'
     volumes:
       - ./server:/home/app/web
     ports:
@@ -32,7 +32,7 @@ services:
     env_file:
       - ./server/.env.dev
     depends_on:
-      - postgres
+      - db
     links:
       - redis
     stdin_open: true

@@ -1,5 +1,5 @@
 # pull official base image
-FROM python:3.10-slim
+FROM python:3.10.6-slim
 
 # Set the working directory
 ENV BASE_DIR=/home/app
@@ -17,13 +17,15 @@ ENV PYTHONDONTWRITEBYTECODE 1
 # Prevents Python from buffering stdout and stderr
 ENV PYTHONUNBUFFERED 1
 
-# install psycopg2 dependencies
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends postgresql-client gcc python3-dev libpq-dev
+# Install postgresql client
+RUN apt update \
+    && apt install -y --no-install-recommends gcc python3-dev postgresql-client \
+    && apt autoclean
 
-RUN pip install --upgrade pip
+# Upgrade Pip
+RUN pip install --no-cache-dir --upgrade pip
 
-# install python dependencies
+# Install python dependencies
 COPY ./requirements.txt .
 RUN pip install -r requirements.txt
 

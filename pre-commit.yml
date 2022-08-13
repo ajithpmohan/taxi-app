@@ -1,11 +1,12 @@
-version: '3.7'
+version: "3.8"
 
 services:
   pre-commit:
     build:
       context: .
       dockerfile: Dockerfile.pre-commit
-    image: taxi-app-backend-pre-commit:1.0.0
+    image: taxi-app-backend-pre-commit
     command: pre-commit run --all-files
+    # command: bash -c "pre-commit autoupdate && pre-commit run --all-files"
     volumes:
-      - .:/usr/src/app
+      - .:/home/app

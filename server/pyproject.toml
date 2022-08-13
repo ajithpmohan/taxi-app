@@ -2,6 +2,14 @@
 line-length = 99
 include = '\.pyi?$'
 skip-string-normalization = true
+extend-exclude = '''
+/(
+  # The following are specific to Black, you probably don't want those.
+  | blib2to3
+  | tests/data
+  | profiling
+)/
+'''
 
 [tool.isort]
 line_length = 99

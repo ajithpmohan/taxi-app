@@ -1,27 +1,20 @@
-# pull official base image
-FROM python:3.10-slim
+# Pull Python official base image
+FROM python:3.10.6-slim
 
-ENV BASE_DIR=/usr/src/app
-WORKDIR $BASE_DIR
+# Set the working directory
+ENV APP_HOME=/home/app
+WORKDIR $APP_HOME
 
-# create the app user
-# RUN addgroup -S app && adduser -S app -G app
+# Install git
+RUN apt update \
+    && apt install -y --no-install-recommends git \
+    && apt autoclean
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends gcc musl-dev git
+# Upgrade Pip
+RUN pip install --no-cache-dir --upgrade pip
 
-RUN pip install --upgrade pip
-
+# Install pre-commit
 RUN pip install pre-commit
 
-# Copies everything over to Docker environment
-COPY . $BASE_DIR
-
-# chown all the files to the app user
-# RUN chown -R app:app $BASE_DIR
-
-# change to the app user
-# USER app
-
-RUN pre-commit install
-RUN pre-commit autoupdate
+COPY .pre-commit-config.yaml ./
+COPY ./server ./server
