@@ -17,6 +17,10 @@
 
 You need **Docker Engine** and **Docker Compose**. Install it from [Docker Website](https://docs.docker.com/)
 
+## Environment Variables
+
+Add your REACT_APP_GOOGLE_API_KEY inside client/.env.development file.
+
 ## Usage
 
 Download the repository:
@@ -33,9 +37,9 @@ Download the repository:
 
 ## Access the services in the development mode.
 
-Open [http://localhost:8001/](http://localhost:8001/) to access `client` service in the browser.
+Open [http://localhost:3100/](http://localhost:3100/) to access `client` service in the browser.
 
-Open [http://localhost:8002/](http://localhost:8002/) to access `server` service in the browser.
+Open [http://localhost:8100/](http://localhost:8100/) to access `server` service in the browser.
 
 ## Run React.js Code Linter & Formatter
 

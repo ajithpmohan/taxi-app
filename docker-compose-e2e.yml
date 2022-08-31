@@ -5,16 +5,15 @@ services:
     build:
       context: ./client
       dockerfile: Dockerfile.cy-open
-    image: docker.pkg.github.com/ajithpmohan/taxi-app/e2e-testing-cy-open:1.0
-    container_name: taxi-e2e-testing-cy-open
+    image: taxi-app-cypress-e2e-test-browser
     command: npx cypress open
     # note: inside e2e-testing-cy-open container, the network allows accessing
-    # "client" host under name "localhost:8001"
-    # so "curl http://localhost:8001" would return whatever the webserver
+    # "client" host under name "localhost:3100"
+    # so "curl http://localhost:3100" would return whatever the webserver
     # in the "client" container is cooking
     # see https://docs.docker.com/compose/networking/
     environment:
-      - CYPRESS_baseUrl=http://localhost:8001
+      - CYPRESS_baseUrl=http://localhost:3100
       - DISPLAY=unix${DISPLAY}
     network_mode: 'host'
     tty: true
@@ -35,16 +34,15 @@ services:
     build:
       context: ./client
       dockerfile: Dockerfile.cy-run
-    image: docker.pkg.github.com/ajithpmohan/taxi-app/e2e-testing-cy-run:1.0
-    container_name: taxi-e2e-testing-cy-run
+    image: taxi-app-cypress-e2e-test-run
     command: npx cypress run
     # note: inside e2e-testing-cy-run container, the network allows accessing
-    # "client" host under name "localhost:8001"
-    # so "curl http://localhost:8001" would return whatever the webserver
+    # "client" host under name "localhost:3100"
+    # so "curl http://localhost:3100" would return whatever the webserver
     # in the "client" container is cooking
     # see https://docs.docker.com/compose/networking/
     environment:
-      - CYPRESS_baseUrl=http://localhost:8001
+      - CYPRESS_baseUrl=http://localhost:3100
     network_mode: 'host'
     # mount the host directory client/cypress and the file client/cypress.json as
     # volumes within the container

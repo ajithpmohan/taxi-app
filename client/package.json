@@ -24,7 +24,7 @@
     "rxjs": "^6.6.3"
   },
   "scripts": {
-    "start": "PORT=8000 react-scripts -r @cypress/instrument-cra start",
+    "start": "react-scripts -r @cypress/instrument-cra start",
     "lint": "eslint src/ --fix",
     "format": "prettier --config .prettierrc './src/**/*.js' --write",
     "build": "react-scripts build",

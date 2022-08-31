@@ -16,7 +16,7 @@ services:
       - ./client:/home/app
       - /home/app/node_modules
     ports:
-      - "8001:8000"
+      - "3100:3000"
     depends_on:
       - db
       - server
@@ -28,7 +28,7 @@ services:
     volumes:
       - ./server:/home/app/web
     ports:
-      - "8002:8000"
+      - "8100:8000"
     env_file:
       - ./server/.env.dev
     depends_on:
