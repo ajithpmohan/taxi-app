@@ -12,7 +12,7 @@ channels-redis==3.4.1
 psycopg2-binary==2.9.3
 
 # Image Library
-Pillow==9.2.0
+Pillow==9.3.0
 
 # Coding Standards
 black==22.6.0
