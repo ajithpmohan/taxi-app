@@ -1,12 +1,20 @@
 {
   "editor.formatOnSave": true,
-  "files.insertFinalNewline": true,
   "editor.tabSize": 2,
+  "editor.wordWrap": "on",
+  "editor.bracketPairColorization.enabled": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "prettier.singleQuote": true,
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[json]": {
-    "editor.defaultFormatter": "vscode.json-language-features"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "workbench.iconTheme": "material-icon-theme",
   "workbench.colorTheme": "SynthWave '84",
 }
